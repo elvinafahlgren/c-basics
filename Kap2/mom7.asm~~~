@@ -15,13 +15,13 @@ start:
 
 main:
 @ R0 = R0 << R1
-@ Skriv registervärden före skift till Bargraph
+@ Skriv registervÃ¤rden fÃ¶re skift till Bargraph
 	LSR	R2,R0,#16
 	STRH	R2,[R5]
 	STRH	R0,[R6]
-@ Utför skift
+@ UtfÃ¶r skift
 	LSL	R0,R1
-@ Skriv registervärden efter skift till Bargraph
+@ Skriv registervÃ¤rden efter skift till Bargraph
 	LSR	R2,R0,#16
 	STRH	R2,[R5]
 	STRH	R0,[R6]

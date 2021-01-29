@@ -4,7 +4,7 @@
 start:	
 	MOV	R4,#0
 	MOV	R5,#0
-loop:	BL	dice	@ l‰gger returadress i LR
+loop:	BL	dice	@ l√§gger returadress i LR
 	CMP	R0,#4
 	BCC	less
 	ADD	R4,#1

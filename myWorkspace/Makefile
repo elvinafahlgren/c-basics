@@ -1,8 +1,8 @@
 .PHONY: clean All
 
 All:
-	@echo "----------Building project:[ VariousTextString - Debug ]----------"
-	@cd "VariousTextString" && "$(MAKE)" -f  "VariousTextString.mk"
+	@echo "----------Building project:[ basic_io - Debug ]----------"
+	@cd "basic_io" && "$(MAKE)" -f  "basic_io.mk"
 clean:
-	@echo "----------Cleaning project:[ VariousTextString - Debug ]----------"
-	@cd "VariousTextString" && "$(MAKE)" -f  "VariousTextString.mk" clean
+	@echo "----------Cleaning project:[ basic_io - Debug ]----------"
+	@cd "basic_io" && "$(MAKE)" -f  "basic_io.mk" clean
