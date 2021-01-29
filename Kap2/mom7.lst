@@ -1,0 +1,66 @@
+
+mom7.elf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+20000000 <start>:
+@
+@ mom7.asm
+@
+start:
+@ initiera port D och E som utportar
+	LDR	R6,=0x55555555
+20000000:	4e07      	ldr	r6, [pc, #28]	; (20000020 <main+0x12>)
+	LDR	R5,=0x40020C00
+20000002:	4d08      	ldr	r5, [pc, #32]	; (20000024 <main+0x16>)
+	STR	R6,[R5]
+20000004:	602e      	str	r6, [r5, #0]
+	LDR	R5,=0x40021000
+20000006:	4d08      	ldr	r5, [pc, #32]	; (20000028 <main+0x1a>)
+	STR	R6,[R5]
+20000008:	602e      	str	r6, [r5, #0]
+@ adressen till port D:s ut-dataregister till R5
+	LDR	R5,=0x40020C14
+2000000a:	4d08      	ldr	r5, [pc, #32]	; (2000002c <main+0x1e>)
+@ adressen till port E:s ut-dataregister till R6
+	LDR	R6,=0x40021014
+2000000c:	4e08      	ldr	r6, [pc, #32]	; (20000030 <main+0x22>)
+
+2000000e <main>:
+
+main:
+@ R0 = R0 << R1
+@ Skriv registervärden före skift till Bargraph
+	LSR	R2,R0,#16
+2000000e:	0c02      	lsrs	r2, r0, #16
+	STRH	R2,[R5]
+20000010:	802a      	strh	r2, [r5, #0]
+	STRH	R0,[R6]
+20000012:	8030      	strh	r0, [r6, #0]
+@ Utför skift
+	LSL	R0,R1
+20000014:	4088      	lsls	r0, r1
+@ Skriv registervärden efter skift till Bargraph
+	LSR	R2,R0,#16
+20000016:	0c02      	lsrs	r2, r0, #16
+	STRH	R2,[R5]
+20000018:	802a      	strh	r2, [r5, #0]
+	STRH	R0,[R6]
+2000001a:	8030      	strh	r0, [r6, #0]
+2000001c:	e7f7      	b.n	2000000e <main>
+2000001e:	0000      	.short	0x0000
+20000020:	55555555 	.word	0x55555555
+20000024:	40020c00 	.word	0x40020c00
+20000028:	40021000 	.word	0x40021000
+2000002c:	40020c14 	.word	0x40020c14
+20000030:	40021014 	.word	0x40021014
+
+20000034 <__bss_end__>:
+	...
+
+20001000 <heap_low>:
+	...
+
+20001800 <heap_top>:
+	...

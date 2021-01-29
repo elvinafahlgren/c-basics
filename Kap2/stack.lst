@@ -1,0 +1,49 @@
+
+stack.elf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+20000000 <start>:
+@ stack.asm
+start:	BL	sub
+20000000:	f000 f801 	bl	20000006 <sub>
+	B	start
+20000004:	e7fc      	b.n	20000000 <start>
+
+20000006 <sub>:
+
+sub:	PUSH	{LR}
+20000006:	b500      	push	{lr}
+	MOV	R0,#0x10
+20000008:	2010      	movs	r0, #16
+	PUSH	{R0}
+2000000a:	b401      	push	{r0}
+	BL	sub2
+2000000c:	f000 f802 	bl	20000014 <sub2>
+	POP	{R0}
+20000010:	bc01      	pop	{r0}
+	POP	{PC}
+20000012:	bd00      	pop	{pc}
+
+20000014 <sub2>:
+
+sub2:	PUSH	{R7}
+20000014:	b480      	push	{r7}
+	MOV	R7,SP
+20000016:	466f      	mov	r7, sp
+	LDR	R1,[R7,#4]
+20000018:	6879      	ldr	r1, [r7, #4]
+	POP	{R7}
+2000001a:	bc80      	pop	{r7}
+2000001c:	4770      	bx	lr
+	...
+
+20000020 <__bss_end__>:
+	...
+
+20001000 <heap_low>:
+	...
+
+20001800 <heap_top>:
+	...

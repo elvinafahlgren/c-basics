@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Workspace Name="myWorkspace" Database="" Version="10000">
+  <Project Name="VadArX" Path="VadArX/VadArX.project" Active="No"/>
+  <Project Name="Lek1" Path="Lek1/Lek1.project" Active="No"/>
+  <VirtualDirectory Name="Lektion4">
+    <Project Name="PrintIntegerArray" Path="PrintIntegerArray/PrintIntegerArray.project" Active="No"/>
+    <Project Name="VariousTextString" Path="VariousTextString/VariousTextString.project" Active="Yes"/>
+  </VirtualDirectory>
+  <BuildMatrix>
+    <WorkspaceConfiguration Name="Debug" Selected="yes">
+      <Environment/>
+      <Project Name="Lek1" ConfigName="Debug"/>
+      <Project Name="PrintIntegerArray" ConfigName="Debug"/>
+      <Project Name="VadArX" ConfigName="Debug"/>
+      <Project Name="VariousTextString" ConfigName="Debug"/>
+    </WorkspaceConfiguration>
+    <WorkspaceConfiguration Name="Release" Selected="yes">
+      <Environment/>
+      <Project Name="VadArX" ConfigName="Release"/>
+      <Project Name="Lek1" ConfigName="Release"/>
+      <Project Name="PrintIntegerArray" ConfigName="Release"/>
+      <Project Name="VariousTextString" ConfigName="Release"/>
+    </WorkspaceConfiguration>
+  </BuildMatrix>
+</CodeLite_Workspace>

@@ -1,0 +1,28 @@
+
+gdbtest1.elf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+20000000 <start>:
+@
+@ gdbtest1.asm
+@
+start:	MOV	R0,#0
+20000000:	2000      	movs	r0, #0
+
+20000002 <main>:
+
+main:	ADD	R0,R0,#1
+20000002:	3001      	adds	r0, #1
+20000004:	e7fd      	b.n	20000002 <main>
+	...
+
+20000008 <__bss_end__>:
+	...
+
+20001000 <heap_low>:
+	...
+
+20001800 <heap_top>:
+	...

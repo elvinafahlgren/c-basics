@@ -1,0 +1,85 @@
+
+dice.elf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+20000000 <start>:
+@
+@ dice.asm
+@
+start:	
+	MOV	R4,#0
+20000000:	2400      	movs	r4, #0
+	MOV	R5,#0
+20000002:	2500      	movs	r5, #0
+
+20000004 <loop>:
+loop:	BL	dice	@ lägger returadress i LR
+20000004:	f000 f806 	bl	20000014 <dice>
+	CMP	R0,#4
+20000008:	2804      	cmp	r0, #4
+	BCC	less
+2000000a:	d301      	bcc.n	20000010 <less>
+	ADD	R4,#1
+2000000c:	3401      	adds	r4, #1
+	B	start
+2000000e:	e7f7      	b.n	20000000 <start>
+
+20000010 <less>:
+less:	
+	ADD	R5,#1
+20000010:	3501      	adds	r5, #1
+	B	loop
+20000012:	e7f7      	b.n	20000004 <loop>
+
+20000014 <dice>:
+
+dice:	LDR	R0,seed
+20000014:	4806      	ldr	r0, [pc, #24]	; (20000030 <seed>)
+	LDR	R1,a
+20000016:	4907      	ldr	r1, [pc, #28]	; (20000034 <a>)
+	MUL	R0,R1
+20000018:	4348      	muls	r0, r1
+	LDR	R1,c
+2000001a:	4907      	ldr	r1, [pc, #28]	; (20000038 <c>)
+	ADD	R0,R1
+2000001c:	1840      	adds	r0, r0, r1
+	LDR	R1,m
+2000001e:	4907      	ldr	r1, [pc, #28]	; (2000003c <m>)
+	AND	R0,R1
+20000020:	4008      	ands	r0, r1
+	LDR	R1,=seed
+20000022:	4907      	ldr	r1, [pc, #28]	; (20000040 <m+0x4>)
+	STR	R0,[R1]
+20000024:	6008      	str	r0, [r1, #0]
+	MOV	R1,#0x7
+20000026:	2107      	movs	r1, #7
+	AND	R0,R1
+20000028:	4008      	ands	r0, r1
+	BX	LR
+2000002a:	4770      	bx	lr
+2000002c:	46c0      	nop			; (mov r8, r8)
+2000002e:	46c0      	nop			; (mov r8, r8)
+
+20000030 <seed>:
+20000030:	075bcd15 	.word	0x075bcd15
+
+20000034 <a>:
+20000034:	41c64e6d 	.word	0x41c64e6d
+
+20000038 <c>:
+20000038:	00003039 	.word	0x00003039
+
+2000003c <m>:
+2000003c:	7fffffff 	.word	0x7fffffff
+20000040:	20000030 	.word	0x20000030
+
+20000044 <__bss_end__>:
+	...
+
+20001000 <heap_low>:
+	...
+
+20001800 <heap_top>:
+	...
