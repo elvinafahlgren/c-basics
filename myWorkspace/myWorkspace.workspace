@@ -4,7 +4,8 @@
   <Project Name="Lek1" Path="Lek1/Lek1.project" Active="No"/>
   <VirtualDirectory Name="Lektion4">
     <Project Name="PrintIntegerArray" Path="PrintIntegerArray/PrintIntegerArray.project" Active="No"/>
-    <Project Name="VariousTextString" Path="VariousTextString/VariousTextString.project" Active="Yes"/>
+    <Project Name="VariousTextString" Path="VariousTextString/VariousTextString.project" Active="No"/>
+    <Project Name="jump" Path="jump/jump.project" Active="Yes"/>
   </VirtualDirectory>
   <Project Name="basic_io" Path="basic_io/basic_io.project" Active="No"/>
   <BuildMatrix>
@@ -15,6 +16,10 @@
       <Project Name="VadArX" ConfigName="Debug"/>
       <Project Name="VariousTextString" ConfigName="Debug"/>
       <Project Name="basic_io" ConfigName="Debug"/>
+<<<<<<< HEAD
+=======
+      <Project Name="jump" ConfigName="Debug"/>
+>>>>>>> dc0f5182086ffeff8f1a2a914b9878b9ebf76c78
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Environment/>
@@ -23,6 +28,10 @@
       <Project Name="PrintIntegerArray" ConfigName="Release"/>
       <Project Name="VariousTextString" ConfigName="Release"/>
       <Project Name="basic_io" ConfigName="Release"/>
+<<<<<<< HEAD
+=======
+      <Project Name="jump" ConfigName="Release"/>
+>>>>>>> dc0f5182086ffeff8f1a2a914b9878b9ebf76c78
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>

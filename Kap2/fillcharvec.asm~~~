@@ -1,0 +1,4 @@
+@
+@ fillcharvec.asm
+@
+start:	MOV

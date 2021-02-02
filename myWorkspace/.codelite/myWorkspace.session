@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Session Name="/home/elvina/Dokument/MOP/myWorkspace/myWorkspace.workspace">
-  <int Value="1" Name="m_selectedTab"/>
-  <wxString Value="/home/elvina/Dokument/MOP/myWorkspace/myWorkspace.workspace" Name="m_workspaceName"/>
+<Session Name="D:\mop\myWorkspace\myWorkspace.workspace">
+  <int Value="0" Name="m_selectedTab"/>
+  <wxString Value="D:\mop\myWorkspace\myWorkspace.workspace" Name="m_workspaceName"/>
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
+<<<<<<< HEAD
       <wxString Value="/home/elvina/Dokument/MOP/myWorkspace/VariousTextString/main.c" Name="FileName"/>
       <int Value="0" Name="FirstVisibleLine"/>
       <int Value="0" Name="CurrentLine"/>
@@ -14,6 +15,11 @@
       <wxString Value="/home/elvina/Dokument/MOP/myWorkspace/PrintIntegerArray/main.c" Name="FileName"/>
       <int Value="8" Name="FirstVisibleLine"/>
       <int Value="10" Name="CurrentLine"/>
+=======
+      <wxString Value="D:\mop\myWorkspace\jump\jumpStartup.c" Name="FileName"/>
+      <int Value="11" Name="FirstVisibleLine"/>
+      <int Value="21" Name="CurrentLine"/>
+>>>>>>> dc0f5182086ffeff8f1a2a914b9878b9ebf76c78
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
