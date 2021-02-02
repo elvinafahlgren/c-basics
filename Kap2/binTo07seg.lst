@@ -1,0 +1,77 @@
+
+binTo07seg.elf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+20000000 <init>:
+@
+@ binTo7seg.asm
+@
+
+init:		LDR	R6,=0x55555555	@ initiera port D som utport
+20000000:	4e16      	ldr	r6, [pc, #88]	; (2000005c <SegCodes+0x40>)
+		LDR	R5,=0x40020C00
+20000002:	4d17      	ldr	r5, [pc, #92]	; (20000060 <SegCodes+0x44>)
+		STR	R6,[R5]
+20000004:	602e      	str	r6, [r5, #0]
+		LDR	R5,=0x40020C14	@ adressen till port D:s ut-dataregiser till R5
+20000006:	4d17      	ldr	r5, [pc, #92]	; (20000064 <SegCodes+0x48>)
+		LDR	R6,=0x40021010	@ adressen till port E:s in-dataregister till R6
+20000008:	4e17      	ldr	r6, [pc, #92]	; (20000068 <SegCodes+0x4c>)
+		LDR	R4,=SegCodes	@ R4 = &SegCodes[0]
+2000000a:	4c18      	ldr	r4, [pc, #96]	; (2000006c <SegCodes+0x50>)
+
+2000000c <main>:
+
+main:		LDRB	R0,[R6]		@ läs inport till R0
+2000000c:	7830      	ldrb	r0, [r6, #0]
+		CMP	R0,#16		@ R0 - 16 -> APSR
+2000000e:	2810      	cmp	r0, #16
+		BLO	ja
+20000010:	d301      	bcc.n	20000016 <ja>
+		MOV	R0,#0		@ Utport <- 0
+20000012:	2000      	movs	r0, #0
+		B	main
+20000014:	e7fa      	b.n	2000000c <main>
+
+20000016 <ja>:
+
+ja:		ADD	R0,R4,R0	@ R0 <- (R4 + R0)
+20000016:	1820      	adds	r0, r4, r0
+		STRB	R0,[R5]		@ Utport <- R0
+20000018:	7028      	strb	r0, [r5, #0]
+		B	main
+2000001a:	e7f7      	b.n	2000000c <main>
+
+2000001c <SegCodes>:
+2000001c:	0000003f 	.word	0x0000003f
+20000020:	00000006 	.word	0x00000006
+20000024:	0000005b 	.word	0x0000005b
+20000028:	0000004f 	.word	0x0000004f
+2000002c:	00000066 	.word	0x00000066
+20000030:	0000006d 	.word	0x0000006d
+20000034:	0000007d 	.word	0x0000007d
+20000038:	00000007 	.word	0x00000007
+2000003c:	0000007f 	.word	0x0000007f
+20000040:	00000067 	.word	0x00000067
+20000044:	00000077 	.word	0x00000077
+20000048:	0000007f 	.word	0x0000007f
+2000004c:	00000039 	.word	0x00000039
+20000050:	0000003f 	.word	0x0000003f
+20000054:	00000079 	.word	0x00000079
+20000058:	00000071 	.word	0x00000071
+2000005c:	55555555 	.word	0x55555555
+20000060:	40020c00 	.word	0x40020c00
+20000064:	40020c14 	.word	0x40020c14
+20000068:	40021010 	.word	0x40021010
+2000006c:	2000001c 	.word	0x2000001c
+
+20000070 <__bss_end__>:
+	...
+
+20001000 <heap_low>:
+	...
+
+20001800 <heap_top>:
+	...

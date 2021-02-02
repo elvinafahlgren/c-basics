@@ -6,6 +6,7 @@
     <Project Name="PrintIntegerArray" Path="PrintIntegerArray/PrintIntegerArray.project" Active="No"/>
     <Project Name="VariousTextString" Path="VariousTextString/VariousTextString.project" Active="Yes"/>
   </VirtualDirectory>
+  <Project Name="basic_io" Path="basic_io/basic_io.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Environment/>
@@ -13,6 +14,7 @@
       <Project Name="PrintIntegerArray" ConfigName="Debug"/>
       <Project Name="VadArX" ConfigName="Debug"/>
       <Project Name="VariousTextString" ConfigName="Debug"/>
+      <Project Name="basic_io" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Environment/>
@@ -20,6 +22,7 @@
       <Project Name="Lek1" ConfigName="Release"/>
       <Project Name="PrintIntegerArray" ConfigName="Release"/>
       <Project Name="VariousTextString" ConfigName="Release"/>
+      <Project Name="basic_io" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>
