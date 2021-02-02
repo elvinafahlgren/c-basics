@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Workspace Name="myWorkspace2.0" Database="" Version="10000">
+  <Project Name="lek5" Path="lek5/lek5.project" Active="No"/>
+  <Project Name="HelloWorld" Path="HelloWorld/HelloWorld.project" Active="Yes"/>
+  <Project Name="PrintIntegerArray" Path="PrintIntegerArray/PrintIntegerArray.project" Active="No"/>
+  <Project Name="VadArX" Path="VadArX/VadArX.project" Active="No"/>
+  <Project Name="VariousTextString" Path="VariousTextString/VariousTextString.project" Active="No"/>
+  <BuildMatrix>
+    <WorkspaceConfiguration Name="Debug" Selected="yes">
+      <Environment/>
+      <Project Name="lek5" ConfigName="Debug"/>
+      <Project Name="HelloWorld" ConfigName="Debug"/>
+      <Project Name="jump" ConfigName="Debug"/>
+      <Project Name="PrintIntegerArray" ConfigName="Debug"/>
+      <Project Name="VadArX" ConfigName="Debug"/>
+      <Project Name="VariousTextString" ConfigName="Debug"/>
+      <Project Name="HelloWorld" ConfigName="Debug"/>
+      <Project Name="Lek1" ConfigName="Debug"/>
+      <Project Name="lek5" ConfigName="Debug"/>
+      <Project Name="HelloWorld" ConfigName="Debug"/>
+      <Project Name="PrintIntegerArray" ConfigName="Debug"/>
+      <Project Name="VadArX" ConfigName="Debug"/>
+      <Project Name="VariousTextString" ConfigName="Debug"/>
+    </WorkspaceConfiguration>
+    <WorkspaceConfiguration Name="Release" Selected="yes">
+      <Environment/>
+      <Project Name="lek5" ConfigName="Release"/>
+      <Project Name="HelloWorld" ConfigName="Release"/>
+      <Project Name="jump" ConfigName="Release"/>
+      <Project Name="PrintIntegerArray" ConfigName="Release"/>
+      <Project Name="VadArX" ConfigName="Release"/>
+      <Project Name="VariousTextString" ConfigName="Release"/>
+      <Project Name="HelloWorld" ConfigName="Release"/>
+      <Project Name="Lek1" ConfigName="Release"/>
+      <Project Name="lek5" ConfigName="Release"/>
+      <Project Name="HelloWorld" ConfigName="Release"/>
+      <Project Name="PrintIntegerArray" ConfigName="Release"/>
+      <Project Name="VadArX" ConfigName="Release"/>
+      <Project Name="VariousTextString" ConfigName="Release"/>
+    </WorkspaceConfiguration>
+  </BuildMatrix>
+</CodeLite_Workspace>

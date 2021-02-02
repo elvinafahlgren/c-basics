@@ -1,0 +1,4 @@
+startup	D:\mop\myWorkspace\jump\jumpStartup.c	/^void startup ( void )$/;"	function	line:6	signature:( void )	returns:void 
+GPIO_D_CONFIG	D:\mop\myWorkspace\jump\jumpStartup.c	/^#define GPIO_D_CONFIG	0x40020C00$/;"	macro	line:13
+GPIO_D_OUT	D:\mop\myWorkspace\jump\jumpStartup.c	/^#define GPIO_D_OUT		0x40020C14$/;"	macro	line:14
+main	D:\mop\myWorkspace\jump\jumpStartup.c	/^void main(void)$/;"	function	line:16	signature:(void)	returns:void 

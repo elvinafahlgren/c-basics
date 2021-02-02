@@ -1,0 +1,11 @@
+std	C:\Users\elvin\AppData\Roaming\codelite\tmp\codelite_templates.hpp	/^namespace std { template<typename _Tp> class shared_ptr {$/;"	namespace	line:1
+shared_ptr	C:\Users\elvin\AppData\Roaming\codelite\tmp\codelite_templates.hpp	/^namespace std { template<typename _Tp> class shared_ptr { $/;"	class	line:1	namespace:std
+operator ->	C:\Users\elvin\AppData\Roaming\codelite\tmp\codelite_templates.hpp	/^    _Tp* operator->();$/;"	prototype	line:2	class:std::shared_ptr	access:private	signature:()	returns:_Tp 
+reset	C:\Users\elvin\AppData\Roaming\codelite\tmp\codelite_templates.hpp	/^    void reset( Y* ptr );$/;"	prototype	line:3	class:std::shared_ptr	access:private	signature:( Y* ptr )	returns:void 
+reset	C:\Users\elvin\AppData\Roaming\codelite\tmp\codelite_templates.hpp	/^    void reset( Y* ptr, Deleter d );$/;"	prototype	line:4	class:std::shared_ptr	access:private	signature:( Y* ptr, Deleter d )	returns:void 
+reset	C:\Users\elvin\AppData\Roaming\codelite\tmp\codelite_templates.hpp	/^    void reset( Y* ptr, Deleter d, Alloc alloc );$/;"	prototype	line:5	class:std::shared_ptr	access:private	signature:( Y* ptr, Deleter d, Alloc alloc )	returns:void 
+get	C:\Users\elvin\AppData\Roaming\codelite\tmp\codelite_templates.hpp	/^    _T* get() const;$/;"	prototype	line:6	class:std::shared_ptr	access:private	signature:() const	returns:_T 
+startup	D:\mop\myWorkspace\jump\jumpStartup.c	/^void startup ( void )$/;"	function	line:6	signature:( void )	returns:void 
+GPIO_D_CONFIG	D:\mop\myWorkspace\jump\jumpStartup.c	/^#define GPIO_D_CONFIG	0x40020C00$/;"	macro	line:13
+GPIO_D_OUT	D:\mop\myWorkspace\jump\jumpStartup.c	/^#define GPIO_D_OUT		0x40020C14$/;"	macro	line:14
+main	D:\mop\myWorkspace\jump\jumpStartup.c	/^void main(void)$/;"	function	line:16	signature:(void)	returns:void 
