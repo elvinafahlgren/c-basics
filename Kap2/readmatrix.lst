@@ -1,0 +1,55 @@
+
+readmatrix.elf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+20000000 <readmatrix>:
+@
+@ readmatrix.asm
+@
+readmatrix:	LDR	R0,i		@ R0 = i
+20000000:	4804      	ldr	r0, [pc, #16]	; (20000014 <i>)
+		LSL	R1,R0,#1	@ R1 = i*2
+20000002:	0041      	lsls	r1, r0, #1
+		ADD	R0,R1,R0	@ R0 = i*(2+1)
+20000004:	1808      	adds	r0, r1, r0
+		LDR	R1,j		@ R1 = j
+20000006:	4904      	ldr	r1, [pc, #16]	; (20000018 <j>)
+		ADD	R0,R0,R1	@ R0 = (i*3)+j
+20000008:	1840      	adds	r0, r0, r1
+		LDR	R1,=m3		@ R1 = &m3[0]
+2000000a:	4907      	ldr	r1, [pc, #28]	; (20000028 <ch+0x3>)
+		LDR	R0,[R1,R0]	@ R0 = m3[i][j]
+2000000c:	5808      	ldr	r0, [r1, r0]
+		LDR	R1,=ch		@ R1 = &ch
+2000000e:	4907      	ldr	r1, [pc, #28]	; (2000002c <ch+0x7>)
+		STRB	R0,[R1]		@ ch = R0
+20000010:	7008      	strb	r0, [r1, #0]
+20000012:	46c0      	nop			; (mov r8, r8)
+
+20000014 <i>:
+20000014:	00000000 	.word	0x00000000
+
+20000018 <j>:
+20000018:	00000000 	.word	0x00000000
+
+2000001c <m3>:
+2000001c:	04030201 	.word	0x04030201
+20000020:	08070605 	.word	0x08070605
+20000024:	09          	.byte	0x09
+
+20000025 <ch>:
+20000025:	00          	.byte	0x00
+20000026:	0000      	.short	0x0000
+20000028:	2000001c 	.word	0x2000001c
+2000002c:	20000025 	.word	0x20000025
+
+20000030 <__bss_end__>:
+	...
+
+20001000 <heap_low>:
+	...
+
+20001800 <heap_top>:
+	...

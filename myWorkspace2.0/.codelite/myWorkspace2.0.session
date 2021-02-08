@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Session Name="D:\mop\myWorkspace2.0\myWorkspace2.0.workspace">
-  <int Value="1" Name="m_selectedTab"/>
-  <wxString Value="D:\mop\myWorkspace2.0\myWorkspace2.0.workspace" Name="m_workspaceName"/>
+<Session Name="/home/elvina/Dokument/MOP/myWorkspace2.0/myWorkspace2.0.workspace">
+  <int Value="0" Name="m_selectedTab"/>
+  <wxString Value="/home/elvina/Dokument/MOP/myWorkspace2.0/myWorkspace2.0.workspace" Name="m_workspaceName"/>
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
-      <wxString Value="D:\mop\myWorkspace2.0\lek5\main.c" Name="FileName"/>
-      <int Value="13" Name="FirstVisibleLine"/>
-      <int Value="37" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-      <IntVector Name="CollapsedFolds"/>
-    </TabInfo>
-    <TabInfo>
-      <wxString Value="D:\mop\myWorkspace2.0\HelloWorld\main.c" Name="FileName"/>
+      <wxString Value="/home/elvina/Dokument/MOP/myWorkspace2.0/lek5/main.c" Name="FileName"/>
       <int Value="0" Name="FirstVisibleLine"/>
-      <int Value="7" Name="CurrentLine"/>
+      <int Value="0" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>

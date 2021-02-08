@@ -9,14 +9,14 @@ init:		LDR	R6,=0x55555555	@ initiera port D som utport
 		LDR	R6,=0x40021010	@ adressen till port E:s in-dataregister till R6
 		LDR	R4,=SegCodes	@ R4 = &SegCodes[0]
 
-main:		LDRB	R0,[R6]		@ läs inport till R0
+main:		LDRB	R0,[R6]		@ lÃ¤s inport till R0
 		CMP	R0,#16		@ R0 - 16 -> APSR
 		BLO	ja
 		MOV	R0,#0		@ Utport <- 0
 		B	main
 
 ja:		ADD	R0,R4,R0	@ R0 <- (R4 + R0)
-		LDRB	R0,[R0]		@ ladda R0 me det som ligger på adressen R4+inport
+		LDRB	R0,[R0]		@ ladda R0 me det som ligger pÃ¥ adressen R4+inport
 		STRB	R0,[R5]		@ Utport <- R0
 		B	main
 

@@ -1,0 +1,49 @@
+
+fillcharvec.elf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+20000000 <start>:
+@
+@ fillcharvec.asm
+@
+start:	MOV	R0,#0		@ i = 0
+20000000:	2000      	movs	r0, #0
+	LDR	R1,=ca		@ R1 = &ca[0]
+20000002:	4906      	ldr	r1, [pc, #24]	; (2000001c <ca+0xa>)
+
+20000004 <for>:
+
+for:	CMP	R0,#0xA		@ i < sizeof(ca)
+20000004:	280a      	cmp	r0, #10
+	BGE	forend
+20000006:	da02      	bge.n	2000000e <forend>
+	STRB	R0,[R1,R0]	@ ca[i] = i
+20000008:	5408      	strb	r0, [r1, r0]
+	ADD	R0,#1		@i = i + 1
+2000000a:	3001      	adds	r0, #1
+	B	for
+2000000c:	e7fa      	b.n	20000004 <for>
+
+2000000e <forend>:
+	
+forend:	@MOV	R1,#5		@ R1
+	MOV	R0,#0xFF
+2000000e:	20ff      	movs	r0, #255	; 0xff
+	STRB	R0,[R1,#5]	@ ca[5] = 0xFF;
+20000010:	7148      	strb	r0, [r1, #5]
+
+20000012 <ca>:
+	...
+2000001a:	0000      	.short	0x0000
+2000001c:	20000012 	.word	0x20000012
+
+20000020 <__bss_end__>:
+	...
+
+20001000 <heap_low>:
+	...
+
+20001800 <heap_top>:
+	...

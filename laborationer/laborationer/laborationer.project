@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CodeLite_Project Name="laborationer" Version="11000" InternalType="User templates">
+<CodeLite_Project Name="4-1" Version="11000" InternalType="User templates">
   <Plugins>
     <Plugin Name="qmake">
       <![CDATA[00010001N0005Debug000000000000]]>
@@ -19,6 +19,12 @@
   </Plugins>
   <Description/>
   <Dependencies/>
+  <VirtualDirectory Name="src">
+    <File Name="keypad.c"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="resources">
+    <File Name="md407-ram.x"/>
+  </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="" C_Options="" Assembler="">
@@ -29,7 +35,7 @@
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
-    <Configuration Name="Debug" CompilerType="Cross GCC ( arm-none-eabi )" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+    <Configuration Name="Debug" CompilerType="Använd Denna!!!!!!" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g;-O0;-W" C_Options="-g;-O0;-w;-mthumb -march=armv6-m  -mfloat-abi=soft;-std=c99" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
         <IncludePath Value="."/>
       </Compiler>
@@ -133,10 +139,6 @@ monitor restart</PostConnectCommands>
       </Completion>
     </Configuration>
   </Settings>
-  <VirtualDirectory Name="src">
-    <File Name="startup.c"/>
-  </VirtualDirectory>
-  <VirtualDirectory Name="resources">
-    <File Name="md407-ram.x"/>
-  </VirtualDirectory>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>

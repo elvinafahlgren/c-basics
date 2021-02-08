@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="laborationer" Database="" Version="10000">
   <VirtualDirectory Name="lab2">
-    <Project Name="laborationer" Path="laborationer/laborationer.project" Active="Yes"/>
+    <Project Name="laborationer" Path="laborationer/laborationer.project" Active="No"/>
+    <Project Name="5-3" Path="5-3/5-3.project" Active="Yes"/>
   </VirtualDirectory>
+  <Project Name="4-1" Path="4-1/4-1.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Environment/>
-      <Project Name="laborationer" ConfigName="Debug"/>
+      <Project Name="4-1" ConfigName="Debug"/>
+      <Project Name="4-1" ConfigName="Debug"/>
+      <Project Name="5-3" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Environment/>
-      <Project Name="laborationer" ConfigName="Release"/>
+      <Project Name="4-1" ConfigName="Release"/>
+      <Project Name="4-1" ConfigName="Release"/>
+      <Project Name="5-3" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>
