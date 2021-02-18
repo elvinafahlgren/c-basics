@@ -5,46 +5,25 @@ Debug/mop3-5:     file format elf32-littlearm
 Disassembly of section .text:
 
 20000000 <startup>:
- *
- */
-__attribute__((naked)) __attribute__((section (".start_section")) )
-void startup ( void )
-{
-__asm__ volatile(" LDR R0,=0x2001C000\n");		/* set stack */
 20000000:	4802      	ldr	r0, [pc, #8]	; (2000000c <startup+0xc>)
-__asm__ volatile(" MOV SP,R0\n");
 20000002:	4685      	mov	sp, r0
-__asm__ volatile(" BL main\n");					/* call main */
 20000004:	f000 fab5 	bl	20000572 <main>
-__asm__ volatile(".L1: B .L1\n");				/* never return */
 20000008:	e7fe      	b.n	20000008 <startup+0x8>
-}
 2000000a:	46c0      	nop			; (mov r8, r8)
 2000000c:	2001c000 	andcs	ip, r1, r0
 
 20000010 <init_app>:
-#define GPIO_PUPDR ((volatile unsigned long *) 0x40020C0C)
-
-#define MAX_POINTS 25 
-
-void init_app( void )
-{
 20000010:	b580      	push	{r7, lr}
 20000012:	af00      	add	r7, sp, #0
-    * ( (unsigned char *) 0x40020C15) = 0x0;
 20000014:	4b0f      	ldr	r3, [pc, #60]	; (20000054 <init_app+0x44>)
 20000016:	2200      	movs	r2, #0
 20000018:	701a      	strb	r2, [r3, #0]
-    * ( (unsigned char *) 0x40020C11) = 0x0;
 2000001a:	4b0f      	ldr	r3, [pc, #60]	; (20000058 <init_app+0x48>)
 2000001c:	2200      	movs	r2, #0
 2000001e:	701a      	strb	r2, [r3, #0]
-    
-    * ( (unsigned long *) 0x40020C00) = 0x55005555;  // GPIO_MODER initieras
 20000020:	4b0e      	ldr	r3, [pc, #56]	; (2000005c <init_app+0x4c>)
 20000022:	4a0f      	ldr	r2, [pc, #60]	; (20000060 <init_app+0x50>)
 20000024:	601a      	str	r2, [r3, #0]
-    * ( (unsigned short *) 0x40020C04) &= 0x00FF;       // GPIO_OTYPER nollställs & initieras
 20000026:	4b0f      	ldr	r3, [pc, #60]	; (20000064 <init_app+0x54>)
 20000028:	881b      	ldrh	r3, [r3, #0]
 2000002a:	4a0e      	ldr	r2, [pc, #56]	; (20000064 <init_app+0x54>)
@@ -52,15 +31,12 @@ void init_app( void )
 2000002e:	400b      	ands	r3, r1
 20000030:	b29b      	uxth	r3, r3
 20000032:	8013      	strh	r3, [r2, #0]
-    
-    * ( (unsigned long *) 0x40020C0C) &= 0x0000FFFF;       // GPIO_PUPDR nollställs
 20000034:	4b0c      	ldr	r3, [pc, #48]	; (20000068 <init_app+0x58>)
 20000036:	681a      	ldr	r2, [r3, #0]
 20000038:	4b0b      	ldr	r3, [pc, #44]	; (20000068 <init_app+0x58>)
 2000003a:	0412      	lsls	r2, r2, #16
 2000003c:	0c12      	lsrs	r2, r2, #16
 2000003e:	601a      	str	r2, [r3, #0]
-    * ( (unsigned long *) 0x40020C0C) |= 0x00AA0000;       // GPIO_PUPDR initieras
 20000040:	4b09      	ldr	r3, [pc, #36]	; (20000068 <init_app+0x58>)
 20000042:	681a      	ldr	r2, [r3, #0]
 20000044:	4b08      	ldr	r3, [pc, #32]	; (20000068 <init_app+0x58>)
@@ -68,8 +44,6 @@ void init_app( void )
 20000048:	0409      	lsls	r1, r1, #16
 2000004a:	430a      	orrs	r2, r1
 2000004c:	601a      	str	r2, [r3, #0]
-
-}
 2000004e:	46c0      	nop			; (mov r8, r8)
 20000050:	46bd      	mov	sp, r7
 20000052:	bd80      	pop	{r7, pc}
@@ -81,30 +55,20 @@ void init_app( void )
 20000068:	40020c0c 	andmi	r0, r2, ip, lsl #24
 
 2000006c <delay_250ns>:
-
-void delay_250ns( void )
-{
 2000006c:	b580      	push	{r7, lr}
 2000006e:	af00      	add	r7, sp, #0
-    /* SystemCoreClock = 168000000 */
-    *STK_CTRL = 0;
 20000070:	4b0c      	ldr	r3, [pc, #48]	; (200000a4 <delay_250ns+0x38>)
 20000072:	2200      	movs	r2, #0
 20000074:	601a      	str	r2, [r3, #0]
-    *STK_LOAD = ( (168/4) -1 );
 20000076:	4b0c      	ldr	r3, [pc, #48]	; (200000a8 <delay_250ns+0x3c>)
 20000078:	2229      	movs	r2, #41	; 0x29
 2000007a:	601a      	str	r2, [r3, #0]
-    *STK_VAL = 0;
 2000007c:	4b0b      	ldr	r3, [pc, #44]	; (200000ac <delay_250ns+0x40>)
 2000007e:	2200      	movs	r2, #0
 20000080:	601a      	str	r2, [r3, #0]
-    *STK_CTRL = 5;  //sätter enable och clksource
 20000082:	4b08      	ldr	r3, [pc, #32]	; (200000a4 <delay_250ns+0x38>)
 20000084:	2205      	movs	r2, #5
 20000086:	601a      	str	r2, [r3, #0]
-    // börjar räkna
-    while( (*STK_CTRL & 0x10000 )== 0 );    //vänta till countflag=1
 20000088:	46c0      	nop			; (mov r8, r8)
 2000008a:	4b06      	ldr	r3, [pc, #24]	; (200000a4 <delay_250ns+0x38>)
 2000008c:	681a      	ldr	r2, [r3, #0]
@@ -112,11 +76,9 @@ void delay_250ns( void )
 20000090:	025b      	lsls	r3, r3, #9
 20000092:	4013      	ands	r3, r2
 20000094:	d0f9      	beq.n	2000008a <delay_250ns+0x1e>
-    *STK_CTRL = 0;
 20000096:	4b03      	ldr	r3, [pc, #12]	; (200000a4 <delay_250ns+0x38>)
 20000098:	2200      	movs	r2, #0
 2000009a:	601a      	str	r2, [r3, #0]
-}
 2000009c:	46c0      	nop			; (mov r8, r8)
 2000009e:	46bd      	mov	sp, r7
 200000a0:	bd80      	pop	{r7, pc}
@@ -126,15 +88,10 @@ void delay_250ns( void )
 200000ac:	e000e018 	and	lr, r0, r8, lsl r0
 
 200000b0 <delay_micro>:
-
-void delay_micro(unsigned int us)
-{
 200000b0:	b580      	push	{r7, lr}
 200000b2:	b082      	sub	sp, #8
 200000b4:	af00      	add	r7, sp, #0
 200000b6:	6078      	str	r0, [r7, #4]
-#ifdef SIMULATOR
-    us = us / 1000;
 200000b8:	687b      	ldr	r3, [r7, #4]
 200000ba:	22fa      	movs	r2, #250	; 0xfa
 200000bc:	0091      	lsls	r1, r2, #2
@@ -142,32 +99,20 @@ void delay_micro(unsigned int us)
 200000c0:	f000 facc 	bl	2000065c <__udivsi3>
 200000c4:	0003      	movs	r3, r0
 200000c6:	607b      	str	r3, [r7, #4]
-    us++;
 200000c8:	687b      	ldr	r3, [r7, #4]
 200000ca:	3301      	adds	r3, #1
 200000cc:	607b      	str	r3, [r7, #4]
-#endif
-    while( us > 0 )
 200000ce:	e00a      	b.n	200000e6 <delay_micro+0x36>
-    {
-        delay_250ns();
 200000d0:	f7ff ffcc 	bl	2000006c <delay_250ns>
-        delay_250ns();
 200000d4:	f7ff ffca 	bl	2000006c <delay_250ns>
-        delay_250ns();
 200000d8:	f7ff ffc8 	bl	2000006c <delay_250ns>
-        delay_250ns();
 200000dc:	f7ff ffc6 	bl	2000006c <delay_250ns>
-        us--;
 200000e0:	687b      	ldr	r3, [r7, #4]
 200000e2:	3b01      	subs	r3, #1
 200000e4:	607b      	str	r3, [r7, #4]
-    while( us > 0 )
 200000e6:	687b      	ldr	r3, [r7, #4]
 200000e8:	2b00      	cmp	r3, #0
 200000ea:	d1f1      	bne.n	200000d0 <delay_micro+0x20>
-    }
-}
 200000ec:	46c0      	nop			; (mov r8, r8)
 200000ee:	46c0      	nop			; (mov r8, r8)
 200000f0:	46bd      	mov	sp, r7
@@ -175,15 +120,10 @@ void delay_micro(unsigned int us)
 200000f4:	bd80      	pop	{r7, pc}
 
 200000f6 <delay_milli>:
-
-void delay_milli(unsigned int ms)
-{
 200000f6:	b580      	push	{r7, lr}
 200000f8:	b082      	sub	sp, #8
 200000fa:	af00      	add	r7, sp, #0
 200000fc:	6078      	str	r0, [r7, #4]
-#ifdef  SIMULATOR
-    ms = ms / 1000;
 200000fe:	687b      	ldr	r3, [r7, #4]
 20000100:	22fa      	movs	r2, #250	; 0xfa
 20000102:	0091      	lsls	r1, r2, #2
@@ -191,29 +131,20 @@ void delay_milli(unsigned int ms)
 20000106:	f000 faa9 	bl	2000065c <__udivsi3>
 2000010a:	0003      	movs	r3, r0
 2000010c:	607b      	str	r3, [r7, #4]
-    ms++;
 2000010e:	687b      	ldr	r3, [r7, #4]
 20000110:	3301      	adds	r3, #1
 20000112:	607b      	str	r3, [r7, #4]
-#endif
-    while(ms > 0)
 20000114:	e007      	b.n	20000126 <delay_milli+0x30>
-    {
-        delay_micro(1000);
 20000116:	23fa      	movs	r3, #250	; 0xfa
 20000118:	009b      	lsls	r3, r3, #2
 2000011a:	0018      	movs	r0, r3
 2000011c:	f7ff ffc8 	bl	200000b0 <delay_micro>
-        ms--;
 20000120:	687b      	ldr	r3, [r7, #4]
 20000122:	3b01      	subs	r3, #1
 20000124:	607b      	str	r3, [r7, #4]
-    while(ms > 0)
 20000126:	687b      	ldr	r3, [r7, #4]
 20000128:	2b00      	cmp	r3, #0
 2000012a:	d1f4      	bne.n	20000116 <delay_milli+0x20>
-    }
-}
 2000012c:	46c0      	nop			; (mov r8, r8)
 2000012e:	46c0      	nop			; (mov r8, r8)
 20000130:	46bd      	mov	sp, r7
@@ -221,59 +152,26 @@ void delay_milli(unsigned int ms)
 20000134:	bd80      	pop	{r7, pc}
 
 20000136 <graphic_initalize>:
-__attribute__((naked))
-void graphic_initalize(void)
-{
 20000136:	4770dff0 			; <UNDEFINED> instruction: 0x4770dff0
-	__asm volatile (" .HWORD 0xDFF0\n");
-	__asm volatile (" BX LR\n");
-}
 2000013a:	46c0      	nop			; (mov r8, r8)
 
 2000013c <graphic_clear_screen>:
-
-__attribute__((naked))
-void graphic_clear_screen(void)
-{
 2000013c:	4770dff1 			; <UNDEFINED> instruction: 0x4770dff1
-	__asm volatile (" .HWORD 0xDFF1\n");
-	__asm volatile (" BX LR\n");
-}
 20000140:	46c0      	nop			; (mov r8, r8)
 
 20000142 <graphic_pixel_set>:
-
-
-__attribute__((naked))
-void graphic_pixel_set( int x, int y)
-{
 20000142:	4770dff2 			; <UNDEFINED> instruction: 0x4770dff2
-	__asm volatile (" .HWORD 0xDFF2\n");
-	__asm volatile (" BX LR\n");
-}
 20000146:	46c0      	nop			; (mov r8, r8)
 
 20000148 <graphic_pixel_clear>:
-
-__attribute__((naked))
-void graphic_pixel_clear( int x, int y)
-{
 20000148:	4770dff3 			; <UNDEFINED> instruction: 0x4770dff3
-	__asm volatile (" .HWORD 0xDFF3\n");
-	__asm volatile (" BX LR\n");
-}
 2000014c:	46c0      	nop			; (mov r8, r8)
 
 2000014e <ActivateRow>:
-
-
-
-void ActivateRow(unsigned int row){
 2000014e:	b580      	push	{r7, lr}
 20000150:	b082      	sub	sp, #8
 20000152:	af00      	add	r7, sp, #0
 20000154:	6078      	str	r0, [r7, #4]
-    switch (row) {
 20000156:	687b      	ldr	r3, [r7, #4]
 20000158:	2b04      	cmp	r3, #4
 2000015a:	d01b      	beq.n	20000194 <ActivateRow+0x46>
@@ -293,32 +191,25 @@ void ActivateRow(unsigned int row){
 20000176:	2b02      	cmp	r3, #2
 20000178:	d004      	beq.n	20000184 <ActivateRow+0x36>
 2000017a:	e00f      	b.n	2000019c <ActivateRow+0x4e>
-        case 1: * GPIO_ODR_HIGH = 0x10; break;
 2000017c:	4b0b      	ldr	r3, [pc, #44]	; (200001ac <ActivateRow+0x5e>)
 2000017e:	2210      	movs	r2, #16
 20000180:	701a      	strb	r2, [r3, #0]
 20000182:	e00f      	b.n	200001a4 <ActivateRow+0x56>
-        case 2: * GPIO_ODR_HIGH = 0x20; break;
 20000184:	4b09      	ldr	r3, [pc, #36]	; (200001ac <ActivateRow+0x5e>)
 20000186:	2220      	movs	r2, #32
 20000188:	701a      	strb	r2, [r3, #0]
 2000018a:	e00b      	b.n	200001a4 <ActivateRow+0x56>
-        case 3: * GPIO_ODR_HIGH = 0x40; break;
 2000018c:	4b07      	ldr	r3, [pc, #28]	; (200001ac <ActivateRow+0x5e>)
 2000018e:	2240      	movs	r2, #64	; 0x40
 20000190:	701a      	strb	r2, [r3, #0]
 20000192:	e007      	b.n	200001a4 <ActivateRow+0x56>
-        case 4: * GPIO_ODR_HIGH = 0x80; break;
 20000194:	4b05      	ldr	r3, [pc, #20]	; (200001ac <ActivateRow+0x5e>)
 20000196:	2280      	movs	r2, #128	; 0x80
 20000198:	701a      	strb	r2, [r3, #0]
 2000019a:	e003      	b.n	200001a4 <ActivateRow+0x56>
-        default: *GPIO_ODR_HIGH = 0;
 2000019c:	4b03      	ldr	r3, [pc, #12]	; (200001ac <ActivateRow+0x5e>)
 2000019e:	2200      	movs	r2, #0
 200001a0:	701a      	strb	r2, [r3, #0]
-    }
-}  
 200001a2:	46c0      	nop			; (mov r8, r8)
 200001a4:	46c0      	nop			; (mov r8, r8)
 200001a6:	46bd      	mov	sp, r7
@@ -327,56 +218,42 @@ void ActivateRow(unsigned int row){
 200001ac:	40020c15 	andmi	r0, r2, r5, lsl ip
 
 200001b0 <ReadColumn>:
-
-int ReadColumn(void){
 200001b0:	b580      	push	{r7, lr}
 200001b2:	b082      	sub	sp, #8
 200001b4:	af00      	add	r7, sp, #0
-    unsigned char c;
-    c = * GPIO_IDR_HIGH;
 200001b6:	4a12      	ldr	r2, [pc, #72]	; (20000200 <ReadColumn+0x50>)
 200001b8:	1dfb      	adds	r3, r7, #7
 200001ba:	7812      	ldrb	r2, [r2, #0]
 200001bc:	701a      	strb	r2, [r3, #0]
-    if ( c & 0x8 ) 
 200001be:	1dfb      	adds	r3, r7, #7
 200001c0:	781b      	ldrb	r3, [r3, #0]
 200001c2:	2208      	movs	r2, #8
 200001c4:	4013      	ands	r3, r2
 200001c6:	d001      	beq.n	200001cc <ReadColumn+0x1c>
-        return 0x4;
 200001c8:	2304      	movs	r3, #4
 200001ca:	e015      	b.n	200001f8 <ReadColumn+0x48>
-    if ( c & 0x4 ) 
 200001cc:	1dfb      	adds	r3, r7, #7
 200001ce:	781b      	ldrb	r3, [r3, #0]
 200001d0:	2204      	movs	r2, #4
 200001d2:	4013      	ands	r3, r2
 200001d4:	d001      	beq.n	200001da <ReadColumn+0x2a>
-        return 0x3;
 200001d6:	2303      	movs	r3, #3
 200001d8:	e00e      	b.n	200001f8 <ReadColumn+0x48>
-    if ( c & 0x2 ) 
 200001da:	1dfb      	adds	r3, r7, #7
 200001dc:	781b      	ldrb	r3, [r3, #0]
 200001de:	2202      	movs	r2, #2
 200001e0:	4013      	ands	r3, r2
 200001e2:	d001      	beq.n	200001e8 <ReadColumn+0x38>
-        return 0x2;
 200001e4:	2302      	movs	r3, #2
 200001e6:	e007      	b.n	200001f8 <ReadColumn+0x48>
-    if ( c & 0x1 ) 
 200001e8:	1dfb      	adds	r3, r7, #7
 200001ea:	781b      	ldrb	r3, [r3, #0]
 200001ec:	2201      	movs	r2, #1
 200001ee:	4013      	ands	r3, r2
 200001f0:	d001      	beq.n	200001f6 <ReadColumn+0x46>
-        return 0x1;
 200001f2:	2301      	movs	r3, #1
 200001f4:	e000      	b.n	200001f8 <ReadColumn+0x48>
-    return 0;
 200001f6:	2300      	movs	r3, #0
-}      
 200001f8:	0018      	movs	r0, r3
 200001fa:	46bd      	mov	sp, r7
 200001fc:	b002      	add	sp, #8
@@ -384,40 +261,29 @@ int ReadColumn(void){
 20000200:	40020c11 	andmi	r0, r2, r1, lsl ip
 
 20000204 <keyb>:
-
-
-unsigned char keyb(void){
 20000204:	b590      	push	{r4, r7, lr}
 20000206:	b087      	sub	sp, #28
 20000208:	af00      	add	r7, sp, #0
-    unsigned char key[] = {1,2,3,0xA,4,5,6,0xB,7,8,9,0xC,0xE,0,0xF,0xD};
 2000020a:	003b      	movs	r3, r7
 2000020c:	4a16      	ldr	r2, [pc, #88]	; (20000268 <keyb+0x64>)
 2000020e:	ca13      	ldmia	r2!, {r0, r1, r4}
 20000210:	c313      	stmia	r3!, {r0, r1, r4}
 20000212:	6812      	ldr	r2, [r2, #0]
 20000214:	601a      	str	r2, [r3, #0]
-    unsigned int row, col;
-    for (int row = 1; row <= 4; row++){
 20000216:	2301      	movs	r3, #1
 20000218:	617b      	str	r3, [r7, #20]
 2000021a:	e01a      	b.n	20000252 <keyb+0x4e>
-        ActivateRow(row);
 2000021c:	697b      	ldr	r3, [r7, #20]
 2000021e:	0018      	movs	r0, r3
 20000220:	f7ff ff95 	bl	2000014e <ActivateRow>
-        col = ReadColumn();
 20000224:	f7ff ffc4 	bl	200001b0 <ReadColumn>
 20000228:	0003      	movs	r3, r0
 2000022a:	613b      	str	r3, [r7, #16]
-        if  (col != 0 ){
 2000022c:	693b      	ldr	r3, [r7, #16]
 2000022e:	2b00      	cmp	r3, #0
 20000230:	d00c      	beq.n	2000024c <keyb+0x48>
-            ActivateRow(0);
 20000232:	2000      	movs	r0, #0
 20000234:	f7ff ff8b 	bl	2000014e <ActivateRow>
-            return key [ 4 * (row-1) + (col-1) ];
 20000238:	697b      	ldr	r3, [r7, #20]
 2000023a:	3b01      	subs	r3, #1
 2000023c:	009b      	lsls	r3, r3, #2
@@ -428,21 +294,15 @@ unsigned char keyb(void){
 20000246:	003a      	movs	r2, r7
 20000248:	5cd3      	ldrb	r3, [r2, r3]
 2000024a:	e009      	b.n	20000260 <keyb+0x5c>
-    for (int row = 1; row <= 4; row++){
 2000024c:	697b      	ldr	r3, [r7, #20]
 2000024e:	3301      	adds	r3, #1
 20000250:	617b      	str	r3, [r7, #20]
 20000252:	697b      	ldr	r3, [r7, #20]
 20000254:	2b04      	cmp	r3, #4
 20000256:	dde1      	ble.n	2000021c <keyb+0x18>
-        }
-    }
-    ActivateRow(0);
 20000258:	2000      	movs	r0, #0
 2000025a:	f7ff ff78 	bl	2000014e <ActivateRow>
-    return 0xFF;
 2000025e:	23ff      	movs	r3, #255	; 0xff
-}
 20000260:	0018      	movs	r0, r3
 20000262:	46bd      	mov	sp, r7
 20000264:	b007      	add	sp, #28
@@ -450,31 +310,19 @@ unsigned char keyb(void){
 20000268:	2000083c 	andcs	r0, r0, ip, lsr r8
 
 2000026c <draw_object>:
-	void (* move ) (struct tObj *);
-	void (* set_speed ) (struct tObj *, int, int);
-} OBJECT, *POBJECT; 
-
-void draw_object( POBJECT o)
-{	
 2000026c:	b590      	push	{r4, r7, lr}
 2000026e:	b087      	sub	sp, #28
 20000270:	af00      	add	r7, sp, #0
 20000272:	6078      	str	r0, [r7, #4]
-	int currentposx = o->posx;
 20000274:	687b      	ldr	r3, [r7, #4]
 20000276:	68db      	ldr	r3, [r3, #12]
 20000278:	613b      	str	r3, [r7, #16]
-	int currentposy = o->posy;
 2000027a:	687b      	ldr	r3, [r7, #4]
 2000027c:	691b      	ldr	r3, [r3, #16]
 2000027e:	60fb      	str	r3, [r7, #12]
-	
-	for(int i = 0; i < (o->geo)->numpoints; i++)
 20000280:	2300      	movs	r3, #0
 20000282:	617b      	str	r3, [r7, #20]
 20000284:	e01c      	b.n	200002c0 <draw_object+0x54>
-	{
-		POINT currentp = (o->geo)->px[i];
 20000286:	687b      	ldr	r3, [r7, #4]
 20000288:	6819      	ldr	r1, [r3, #0]
 2000028a:	2408      	movs	r4, #8
@@ -487,7 +335,6 @@ void draw_object( POBJECT o)
 20000298:	1812      	adds	r2, r2, r0
 2000029a:	8812      	ldrh	r2, [r2, #0]
 2000029c:	801a      	strh	r2, [r3, #0]
-		graphic_pixel_set(currentposx + currentp.x, currentposy + currentp.y);		
 2000029e:	193b      	adds	r3, r7, r4
 200002a0:	781b      	ldrb	r3, [r3, #0]
 200002a2:	001a      	movs	r2, r3
@@ -501,7 +348,6 @@ void draw_object( POBJECT o)
 200002b2:	0019      	movs	r1, r3
 200002b4:	0010      	movs	r0, r2
 200002b6:	f7ff ff44 	bl	20000142 <graphic_pixel_set>
-	for(int i = 0; i < (o->geo)->numpoints; i++)
 200002ba:	697b      	ldr	r3, [r7, #20]
 200002bc:	3301      	adds	r3, #1
 200002be:	617b      	str	r3, [r7, #20]
@@ -511,8 +357,6 @@ void draw_object( POBJECT o)
 200002c6:	697a      	ldr	r2, [r7, #20]
 200002c8:	429a      	cmp	r2, r3
 200002ca:	dbdc      	blt.n	20000286 <draw_object+0x1a>
-	} 
-}
 200002cc:	46c0      	nop			; (mov r8, r8)
 200002ce:	46c0      	nop			; (mov r8, r8)
 200002d0:	46bd      	mov	sp, r7
@@ -520,28 +364,19 @@ void draw_object( POBJECT o)
 200002d4:	bd90      	pop	{r4, r7, pc}
 
 200002d6 <clear_object>:
-
-void clear_object( POBJECT o)
-{	
 200002d6:	b590      	push	{r4, r7, lr}
 200002d8:	b087      	sub	sp, #28
 200002da:	af00      	add	r7, sp, #0
 200002dc:	6078      	str	r0, [r7, #4]
-	int currentposx = o->posx;
 200002de:	687b      	ldr	r3, [r7, #4]
 200002e0:	68db      	ldr	r3, [r3, #12]
 200002e2:	613b      	str	r3, [r7, #16]
-	int currentposy = o->posy;
 200002e4:	687b      	ldr	r3, [r7, #4]
 200002e6:	691b      	ldr	r3, [r3, #16]
 200002e8:	60fb      	str	r3, [r7, #12]
-	
-	for(int i = 0; i < (o->geo)->numpoints; i++)
 200002ea:	2300      	movs	r3, #0
 200002ec:	617b      	str	r3, [r7, #20]
 200002ee:	e01c      	b.n	2000032a <clear_object+0x54>
-	{
-		POINT currentp = (o->geo)->px[i];
 200002f0:	687b      	ldr	r3, [r7, #4]
 200002f2:	6819      	ldr	r1, [r3, #0]
 200002f4:	2408      	movs	r4, #8
@@ -554,7 +389,6 @@ void clear_object( POBJECT o)
 20000302:	1812      	adds	r2, r2, r0
 20000304:	8812      	ldrh	r2, [r2, #0]
 20000306:	801a      	strh	r2, [r3, #0]
-		graphic_pixel_clear(currentposx + currentp.x, currentposy + currentp.y);		
 20000308:	193b      	adds	r3, r7, r4
 2000030a:	781b      	ldrb	r3, [r3, #0]
 2000030c:	001a      	movs	r2, r3
@@ -568,7 +402,6 @@ void clear_object( POBJECT o)
 2000031c:	0019      	movs	r1, r3
 2000031e:	0010      	movs	r0, r2
 20000320:	f7ff ff12 	bl	20000148 <graphic_pixel_clear>
-	for(int i = 0; i < (o->geo)->numpoints; i++)
 20000324:	697b      	ldr	r3, [r7, #20]
 20000326:	3301      	adds	r3, #1
 20000328:	617b      	str	r3, [r7, #20]
@@ -578,8 +411,6 @@ void clear_object( POBJECT o)
 20000330:	697a      	ldr	r2, [r7, #20]
 20000332:	429a      	cmp	r2, r3
 20000334:	dbdc      	blt.n	200002f0 <clear_object+0x1a>
-	} 
-}
 20000336:	46c0      	nop			; (mov r8, r8)
 20000338:	46c0      	nop			; (mov r8, r8)
 2000033a:	46bd      	mov	sp, r7
@@ -587,19 +418,13 @@ void clear_object( POBJECT o)
 2000033e:	bd90      	pop	{r4, r7, pc}
 
 20000340 <move_ballobject>:
-
-void move_ballobject(POBJECT o )
-{
 20000340:	b580      	push	{r7, lr}
 20000342:	b082      	sub	sp, #8
 20000344:	af00      	add	r7, sp, #0
 20000346:	6078      	str	r0, [r7, #4]
-	clear_object( o );
 20000348:	687b      	ldr	r3, [r7, #4]
 2000034a:	0018      	movs	r0, r3
 2000034c:	f7ff ffc3 	bl	200002d6 <clear_object>
-	
-	o->posx = (o->posx + o->dirx);
 20000350:	687b      	ldr	r3, [r7, #4]
 20000352:	68da      	ldr	r2, [r3, #12]
 20000354:	687b      	ldr	r3, [r7, #4]
@@ -607,7 +432,6 @@ void move_ballobject(POBJECT o )
 20000358:	18d2      	adds	r2, r2, r3
 2000035a:	687b      	ldr	r3, [r7, #4]
 2000035c:	60da      	str	r2, [r3, #12]
-	o->posy = (o->posy + o->diry);
 2000035e:	687b      	ldr	r3, [r7, #4]
 20000360:	691a      	ldr	r2, [r3, #16]
 20000362:	687b      	ldr	r3, [r7, #4]
@@ -615,26 +439,18 @@ void move_ballobject(POBJECT o )
 20000366:	18d2      	adds	r2, r2, r3
 20000368:	687b      	ldr	r3, [r7, #4]
 2000036a:	611a      	str	r2, [r3, #16]
-	
-	if( o->posx < 1)
 2000036c:	687b      	ldr	r3, [r7, #4]
 2000036e:	68db      	ldr	r3, [r3, #12]
 20000370:	2b00      	cmp	r3, #0
 20000372:	dc07      	bgt.n	20000384 <move_ballobject+0x44>
-	{
-		o->dirx = -1 * o->dirx;
 20000374:	687b      	ldr	r3, [r7, #4]
 20000376:	685b      	ldr	r3, [r3, #4]
 20000378:	425a      	negs	r2, r3
 2000037a:	687b      	ldr	r3, [r7, #4]
 2000037c:	605a      	str	r2, [r3, #4]
-		o->posx = 1;
 2000037e:	687b      	ldr	r3, [r7, #4]
 20000380:	2201      	movs	r2, #1
 20000382:	60da      	str	r2, [r3, #12]
-	}
-	
-	if( ((o->posx + (o->geo)->sizex) ) > 128 )
 20000384:	687b      	ldr	r3, [r7, #4]
 20000386:	68da      	ldr	r2, [r3, #12]
 20000388:	687b      	ldr	r3, [r7, #4]
@@ -643,14 +459,11 @@ void move_ballobject(POBJECT o )
 2000038e:	18d3      	adds	r3, r2, r3
 20000390:	2b80      	cmp	r3, #128	; 0x80
 20000392:	dd0b      	ble.n	200003ac <move_ballobject+0x6c>
-	{
-		o->dirx = -1 * o->dirx;
 20000394:	687b      	ldr	r3, [r7, #4]
 20000396:	685b      	ldr	r3, [r3, #4]
 20000398:	425a      	negs	r2, r3
 2000039a:	687b      	ldr	r3, [r7, #4]
 2000039c:	605a      	str	r2, [r3, #4]
-		o->posx = 128 - (o->geo)->sizex;
 2000039e:	687b      	ldr	r3, [r7, #4]
 200003a0:	681b      	ldr	r3, [r3, #0]
 200003a2:	685b      	ldr	r3, [r3, #4]
@@ -658,27 +471,18 @@ void move_ballobject(POBJECT o )
 200003a6:	1ad2      	subs	r2, r2, r3
 200003a8:	687b      	ldr	r3, [r7, #4]
 200003aa:	60da      	str	r2, [r3, #12]
-	}
-	
-	if( o->posy < 1)
 200003ac:	687b      	ldr	r3, [r7, #4]
 200003ae:	691b      	ldr	r3, [r3, #16]
 200003b0:	2b00      	cmp	r3, #0
 200003b2:	dc07      	bgt.n	200003c4 <move_ballobject+0x84>
-	{
-		o->diry = -1 * o->diry;
 200003b4:	687b      	ldr	r3, [r7, #4]
 200003b6:	689b      	ldr	r3, [r3, #8]
 200003b8:	425a      	negs	r2, r3
 200003ba:	687b      	ldr	r3, [r7, #4]
 200003bc:	609a      	str	r2, [r3, #8]
-		o->posy = 1;
 200003be:	687b      	ldr	r3, [r7, #4]
 200003c0:	2201      	movs	r2, #1
 200003c2:	611a      	str	r2, [r3, #16]
-	}
-	
-	if( ((o->posy + (o->geo)->sizey) ) > 64 )
 200003c4:	687b      	ldr	r3, [r7, #4]
 200003c6:	691a      	ldr	r2, [r3, #16]
 200003c8:	687b      	ldr	r3, [r7, #4]
@@ -687,14 +491,11 @@ void move_ballobject(POBJECT o )
 200003ce:	18d3      	adds	r3, r2, r3
 200003d0:	2b40      	cmp	r3, #64	; 0x40
 200003d2:	dd0b      	ble.n	200003ec <move_ballobject+0xac>
-	{
-		o->diry = -1 * o->diry;
 200003d4:	687b      	ldr	r3, [r7, #4]
 200003d6:	689b      	ldr	r3, [r3, #8]
 200003d8:	425a      	negs	r2, r3
 200003da:	687b      	ldr	r3, [r7, #4]
 200003dc:	609a      	str	r2, [r3, #8]
-		o->posy = 64 - (o->geo)->sizey;
 200003de:	687b      	ldr	r3, [r7, #4]
 200003e0:	681b      	ldr	r3, [r3, #0]
 200003e2:	689b      	ldr	r3, [r3, #8]
@@ -702,32 +503,22 @@ void move_ballobject(POBJECT o )
 200003e6:	1ad2      	subs	r2, r2, r3
 200003e8:	687b      	ldr	r3, [r7, #4]
 200003ea:	611a      	str	r2, [r3, #16]
-	}
-	
-	draw_object( o );
 200003ec:	687b      	ldr	r3, [r7, #4]
 200003ee:	0018      	movs	r0, r3
 200003f0:	f7ff ff3c 	bl	2000026c <draw_object>
-}
 200003f4:	46c0      	nop			; (mov r8, r8)
 200003f6:	46bd      	mov	sp, r7
 200003f8:	b002      	add	sp, #8
 200003fa:	bd80      	pop	{r7, pc}
 
 200003fc <move_spiderobject>:
-
-void move_spiderobject(POBJECT o )
-{
 200003fc:	b580      	push	{r7, lr}
 200003fe:	b082      	sub	sp, #8
 20000400:	af00      	add	r7, sp, #0
 20000402:	6078      	str	r0, [r7, #4]
-	clear_object( o );
 20000404:	687b      	ldr	r3, [r7, #4]
 20000406:	0018      	movs	r0, r3
 20000408:	f7ff ff65 	bl	200002d6 <clear_object>
-	
-	o->posx = (o->posx + o->dirx);
 2000040c:	687b      	ldr	r3, [r7, #4]
 2000040e:	68da      	ldr	r2, [r3, #12]
 20000410:	687b      	ldr	r3, [r7, #4]
@@ -735,7 +526,6 @@ void move_spiderobject(POBJECT o )
 20000414:	18d2      	adds	r2, r2, r3
 20000416:	687b      	ldr	r3, [r7, #4]
 20000418:	60da      	str	r2, [r3, #12]
-	o->posy = (o->posy + o->diry);
 2000041a:	687b      	ldr	r3, [r7, #4]
 2000041c:	691a      	ldr	r2, [r3, #16]
 2000041e:	687b      	ldr	r3, [r7, #4]
@@ -743,34 +533,23 @@ void move_spiderobject(POBJECT o )
 20000422:	18d2      	adds	r2, r2, r3
 20000424:	687b      	ldr	r3, [r7, #4]
 20000426:	611a      	str	r2, [r3, #16]
-	
-	draw_object( o );
 20000428:	687b      	ldr	r3, [r7, #4]
 2000042a:	0018      	movs	r0, r3
 2000042c:	f7ff ff1e 	bl	2000026c <draw_object>
-}
 20000430:	46c0      	nop			; (mov r8, r8)
 20000432:	46bd      	mov	sp, r7
 20000434:	b002      	add	sp, #8
 20000436:	bd80      	pop	{r7, pc}
 
 20000438 <objects_overlap>:
-
-/* om object o1 överlappar object o2 returnera 1, annars 0 */
-int objects_overlap( POBJECT o1, POBJECT o2 )
-{
 20000438:	b590      	push	{r4, r7, lr}
 2000043a:	b08b      	sub	sp, #44	; 0x2c
 2000043c:	af00      	add	r7, sp, #0
 2000043e:	6078      	str	r0, [r7, #4]
 20000440:	6039      	str	r1, [r7, #0]
-	
-	for(int i = 0; i < (o1->geo)->numpoints; i++)
 20000442:	2300      	movs	r3, #0
 20000444:	627b      	str	r3, [r7, #36]	; 0x24
 20000446:	e050      	b.n	200004ea <objects_overlap+0xb2>
-	{
-		POINT currentPo1 = (o1->geo)->px[i];
 20000448:	687b      	ldr	r3, [r7, #4]
 2000044a:	6819      	ldr	r1, [r3, #0]
 2000044c:	240c      	movs	r4, #12
@@ -783,27 +562,21 @@ int objects_overlap( POBJECT o1, POBJECT o2 )
 2000045a:	1812      	adds	r2, r2, r0
 2000045c:	8812      	ldrh	r2, [r2, #0]
 2000045e:	801a      	strh	r2, [r3, #0]
-		int o1x = o1->posx + currentPo1.x;
 20000460:	687b      	ldr	r3, [r7, #4]
 20000462:	68db      	ldr	r3, [r3, #12]
 20000464:	193a      	adds	r2, r7, r4
 20000466:	7812      	ldrb	r2, [r2, #0]
 20000468:	189b      	adds	r3, r3, r2
 2000046a:	61fb      	str	r3, [r7, #28]
-		int o1y = o1->posy + currentPo1.y;
 2000046c:	687b      	ldr	r3, [r7, #4]
 2000046e:	691b      	ldr	r3, [r3, #16]
 20000470:	193a      	adds	r2, r7, r4
 20000472:	7852      	ldrb	r2, [r2, #1]
 20000474:	189b      	adds	r3, r3, r2
 20000476:	61bb      	str	r3, [r7, #24]
-		
-		for(int j = 0; j < (o2->geo)->numpoints; j++)
 20000478:	2300      	movs	r3, #0
 2000047a:	623b      	str	r3, [r7, #32]
 2000047c:	e02c      	b.n	200004d8 <objects_overlap+0xa0>
-		{
-			POINT currentPo2 = (o2->geo)->px[j];
 2000047e:	683b      	ldr	r3, [r7, #0]
 20000480:	6819      	ldr	r1, [r3, #0]
 20000482:	2408      	movs	r4, #8
@@ -816,22 +589,18 @@ int objects_overlap( POBJECT o1, POBJECT o2 )
 20000490:	1812      	adds	r2, r2, r0
 20000492:	8812      	ldrh	r2, [r2, #0]
 20000494:	801a      	strh	r2, [r3, #0]
-			int o2x = o2->posx + currentPo2.x;
 20000496:	683b      	ldr	r3, [r7, #0]
 20000498:	68db      	ldr	r3, [r3, #12]
 2000049a:	193a      	adds	r2, r7, r4
 2000049c:	7812      	ldrb	r2, [r2, #0]
 2000049e:	189b      	adds	r3, r3, r2
 200004a0:	617b      	str	r3, [r7, #20]
-			int o2y = o2->posy + currentPo2.y;
 200004a2:	683b      	ldr	r3, [r7, #0]
 200004a4:	691b      	ldr	r3, [r3, #16]
 200004a6:	193a      	adds	r2, r7, r4
 200004a8:	7852      	ldrb	r2, [r2, #1]
 200004aa:	189b      	adds	r3, r3, r2
 200004ac:	613b      	str	r3, [r7, #16]
-			
-			if((o1x == o2x) & (o1y == o2y))
 200004ae:	69fa      	ldr	r2, [r7, #28]
 200004b0:	697b      	ldr	r3, [r7, #20]
 200004b2:	1ad3      	subs	r3, r2, r3
@@ -848,10 +617,8 @@ int objects_overlap( POBJECT o1, POBJECT o2 )
 200004c8:	b2db      	uxtb	r3, r3
 200004ca:	2b00      	cmp	r3, #0
 200004cc:	d001      	beq.n	200004d2 <objects_overlap+0x9a>
-				return 1;
 200004ce:	2301      	movs	r3, #1
 200004d0:	e012      	b.n	200004f8 <objects_overlap+0xc0>
-		for(int j = 0; j < (o2->geo)->numpoints; j++)
 200004d2:	6a3b      	ldr	r3, [r7, #32]
 200004d4:	3301      	adds	r3, #1
 200004d6:	623b      	str	r3, [r7, #32]
@@ -861,7 +628,6 @@ int objects_overlap( POBJECT o1, POBJECT o2 )
 200004de:	6a3a      	ldr	r2, [r7, #32]
 200004e0:	429a      	cmp	r2, r3
 200004e2:	dbcc      	blt.n	2000047e <objects_overlap+0x46>
-	for(int i = 0; i < (o1->geo)->numpoints; i++)
 200004e4:	6a7b      	ldr	r3, [r7, #36]	; 0x24
 200004e6:	3301      	adds	r3, #1
 200004e8:	627b      	str	r3, [r7, #36]	; 0x24
@@ -871,34 +637,23 @@ int objects_overlap( POBJECT o1, POBJECT o2 )
 200004f0:	6a7a      	ldr	r2, [r7, #36]	; 0x24
 200004f2:	429a      	cmp	r2, r3
 200004f4:	dba8      	blt.n	20000448 <objects_overlap+0x10>
-		}	
-	} 
-	return 0;
 200004f6:	2300      	movs	r3, #0
-}
 200004f8:	0018      	movs	r0, r3
 200004fa:	46bd      	mov	sp, r7
 200004fc:	b00b      	add	sp, #44	; 0x2c
 200004fe:	bd90      	pop	{r4, r7, pc}
 
 20000500 <object_out>:
-
-int object_out( POBJECT o )
-{
 20000500:	b580      	push	{r7, lr}
 20000502:	b082      	sub	sp, #8
 20000504:	af00      	add	r7, sp, #0
 20000506:	6078      	str	r0, [r7, #4]
-	if( o->posx < 1)
 20000508:	687b      	ldr	r3, [r7, #4]
 2000050a:	68db      	ldr	r3, [r3, #12]
 2000050c:	2b00      	cmp	r3, #0
 2000050e:	dc01      	bgt.n	20000514 <object_out+0x14>
-		return 1;
 20000510:	2301      	movs	r3, #1
 20000512:	e01a      	b.n	2000054a <object_out+0x4a>
-	
-	if( ((o->posx + (o->geo)->sizex) ) > 128 )
 20000514:	687b      	ldr	r3, [r7, #4]
 20000516:	68da      	ldr	r2, [r3, #12]
 20000518:	687b      	ldr	r3, [r7, #4]
@@ -907,20 +662,14 @@ int object_out( POBJECT o )
 2000051e:	18d3      	adds	r3, r2, r3
 20000520:	2b80      	cmp	r3, #128	; 0x80
 20000522:	dd01      	ble.n	20000528 <object_out+0x28>
-		return 1;
 20000524:	2301      	movs	r3, #1
 20000526:	e010      	b.n	2000054a <object_out+0x4a>
-		
-	if( o->posy < 1)
 20000528:	687b      	ldr	r3, [r7, #4]
 2000052a:	691b      	ldr	r3, [r3, #16]
 2000052c:	2b00      	cmp	r3, #0
 2000052e:	dc01      	bgt.n	20000534 <object_out+0x34>
-		return 1;
 20000530:	2301      	movs	r3, #1
 20000532:	e00a      	b.n	2000054a <object_out+0x4a>
-	
-	if( ((o->posy + (o->geo)->sizey) ) > 64 )
 20000534:	687b      	ldr	r3, [r7, #4]
 20000536:	691a      	ldr	r2, [r3, #16]
 20000538:	687b      	ldr	r3, [r7, #4]
@@ -929,93 +678,63 @@ int object_out( POBJECT o )
 2000053e:	18d3      	adds	r3, r2, r3
 20000540:	2b40      	cmp	r3, #64	; 0x40
 20000542:	dd01      	ble.n	20000548 <object_out+0x48>
-		return 1;
 20000544:	2301      	movs	r3, #1
 20000546:	e000      	b.n	2000054a <object_out+0x4a>
-		
-	return 0;	
 20000548:	2300      	movs	r3, #0
-}
 2000054a:	0018      	movs	r0, r3
 2000054c:	46bd      	mov	sp, r7
 2000054e:	b002      	add	sp, #8
 20000550:	bd80      	pop	{r7, pc}
 
 20000552 <set_object_speed>:
-
-void set_object_speed(POBJECT o, int speedx, int speedy)
-{
 20000552:	b580      	push	{r7, lr}
 20000554:	b084      	sub	sp, #16
 20000556:	af00      	add	r7, sp, #0
 20000558:	60f8      	str	r0, [r7, #12]
 2000055a:	60b9      	str	r1, [r7, #8]
 2000055c:	607a      	str	r2, [r7, #4]
-	o->dirx = speedx;
 2000055e:	68fb      	ldr	r3, [r7, #12]
 20000560:	68ba      	ldr	r2, [r7, #8]
 20000562:	605a      	str	r2, [r3, #4]
-	o->diry = speedy;
 20000564:	68fb      	ldr	r3, [r7, #12]
 20000566:	687a      	ldr	r2, [r7, #4]
 20000568:	609a      	str	r2, [r3, #8]
-}
 2000056a:	46c0      	nop			; (mov r8, r8)
 2000056c:	46bd      	mov	sp, r7
 2000056e:	b004      	add	sp, #16
 20000570:	bd80      	pop	{r7, pc}
 
 20000572 <main>:
-	move_spiderobject,
-	set_object_speed
-}; 
-
-int main(void)
-{
 20000572:	b590      	push	{r4, r7, lr}
 20000574:	b085      	sub	sp, #20
 20000576:	af00      	add	r7, sp, #0
-	char c;
-	POBJECT victim = &ball;
 20000578:	4b35      	ldr	r3, [pc, #212]	; (20000650 <main+0xde>)
 2000057a:	60fb      	str	r3, [r7, #12]
-	POBJECT creature = &spider;
 2000057c:	4b35      	ldr	r3, [pc, #212]	; (20000654 <main+0xe2>)
 2000057e:	60bb      	str	r3, [r7, #8]
-	init_app();
 20000580:	f7ff fd46 	bl	20000010 <init_app>
-	graphic_initalize();
 20000584:	f7ff fdd7 	bl	20000136 <graphic_initalize>
-	graphic_clear_screen();
 20000588:	f7ff fdd8 	bl	2000013c <graphic_clear_screen>
-	victim->set_speed( victim, 4, 1);
 2000058c:	68fb      	ldr	r3, [r7, #12]
 2000058e:	6a1b      	ldr	r3, [r3, #32]
 20000590:	68f8      	ldr	r0, [r7, #12]
 20000592:	2201      	movs	r2, #1
 20000594:	2104      	movs	r1, #4
 20000596:	4798      	blx	r3
-
-	while( 1 )
-	{
-		victim->move( victim );
 20000598:	68fb      	ldr	r3, [r7, #12]
 2000059a:	69db      	ldr	r3, [r3, #28]
 2000059c:	68fa      	ldr	r2, [r7, #12]
 2000059e:	0010      	movs	r0, r2
 200005a0:	4798      	blx	r3
-		creature->move( creature );
 200005a2:	68bb      	ldr	r3, [r7, #8]
 200005a4:	69db      	ldr	r3, [r3, #28]
 200005a6:	68ba      	ldr	r2, [r7, #8]
 200005a8:	0010      	movs	r0, r2
 200005aa:	4798      	blx	r3
-		c = keyb();
 200005ac:	1dfc      	adds	r4, r7, #7
 200005ae:	f7ff fe29 	bl	20000204 <keyb>
 200005b2:	0003      	movs	r3, r0
 200005b4:	7023      	strb	r3, [r4, #0]
-		switch( c )
 200005b6:	1dfb      	adds	r3, r7, #7
 200005b8:	781b      	ldrb	r3, [r3, #0]
 200005ba:	2b08      	cmp	r3, #8
@@ -1025,8 +744,6 @@ int main(void)
 200005c2:	18d3      	adds	r3, r2, r3
 200005c4:	681b      	ldr	r3, [r3, #0]
 200005c6:	469f      	mov	pc, r3
-		{
-			case 6: creature->set_speed( creature, 2, 0); break;
 200005c8:	68bb      	ldr	r3, [r7, #8]
 200005ca:	6a1b      	ldr	r3, [r3, #32]
 200005cc:	68b8      	ldr	r0, [r7, #8]
@@ -1034,7 +751,6 @@ int main(void)
 200005d0:	2102      	movs	r1, #2
 200005d2:	4798      	blx	r3
 200005d4:	e024      	b.n	20000620 <main+0xae>
-			case 4: creature->set_speed( creature, -2, 0); break;
 200005d6:	68bb      	ldr	r3, [r7, #8]
 200005d8:	6a1b      	ldr	r3, [r3, #32]
 200005da:	2202      	movs	r2, #2
@@ -1043,7 +759,6 @@ int main(void)
 200005e0:	2200      	movs	r2, #0
 200005e2:	4798      	blx	r3
 200005e4:	e01c      	b.n	20000620 <main+0xae>
-			case 5: creature->set_speed( creature, 0, 0); break;
 200005e6:	68bb      	ldr	r3, [r7, #8]
 200005e8:	6a1b      	ldr	r3, [r3, #32]
 200005ea:	68b8      	ldr	r0, [r7, #8]
@@ -1051,7 +766,6 @@ int main(void)
 200005ee:	2100      	movs	r1, #0
 200005f0:	4798      	blx	r3
 200005f2:	e015      	b.n	20000620 <main+0xae>
-			case 2: creature->set_speed( creature, 0, -2); break;
 200005f4:	68bb      	ldr	r3, [r7, #8]
 200005f6:	6a1b      	ldr	r3, [r3, #32]
 200005f8:	2202      	movs	r2, #2
@@ -1060,7 +774,6 @@ int main(void)
 200005fe:	2100      	movs	r1, #0
 20000600:	4798      	blx	r3
 20000602:	e00d      	b.n	20000620 <main+0xae>
-			case 8: creature->set_speed( creature, 0, 2); break;
 20000604:	68bb      	ldr	r3, [r7, #8]
 20000606:	6a1b      	ldr	r3, [r3, #32]
 20000608:	68b8      	ldr	r0, [r7, #8]
@@ -1068,8 +781,6 @@ int main(void)
 2000060c:	2100      	movs	r1, #0
 2000060e:	4798      	blx	r3
 20000610:	e006      	b.n	20000620 <main+0xae>
-			default:
-			creature->set_speed( creature, 0, 0); break;
 20000612:	68bb      	ldr	r3, [r7, #8]
 20000614:	6a1b      	ldr	r3, [r3, #32]
 20000616:	68b8      	ldr	r0, [r7, #8]
@@ -1077,8 +788,6 @@ int main(void)
 2000061a:	2100      	movs	r1, #0
 2000061c:	4798      	blx	r3
 2000061e:	46c0      	nop			; (mov r8, r8)
-		}
-		if( objects_overlap( victim, creature ) || object_out( creature ) )
 20000620:	68ba      	ldr	r2, [r7, #8]
 20000622:	68fb      	ldr	r3, [r7, #12]
 20000624:	0011      	movs	r1, r2
@@ -1091,18 +800,10 @@ int main(void)
 20000634:	f7ff ff64 	bl	20000500 <object_out>
 20000638:	1e03      	subs	r3, r0, #0
 2000063a:	d103      	bne.n	20000644 <main+0xd2>
-		{
-		// Game over
-			break;
-		}
-		delay_milli(20);
 2000063c:	2014      	movs	r0, #20
 2000063e:	f7ff fd5a 	bl	200000f6 <delay_milli>
-		victim->move( victim );
 20000642:	e7a9      	b.n	20000598 <main+0x26>
 20000644:	2300      	movs	r3, #0
-	}
-}
 20000646:	0018      	movs	r0, r3
 20000648:	46bd      	mov	sp, r7
 2000064a:	b005      	add	sp, #20
@@ -2176,7 +1877,7 @@ Disassembly of section .debug_line:
  43c:	6e032503 	cfsh32vs	mvfx2, mvfx3, #3
  440:	0301053c 	movweq	r0, #5436	; 0x153c
  444:	0b022e14 	bleq	8bc9c <startup-0x1ff74364>
- 448:	Address 0x00000448 is out of bounds.
+ 448:	Address 0x0000000000000448 is out of bounds.
 
 
 Disassembly of section .debug_str:

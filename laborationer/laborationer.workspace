@@ -13,9 +13,13 @@
     <Project Name="5-14" Path="5-14/5-14.project" Active="No"/>
     <Project Name="5-15" Path="5-15/5-15.project" Active="No"/>
     <Project Name="5-15" Path="5-15/5-15.project" Active="No"/>
-    <Project Name="mop3-5" Path="mop3-5/mop3-5.project" Active="Yes"/>
+    <Project Name="mop3-5" Path="mop3-5/mop3-5.project" Active="No"/>
   </VirtualDirectory>
-  <VirtualDirectory Name="lab4"/>
+  <VirtualDirectory Name="lab4">
+    <Project Name="getsetpsr" Path="getsetpsr/getsetpsr.project" Active="No"/>
+    <Project Name="mop4-1" Path="mop4-1/mop4-1.project" Active="Yes"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="lab"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Environment/>
@@ -30,6 +34,8 @@
       <Project Name="5-15" ConfigName="Debug"/>
       <Project Name="5-15" ConfigName="Debug"/>
       <Project Name="mop3-5" ConfigName="Debug"/>
+      <Project Name="getsetpsr" ConfigName="Debug"/>
+      <Project Name="mop4-1" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Environment/>
@@ -44,6 +50,8 @@
       <Project Name="5-15" ConfigName="Release"/>
       <Project Name="5-15" ConfigName="Release"/>
       <Project Name="mop3-5" ConfigName="Release"/>
+      <Project Name="getsetpsr" ConfigName="Release"/>
+      <Project Name="mop4-1" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>

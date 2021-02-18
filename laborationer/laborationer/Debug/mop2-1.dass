@@ -5,61 +5,37 @@ Debug/mop2-1:     file format elf32-littlearm
 Disassembly of section .text:
 
 20000000 <startup>:
- *
- */
-__attribute__((naked)) __attribute__((section (".start_section")) )
-void startup ( void )
-{
-__asm__ volatile(" LDR R0,=0x2001C000\n");		/* set stack */
 20000000:	4802      	ldr	r0, [pc, #8]	; (2000000c <startup+0xc>)
-__asm__ volatile(" MOV SP,R0\n");
 20000002:	4685      	mov	sp, r0
-__asm__ volatile(" BL main\n");					/* call main */
 20000004:	f000 f8ec 	bl	200001e0 <main>
-__asm__ volatile(".L1: B .L1\n");				/* never return */
 20000008:	e7fe      	b.n	20000008 <startup+0x8>
-}
 2000000a:	46c0      	nop			; (mov r8, r8)
 2000000c:	2001c000 	andcs	ip, r1, r0
 
 20000010 <app_init>:
-#define GPIO_MODER ((volatile unsigned long *) 0x40020C00)
-#define GPIO_OTYPER ((volatile unsigned short *) 0x40020C04)
-#define GPIO_PUPDR ((volatile unsigned long *)0x40020C0C
-
-
-void app_init(void){
 20000010:	b580      	push	{r7, lr}
 20000012:	af00      	add	r7, sp, #0
-    
-    * ( (unsigned char *) 0x40020C15) = 0x0;
 20000014:	4b15      	ldr	r3, [pc, #84]	; (2000006c <app_init+0x5c>)
 20000016:	2200      	movs	r2, #0
 20000018:	701a      	strb	r2, [r3, #0]
-	* ( (unsigned char *) 0x40020C14) = 0x0;
 2000001a:	4b15      	ldr	r3, [pc, #84]	; (20000070 <app_init+0x60>)
 2000001c:	2200      	movs	r2, #0
 2000001e:	701a      	strb	r2, [r3, #0]
-    * ( (unsigned char *) 0x40020C11) = 0x0;
 20000020:	4b14      	ldr	r3, [pc, #80]	; (20000074 <app_init+0x64>)
 20000022:	2200      	movs	r2, #0
 20000024:	701a      	strb	r2, [r3, #0]
-    
-    * ( (unsigned long *) 0x40020C00) &= 0x0000FFFF;  // GPIO_MODER nollställs
 20000026:	4b14      	ldr	r3, [pc, #80]	; (20000078 <app_init+0x68>)
 20000028:	681a      	ldr	r2, [r3, #0]
 2000002a:	4b13      	ldr	r3, [pc, #76]	; (20000078 <app_init+0x68>)
 2000002c:	0412      	lsls	r2, r2, #16
 2000002e:	0c12      	lsrs	r2, r2, #16
 20000030:	601a      	str	r2, [r3, #0]
-    * ( (unsigned long *) 0x40020C00) |= 0x55005555;  // GPIO_MODER initieras
 20000032:	4b11      	ldr	r3, [pc, #68]	; (20000078 <app_init+0x68>)
 20000034:	681a      	ldr	r2, [r3, #0]
 20000036:	4b10      	ldr	r3, [pc, #64]	; (20000078 <app_init+0x68>)
 20000038:	4910      	ldr	r1, [pc, #64]	; (2000007c <app_init+0x6c>)
 2000003a:	430a      	orrs	r2, r1
 2000003c:	601a      	str	r2, [r3, #0]
-    * ( (unsigned short *) 0x40020C04) &= 0x00FF;       // GPIO_OTYPER nollställs & initieras
 2000003e:	4b10      	ldr	r3, [pc, #64]	; (20000080 <app_init+0x70>)
 20000040:	881b      	ldrh	r3, [r3, #0]
 20000042:	4a0f      	ldr	r2, [pc, #60]	; (20000080 <app_init+0x70>)
@@ -67,15 +43,12 @@ void app_init(void){
 20000046:	400b      	ands	r3, r1
 20000048:	b29b      	uxth	r3, r3
 2000004a:	8013      	strh	r3, [r2, #0]
-    
-    * ( (unsigned long *) 0x40020C0C) &= 0x0000FFFF;       // GPIO_PUPDR nollställs
 2000004c:	4b0d      	ldr	r3, [pc, #52]	; (20000084 <app_init+0x74>)
 2000004e:	681a      	ldr	r2, [r3, #0]
 20000050:	4b0c      	ldr	r3, [pc, #48]	; (20000084 <app_init+0x74>)
 20000052:	0412      	lsls	r2, r2, #16
 20000054:	0c12      	lsrs	r2, r2, #16
 20000056:	601a      	str	r2, [r3, #0]
-    * ( (unsigned long *) 0x40020C0C) |= 0x00AA0000;       // GPIO_PUPDR initieras
 20000058:	4b0a      	ldr	r3, [pc, #40]	; (20000084 <app_init+0x74>)
 2000005a:	681a      	ldr	r2, [r3, #0]
 2000005c:	4b09      	ldr	r3, [pc, #36]	; (20000084 <app_init+0x74>)
@@ -83,9 +56,6 @@ void app_init(void){
 20000060:	0409      	lsls	r1, r1, #16
 20000062:	430a      	orrs	r2, r1
 20000064:	601a      	str	r2, [r3, #0]
-
-    
-}
 20000066:	46c0      	nop			; (mov r8, r8)
 20000068:	46bd      	mov	sp, r7
 2000006a:	bd80      	pop	{r7, pc}
@@ -98,14 +68,10 @@ void app_init(void){
 20000084:	40020c0c 	andmi	r0, r2, ip, lsl #24
 
 20000088 <ActivateRow>:
-
-
-void ActivateRow(unsigned int row){
 20000088:	b580      	push	{r7, lr}
 2000008a:	b082      	sub	sp, #8
 2000008c:	af00      	add	r7, sp, #0
 2000008e:	6078      	str	r0, [r7, #4]
-    switch (row) {
 20000090:	687b      	ldr	r3, [r7, #4]
 20000092:	2b04      	cmp	r3, #4
 20000094:	d01b      	beq.n	200000ce <ActivateRow+0x46>
@@ -125,32 +91,25 @@ void ActivateRow(unsigned int row){
 200000b0:	2b02      	cmp	r3, #2
 200000b2:	d004      	beq.n	200000be <ActivateRow+0x36>
 200000b4:	e00f      	b.n	200000d6 <ActivateRow+0x4e>
-        case 1: * GPIO_ODR_HIGH = 0x10; break;
 200000b6:	4b0c      	ldr	r3, [pc, #48]	; (200000e8 <ActivateRow+0x60>)
 200000b8:	2210      	movs	r2, #16
 200000ba:	701a      	strb	r2, [r3, #0]
 200000bc:	e00f      	b.n	200000de <ActivateRow+0x56>
-        case 2: * GPIO_ODR_HIGH = 0x20; break;
 200000be:	4b0a      	ldr	r3, [pc, #40]	; (200000e8 <ActivateRow+0x60>)
 200000c0:	2220      	movs	r2, #32
 200000c2:	701a      	strb	r2, [r3, #0]
 200000c4:	e00b      	b.n	200000de <ActivateRow+0x56>
-        case 3: * GPIO_ODR_HIGH = 0x40; break;
 200000c6:	4b08      	ldr	r3, [pc, #32]	; (200000e8 <ActivateRow+0x60>)
 200000c8:	2240      	movs	r2, #64	; 0x40
 200000ca:	701a      	strb	r2, [r3, #0]
 200000cc:	e007      	b.n	200000de <ActivateRow+0x56>
-        case 4: * GPIO_ODR_HIGH = 0x80; break;
 200000ce:	4b06      	ldr	r3, [pc, #24]	; (200000e8 <ActivateRow+0x60>)
 200000d0:	2280      	movs	r2, #128	; 0x80
 200000d2:	701a      	strb	r2, [r3, #0]
 200000d4:	e003      	b.n	200000de <ActivateRow+0x56>
-        default: *GPIO_ODR_HIGH = 0;
 200000d6:	4b04      	ldr	r3, [pc, #16]	; (200000e8 <ActivateRow+0x60>)
 200000d8:	2200      	movs	r2, #0
 200000da:	701a      	strb	r2, [r3, #0]
-    }
-}  
 200000dc:	46c0      	nop			; (mov r8, r8)
 200000de:	46c0      	nop			; (mov r8, r8)
 200000e0:	46bd      	mov	sp, r7
@@ -160,56 +119,42 @@ void ActivateRow(unsigned int row){
 200000e8:	40020c15 	andmi	r0, r2, r5, lsl ip
 
 200000ec <ReadColumn>:
-
-int ReadColumn(void){
 200000ec:	b580      	push	{r7, lr}
 200000ee:	b082      	sub	sp, #8
 200000f0:	af00      	add	r7, sp, #0
-    unsigned char c;
-    c = * GPIO_IDR_HIGH;
 200000f2:	4a12      	ldr	r2, [pc, #72]	; (2000013c <ReadColumn+0x50>)
 200000f4:	1dfb      	adds	r3, r7, #7
 200000f6:	7812      	ldrb	r2, [r2, #0]
 200000f8:	701a      	strb	r2, [r3, #0]
-    if ( c & 0x8 ) 
 200000fa:	1dfb      	adds	r3, r7, #7
 200000fc:	781b      	ldrb	r3, [r3, #0]
 200000fe:	2208      	movs	r2, #8
 20000100:	4013      	ands	r3, r2
 20000102:	d001      	beq.n	20000108 <ReadColumn+0x1c>
-        return 0x4;
 20000104:	2304      	movs	r3, #4
 20000106:	e015      	b.n	20000134 <ReadColumn+0x48>
-    if ( c & 0x4 ) 
 20000108:	1dfb      	adds	r3, r7, #7
 2000010a:	781b      	ldrb	r3, [r3, #0]
 2000010c:	2204      	movs	r2, #4
 2000010e:	4013      	ands	r3, r2
 20000110:	d001      	beq.n	20000116 <ReadColumn+0x2a>
-        return 0x3;
 20000112:	2303      	movs	r3, #3
 20000114:	e00e      	b.n	20000134 <ReadColumn+0x48>
-    if ( c & 0x2 ) 
 20000116:	1dfb      	adds	r3, r7, #7
 20000118:	781b      	ldrb	r3, [r3, #0]
 2000011a:	2202      	movs	r2, #2
 2000011c:	4013      	ands	r3, r2
 2000011e:	d001      	beq.n	20000124 <ReadColumn+0x38>
-        return 0x2;
 20000120:	2302      	movs	r3, #2
 20000122:	e007      	b.n	20000134 <ReadColumn+0x48>
-    if ( c & 0x1 ) 
 20000124:	1dfb      	adds	r3, r7, #7
 20000126:	781b      	ldrb	r3, [r3, #0]
 20000128:	2201      	movs	r2, #1
 2000012a:	4013      	ands	r3, r2
 2000012c:	d001      	beq.n	20000132 <ReadColumn+0x46>
-        return 0x1;
 2000012e:	2301      	movs	r3, #1
 20000130:	e000      	b.n	20000134 <ReadColumn+0x48>
-    return 0;
 20000132:	2300      	movs	r3, #0
-}      
 20000134:	0018      	movs	r0, r3
 20000136:	46bd      	mov	sp, r7
 20000138:	b002      	add	sp, #8
@@ -217,40 +162,29 @@ int ReadColumn(void){
 2000013c:	40020c11 	andmi	r0, r2, r1, lsl ip
 
 20000140 <keyb>:
-
-
-unsigned char keyb(void){
 20000140:	b590      	push	{r4, r7, lr}
 20000142:	b087      	sub	sp, #28
 20000144:	af00      	add	r7, sp, #0
-    unsigned char key[] = {1,2,3,0xA,4,5,6,0xB,7,8,9,0xC,0xE,0,0xF,0xD};
 20000146:	003b      	movs	r3, r7
 20000148:	4a16      	ldr	r2, [pc, #88]	; (200001a4 <keyb+0x64>)
 2000014a:	ca13      	ldmia	r2!, {r0, r1, r4}
 2000014c:	c313      	stmia	r3!, {r0, r1, r4}
 2000014e:	6812      	ldr	r2, [r2, #0]
 20000150:	601a      	str	r2, [r3, #0]
-    unsigned int row, col;
-    for (int row = 1; row <= 4; row++){
 20000152:	2301      	movs	r3, #1
 20000154:	617b      	str	r3, [r7, #20]
 20000156:	e01a      	b.n	2000018e <keyb+0x4e>
-        ActivateRow(row);
 20000158:	697b      	ldr	r3, [r7, #20]
 2000015a:	0018      	movs	r0, r3
 2000015c:	f7ff ff94 	bl	20000088 <ActivateRow>
-        col = ReadColumn();
 20000160:	f7ff ffc4 	bl	200000ec <ReadColumn>
 20000164:	0003      	movs	r3, r0
 20000166:	613b      	str	r3, [r7, #16]
-        if  (col != 0 ){
 20000168:	693b      	ldr	r3, [r7, #16]
 2000016a:	2b00      	cmp	r3, #0
 2000016c:	d00c      	beq.n	20000188 <keyb+0x48>
-            ActivateRow(0);
 2000016e:	2000      	movs	r0, #0
 20000170:	f7ff ff8a 	bl	20000088 <ActivateRow>
-            return key [ 4 * (row-1) + (col-1) ];
 20000174:	697b      	ldr	r3, [r7, #20]
 20000176:	3b01      	subs	r3, #1
 20000178:	009b      	lsls	r3, r3, #2
@@ -261,21 +195,15 @@ unsigned char keyb(void){
 20000182:	003a      	movs	r2, r7
 20000184:	5cd3      	ldrb	r3, [r2, r3]
 20000186:	e009      	b.n	2000019c <keyb+0x5c>
-    for (int row = 1; row <= 4; row++){
 20000188:	697b      	ldr	r3, [r7, #20]
 2000018a:	3301      	adds	r3, #1
 2000018c:	617b      	str	r3, [r7, #20]
 2000018e:	697b      	ldr	r3, [r7, #20]
 20000190:	2b04      	cmp	r3, #4
 20000192:	dde1      	ble.n	20000158 <keyb+0x18>
-        }
-    }
-    ActivateRow(0);
 20000194:	2000      	movs	r0, #0
 20000196:	f7ff ff77 	bl	20000088 <ActivateRow>
-    return 0xFF;
 2000019a:	23ff      	movs	r3, #255	; 0xff
-}
 2000019c:	0018      	movs	r0, r3
 2000019e:	46bd      	mov	sp, r7
 200001a0:	b007      	add	sp, #28
@@ -283,35 +211,26 @@ unsigned char keyb(void){
 200001a4:	20000208 	andcs	r0, r0, r8, lsl #4
 
 200001a8 <out7seg>:
-
-void out7seg( unsigned char c ){
 200001a8:	b580      	push	{r7, lr}
 200001aa:	b082      	sub	sp, #8
 200001ac:	af00      	add	r7, sp, #0
 200001ae:	0002      	movs	r2, r0
 200001b0:	1dfb      	adds	r3, r7, #7
 200001b2:	701a      	strb	r2, [r3, #0]
-    static unsigned char segCode[]={0x3F,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x67,0x77,0x7C,0x39,0x5E,0x79,0x71};
-    if ( c > 15 ) {
 200001b4:	1dfb      	adds	r3, r7, #7
 200001b6:	781b      	ldrb	r3, [r3, #0]
 200001b8:	2b0f      	cmp	r3, #15
 200001ba:	d903      	bls.n	200001c4 <out7seg+0x1c>
-        * GPIO_ODR_LOW = 0;
 200001bc:	4b06      	ldr	r3, [pc, #24]	; (200001d8 <out7seg+0x30>)
 200001be:	2200      	movs	r2, #0
 200001c0:	701a      	strb	r2, [r3, #0]
-        return;
 200001c2:	e005      	b.n	200001d0 <out7seg+0x28>
-    }
-    * GPIO_ODR_LOW = segCode[c];
 200001c4:	1dfb      	adds	r3, r7, #7
 200001c6:	781b      	ldrb	r3, [r3, #0]
 200001c8:	4903      	ldr	r1, [pc, #12]	; (200001d8 <out7seg+0x30>)
 200001ca:	4a04      	ldr	r2, [pc, #16]	; (200001dc <out7seg+0x34>)
 200001cc:	5cd3      	ldrb	r3, [r2, r3]
 200001ce:	700b      	strb	r3, [r1, #0]
-}
 200001d0:	46bd      	mov	sp, r7
 200001d2:	b002      	add	sp, #8
 200001d4:	bd80      	pop	{r7, pc}
@@ -320,16 +239,9 @@ void out7seg( unsigned char c ){
 200001dc:	200001f8 	strdcs	r0, [r0], -r8
 
 200001e0 <main>:
-    
-void main(void)
-{
 200001e0:	b580      	push	{r7, lr}
 200001e2:	af00      	add	r7, sp, #0
-    app_init();
 200001e4:	f7ff ff14 	bl	20000010 <app_init>
-    //unsigned char * key[] = {1,2,3,0xA,4,5,6,0xB,7,8,9,0xC,0xE,0,0xF,0xD};
-    while (1) {
-        out7seg( keyb() );
 200001e8:	f7ff ffaa 	bl	20000140 <keyb>
 200001ec:	0003      	movs	r3, r0
 200001ee:	0018      	movs	r0, r3
@@ -436,7 +348,7 @@ Disassembly of section .debug_info:
  154:	06080100 	streq	r0, [r8], -r0, lsl #2
  158:	20000000 	andcs	r0, r0, r0
  15c:	0000000c 	andeq	r0, r0, ip
- 160:	Address 0x00000160 is out of bounds.
+ 160:	Address 0x0000000000000160 is out of bounds.
 
 
 Disassembly of section .debug_abbrev:
@@ -510,7 +422,7 @@ Disassembly of section .debug_abbrev:
  104:	1119270b 	tstne	r9, fp, lsl #14
  108:	40061201 	andmi	r1, r6, r1, lsl #4
  10c:	19429718 	stmdbne	r2, {r3, r4, r8, r9, sl, ip, pc}^
- 110:	Address 0x00000110 is out of bounds.
+ 110:	Address 0x0000000000000110 is out of bounds.
 
 
 Disassembly of section .debug_aranges:
@@ -624,7 +536,7 @@ Disassembly of section .debug_line:
  14c:	09052f05 	stmdbeq	r5, {r0, r2, r8, r9, sl, fp, sp}
  150:	01040200 	mrseq	r0, R12_usr
  154:	00070231 	andeq	r0, r7, r1, lsr r2
- 158:	Address 0x00000158 is out of bounds.
+ 158:	Address 0x0000000000000158 is out of bounds.
 
 
 Disassembly of section .debug_str:
@@ -752,7 +664,7 @@ Disassembly of section .ARM.attributes:
   1c:	15011404 	strne	r1, [r1, #-1028]	; 0xfffffbfc
   20:	18031701 	stmdane	r3, {r0, r8, r9, sl, ip}
   24:	1a011901 	bne	46430 <startup-0x1ffb9bd0>
-  28:	Address 0x00000028 is out of bounds.
+  28:	Address 0x0000000000000028 is out of bounds.
 
 
 Disassembly of section .debug_frame:

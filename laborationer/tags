@@ -1,2 +1,2 @@
-startup	D:\mop\laborationer\mop3-5\startup.c	/^void startup ( void )$/;"	function	line:6	signature:( void )	returns:void 
-main	D:\mop\laborationer\mop3-5\startup.c	/^void main(void)$/;"	function	line:14	signature:(void)	returns:void 
+startup	/home/elvina/Dokument/MOP/laborationer/mop4-1/startup.c	/^void startup ( void )$/;"	function	line:6	signature:( void )	returns:void 
+main	/home/elvina/Dokument/MOP/laborationer/mop4-1/startup.c	/^void main(void)$/;"	function	line:14	signature:(void)	returns:void 

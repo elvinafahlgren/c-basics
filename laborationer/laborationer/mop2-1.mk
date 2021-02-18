@@ -5,18 +5,18 @@
 ## Debug
 ProjectName            :=mop2-1
 ConfigurationName      :=Debug
-WorkspacePath          :=D:/mop/laborationer
-ProjectPath            :=D:/mop/laborationer/laborationer
+WorkspacePath          :=/home/elvina/Dokument/MOP/laborationer
+ProjectPath            :=/home/elvina/Dokument/MOP/laborationer/laborationer
 IntermediateDirectory  :=$(ConfigurationName)
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
-User                   :=elvin
-Date                   :=09/02/2021
-CodeLitePath           :=D:/Nedladdningar/CodeLite
-LinkerName             :=$(CodeLiteDir)/tools/gcc-arm/bin/arm-none-eabi-g++.exe
-SharedObjectLinkerName :=$(CodeLiteDir)/tools/gcc-arm/arm-none-eabi-g++.exe -shared -fPIC
+User                   :=Elvina
+Date                   :=18/02/21
+CodeLitePath           :=/home/elvina/.codelite
+LinkerName             :=/usr/share/codelite/tools/gcc-arm/bin/arm-none-eabi-g++
+SharedObjectLinkerName :=/usr/share/codelite/tools/gcc-arm/bin/arm-none-eabi-g++ -shared -fPIC
 ObjectSuffix           :=.o
 DependSuffix           :=.o.d
 PreprocessSuffix       :=.i
@@ -34,9 +34,7 @@ ArchiveOutputSwitch    :=
 PreprocessOnlySwitch   :=-E
 ObjectsFileList        :="mop2-1.txt"
 PCHCompileFlags        :=
-MakeDirCommand         :=makedir
-RcCmpOptions           := 
-RcCompilerName         :=
+MakeDirCommand         :=mkdir -p
 LinkOptions            :=  -T$(ProjectPath)/md407-ram.x -L$(ARM_V6LIB) -L$(ARM_GCC_V6LIB) -nostartfiles
 IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch). 
 IncludePCH             := 
@@ -49,19 +47,19 @@ LibPath                := $(LibraryPathSwitch).
 ## Common variables
 ## AR, CXX, CC, AS, CXXFLAGS and CFLAGS can be overriden using an environment variables
 ##
-AR       := $(CodeLiteDir)/tools/gcc-arm/bin/arm-none-eabi-ar.exe rcu
-CXX      := $(CodeLiteDir)/tools/gcc-arm/bin/arm-none-eabi-g++.exe
-CC       := $(CodeLiteDir)/tools/gcc-arm/bin/arm-none-eabi-gcc.exe
+AR       := /usr/share/codelite/tools/gcc-arm/bin/arm-none-eabi-ar rcu
+CXX      := /usr/share/codelite/tools/gcc-arm/bin/arm-none-eabi-g++
+CC       := /usr/share/codelite/tools/gcc-arm/bin/arm-none-eabi-gcc
 CXXFLAGS :=  -g -O0 -W $(Preprocessors)
 CFLAGS   :=  -g -O0 -w -mthumb -march=armv6-m  -mfloat-abi=soft -std=c99 $(Preprocessors)
 ASFLAGS  := 
-AS       := $(CodeLiteDir)/tools/gcc-arm/bin/arm-none-eabi-as.exe
+AS       := /usr/share/codelite/tools/gcc-arm/bin/arm-none-eabi-as
 
 
 ##
 ## User defined environment variables
 ##
-CodeLiteDir:=D:\Nedladdningar\CodeLite
+CodeLiteDir:=/usr/share/codelite
 ARM_V6LIB:=$(CodeLiteDir)/tools/gcc-arm/arm-none-eabi/lib/thumb/v6-m/nofp
 ARM_GCC_V6LIB:=$(CodeLiteDir)/tools/gcc-arm/lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp
 ARM_M4SFPLIB:=$(CodeLiteDir)/tools/gcc-arm/arm-none-eabi/lib/thumb/v7e-m+fp/softfp
@@ -88,16 +86,16 @@ $(OutputFile): $(IntermediateDirectory)/.d $(Objects)
 
 PostBuild:
 	@echo Executing Post Build commands ...
-	D:\Nedladdningar\CodeLite/tools/gcc-arm/bin/arm-none-eabi-objcopy -S -O srec  Debug/mop2-1 Debug/mop2-1.s19
-	D:\Nedladdningar\CodeLite/tools/gcc-arm/bin/arm-none-eabi-objdump -D -S Debug/mop2-1 > Debug/mop2-1.dass
+	/usr/share/codelite/tools/gcc-arm/bin/arm-none-eabi-objcopy -S -O srec  Debug/mop2-1 Debug/mop2-1.s19
+	/usr/share/codelite/tools/gcc-arm/bin/arm-none-eabi-objdump -D -S Debug/mop2-1 > Debug/mop2-1.dass
 	@echo Done
 
 MakeIntermediateDirs:
-	@$(MakeDirCommand) "$(ConfigurationName)"
+	@test -d $(ConfigurationName) || $(MakeDirCommand) $(ConfigurationName)
 
 
 $(IntermediateDirectory)/.d:
-	@$(MakeDirCommand) "$(ConfigurationName)"
+	@test -d $(ConfigurationName) || $(MakeDirCommand) $(ConfigurationName)
 
 PreBuild:
 
@@ -107,7 +105,7 @@ PreBuild:
 ##
 $(IntermediateDirectory)/keypad.c$(ObjectSuffix): keypad.c
 	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/keypad.c$(ObjectSuffix) -MF$(IntermediateDirectory)/keypad.c$(DependSuffix) -MM keypad.c
-	$(CC) $(SourceSwitch) "D:/mop/laborationer/laborationer/keypad.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/keypad.c$(ObjectSuffix) $(IncludePath)
+	$(CC) $(SourceSwitch) "/home/elvina/Dokument/MOP/laborationer/laborationer/keypad.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/keypad.c$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/keypad.c$(PreprocessSuffix): keypad.c
 	$(CC) $(CFLAGS) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/keypad.c$(PreprocessSuffix) keypad.c
 
