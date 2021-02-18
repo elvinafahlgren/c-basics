@@ -1,0 +1,1301 @@
+
+Debug/Lektion8:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+20000000 <startup>:
+ *
+ */
+__attribute__((naked)) __attribute__((section (".start_section")) )
+void startup ( void )
+{
+__asm__ volatile(" LDR R0,=0x2001C000\n");		/* set stack */
+20000000:	4802      	ldr	r0, [pc, #8]	; (2000000c <startup+0xc>)
+__asm__ volatile(" MOV SP,R0\n");
+20000002:	4685      	mov	sp, r0
+__asm__ volatile(" BL main\n");					/* call main */
+20000004:	f000 f810 	bl	20000028 <main>
+__asm__ volatile(".L1: B .L1\n");				/* never return */
+20000008:	e7fe      	b.n	20000008 <startup+0x8>
+}
+2000000a:	46c0      	nop			; (mov r8, r8)
+2000000c:	2001c000 	andcs	ip, r1, r0
+
+20000010 <graphics_initialize>:
+// Builtin graphics functions
+////////////////////////////////////////////////////////////////////////////////
+
+__attribute__((naked))
+void graphics_initialize ( void )
+{
+20000010:	4770dff0 			; <UNDEFINED> instruction: 0x4770dff0
+	__asm volatile ("  .HWORD  0xDFF0\n");
+	__asm volatile ("  BX LR\n");
+}
+20000014:	46c0      	nop			; (mov r8, r8)
+
+20000016 <graphics_clear_screen>:
+
+__attribute__((naked))
+void graphics_clear_screen ( void )
+{
+20000016:	4770dff1 			; <UNDEFINED> instruction: 0x4770dff1
+	__asm volatile ("  .HWORD  0xDFF1\n");
+	__asm volatile ("  BX LR\n");
+}
+2000001a:	46c0      	nop			; (mov r8, r8)
+
+2000001c <graphics_pixel_set>:
+
+__attribute__((naked))
+void graphics_pixel_set ( int x, int y )
+{
+2000001c:	4770dff2 			; <UNDEFINED> instruction: 0x4770dff2
+	__asm volatile ("  .HWORD  0xDFF2\n");
+	__asm volatile ("  BX LR\n");
+}
+20000020:	46c0      	nop			; (mov r8, r8)
+
+20000022 <graphics_pixel_clear>:
+
+__attribute__((naked))
+void graphics_pixel_clear ( int x, int y )
+{
+20000022:	4770dff3 			; <UNDEFINED> instruction: 0x4770dff3
+	__asm volatile ("  .HWORD  0xDFF3\n");
+	__asm volatile ("  BX LR\n");
+}
+20000026:	46c0      	nop			; (mov r8, r8)
+
+20000028 <main>:
+////////////////////////////////////////////////////////////////////////////////
+// Your code goes here
+////////////////////////////////////////////////////////////////////////////////
+
+void main(void)
+{
+20000028:	b580      	push	{r7, lr}
+2000002a:	b082      	sub	sp, #8
+2000002c:	af00      	add	r7, sp, #0
+	graphics_initialize;
+	graphics_clear_screen;
+	
+	gimp_image.width;
+	
+	for(int y = 0; y < gimp_image.height; y++)
+2000002e:	2300      	movs	r3, #0
+20000030:	607b      	str	r3, [r7, #4]
+20000032:	e01f      	b.n	20000074 <main+0x4c>
+	{
+		for(int x = 0; x < gimp_image.width; x++)
+20000034:	2300      	movs	r3, #0
+20000036:	603b      	str	r3, [r7, #0]
+20000038:	e015      	b.n	20000066 <main+0x3e>
+		{
+			if(gimp_image.pixel_data[(y * gimp_image.width + x) * 3] == 0) graphics_pixel_set(x, y);
+2000003a:	2220      	movs	r2, #32
+2000003c:	687b      	ldr	r3, [r7, #4]
+2000003e:	435a      	muls	r2, r3
+20000040:	683b      	ldr	r3, [r7, #0]
+20000042:	18d2      	adds	r2, r2, r3
+20000044:	0013      	movs	r3, r2
+20000046:	005b      	lsls	r3, r3, #1
+20000048:	189b      	adds	r3, r3, r2
+2000004a:	4a0f      	ldr	r2, [pc, #60]	; (20000088 <main+0x60>)
+2000004c:	18d3      	adds	r3, r2, r3
+2000004e:	7b1b      	ldrb	r3, [r3, #12]
+20000050:	2b00      	cmp	r3, #0
+20000052:	d105      	bne.n	20000060 <main+0x38>
+20000054:	687a      	ldr	r2, [r7, #4]
+20000056:	683b      	ldr	r3, [r7, #0]
+20000058:	0011      	movs	r1, r2
+2000005a:	0018      	movs	r0, r3
+2000005c:	f7ff ffde 	bl	2000001c <graphics_pixel_set>
+		for(int x = 0; x < gimp_image.width; x++)
+20000060:	683b      	ldr	r3, [r7, #0]
+20000062:	3301      	adds	r3, #1
+20000064:	603b      	str	r3, [r7, #0]
+20000066:	2220      	movs	r2, #32
+20000068:	683b      	ldr	r3, [r7, #0]
+2000006a:	429a      	cmp	r2, r3
+2000006c:	d8e5      	bhi.n	2000003a <main+0x12>
+	for(int y = 0; y < gimp_image.height; y++)
+2000006e:	687b      	ldr	r3, [r7, #4]
+20000070:	3301      	adds	r3, #1
+20000072:	607b      	str	r3, [r7, #4]
+20000074:	2220      	movs	r2, #32
+20000076:	687b      	ldr	r3, [r7, #4]
+20000078:	429a      	cmp	r2, r3
+2000007a:	d8db      	bhi.n	20000034 <main+0xc>
+		}
+	}
+}
+2000007c:	46c0      	nop			; (mov r8, r8)
+2000007e:	46c0      	nop			; (mov r8, r8)
+20000080:	46bd      	mov	sp, r7
+20000082:	b002      	add	sp, #8
+20000084:	bd80      	pop	{r7, pc}
+20000086:	46c0      	nop			; (mov r8, r8)
+20000088:	2000008c 	andcs	r0, r0, ip, lsl #1
+
+2000008c <gimp_image>:
+2000008c:	00000020 	andeq	r0, r0, r0, lsr #32
+20000090:	00000020 	andeq	r0, r0, r0, lsr #32
+20000094:	00000003 	andeq	r0, r0, r3
+20000098:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000009c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200000a0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200000a4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200000a8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200000ac:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200000b0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200000b4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200000b8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200000bc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200000c0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200000c4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200000c8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200000cc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200000d0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200000d4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200000d8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200000dc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200000e0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200000e4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200000e8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200000ec:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200000f0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200000f4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200000f8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200000fc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000100:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000104:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000108:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000010c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000110:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000114:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000118:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000011c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000120:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000124:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000128:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000012c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000130:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000134:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000138:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000013c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000140:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000144:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000148:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000014c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000150:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000154:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000158:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000015c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000160:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000164:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000168:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000016c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000170:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000174:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000178:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000017c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000180:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000184:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000188:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000018c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000190:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000194:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000198:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000019c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200001a0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200001a4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200001a8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200001ac:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200001b0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200001b4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200001b8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200001bc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200001c0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200001c4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200001c8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200001cc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200001d0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200001d4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200001d8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200001dc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200001e0:	0000ffff 	strdeq	pc, [r0], -pc	; <UNPREDICTABLE>
+	...
+200001ec:	ffff0000 			; <UNDEFINED> instruction: 0xffff0000
+200001f0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200001f4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200001f8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200001fc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000200:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000204:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000208:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000020c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000210:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000214:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000218:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000021c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000220:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000224:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000228:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000022c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000230:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000234:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000238:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000023c:	00000000 	andeq	r0, r0, r0
+20000240:	ffff0000 			; <UNDEFINED> instruction: 0xffff0000
+20000244:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000248:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000024c:	0000ffff 	strdeq	pc, [r0], -pc	; <UNPREDICTABLE>
+20000250:	ffffff00 			; <UNDEFINED> instruction: 0xffffff00
+20000254:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000258:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000025c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000260:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000264:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000268:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000026c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000270:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000274:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000278:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000027c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000280:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000284:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000288:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000028c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000290:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000294:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000298:	000000ff 	strdeq	r0, [r0], -pc	; <UNPREDICTABLE>
+2000029c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200002a0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200002a4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200002a8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200002ac:	0000ffff 	strdeq	pc, [r0], -pc	; <UNPREDICTABLE>
+200002b0:	ffffff00 			; <UNDEFINED> instruction: 0xffffff00
+200002b4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200002b8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200002bc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200002c0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200002c4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200002c8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200002cc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200002d0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200002d4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200002d8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200002dc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200002e0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200002e4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200002e8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200002ec:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200002f0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200002f4:	0000ffff 	strdeq	pc, [r0], -pc	; <UNPREDICTABLE>
+200002f8:	ffffff00 			; <UNDEFINED> instruction: 0xffffff00
+200002fc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000300:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000304:	000000ff 	strdeq	r0, [r0], -pc	; <UNPREDICTABLE>
+	...
+20000314:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+20000318:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000031c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000320:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000324:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000328:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000032c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000330:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000334:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000338:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000033c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000340:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000344:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000348:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000034c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000350:	00ffffff 	ldrshteq	pc, [pc], #255	; <UNPREDICTABLE>
+20000354:	ffff0000 			; <UNDEFINED> instruction: 0xffff0000
+20000358:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000035c:	00ffffff 	ldrshteq	pc, [pc], #255	; <UNPREDICTABLE>
+	...
+20000378:	ffff0000 			; <UNDEFINED> instruction: 0xffff0000
+2000037c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000380:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000384:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000388:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000038c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000390:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000394:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000398:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000039c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200003a0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200003a4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200003a8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200003ac:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200003b0:	00ffffff 	ldrshteq	pc, [pc], #255	; <UNPREDICTABLE>
+200003b4:	ffff0000 			; <UNDEFINED> instruction: 0xffff0000
+200003b8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200003bc:	00000000 	andeq	r0, r0, r0
+200003c0:	ffff0000 			; <UNDEFINED> instruction: 0xffff0000
+200003c4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200003c8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200003cc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200003d0:	000000ff 	strdeq	r0, [r0], -pc	; <UNPREDICTABLE>
+200003d4:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+200003d8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200003dc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200003e0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200003e4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200003e8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200003ec:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200003f0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200003f4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200003f8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200003fc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000400:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000404:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000408:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000040c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+	...
+2000041c:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+20000420:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000424:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000428:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+2000042c:	0000ffff 	strdeq	pc, [r0], -pc	; <UNPREDICTABLE>
+20000430:	00000000 	andeq	r0, r0, r0
+20000434:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000438:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000043c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000440:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000444:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000448:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000044c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000450:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000454:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000458:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000045c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000460:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000464:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000468:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000046c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000470:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+20000474:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000478:	000000ff 	strdeq	r0, [r0], -pc	; <UNPREDICTABLE>
+2000047c:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+20000480:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000484:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000488:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+2000048c:	0000ffff 	strdeq	pc, [r0], -pc	; <UNPREDICTABLE>
+20000490:	00000000 	andeq	r0, r0, r0
+20000494:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+20000498:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000049c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200004a0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200004a4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200004a8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200004ac:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200004b0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200004b4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200004b8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200004bc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200004c0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200004c4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200004c8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200004cc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200004d0:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+200004d4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200004d8:	000000ff 	strdeq	r0, [r0], -pc	; <UNPREDICTABLE>
+200004dc:	00000000 	andeq	r0, r0, r0
+200004e0:	ffff0000 			; <UNDEFINED> instruction: 0xffff0000
+200004e4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200004e8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200004ec:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200004f0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200004f4:	00ffffff 	ldrshteq	pc, [pc], #255	; <UNPREDICTABLE>
+200004f8:	ffff0000 			; <UNDEFINED> instruction: 0xffff0000
+200004fc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000500:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000504:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000508:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000050c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000510:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000514:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000518:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000051c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000520:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000524:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000528:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000052c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000530:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+20000534:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000538:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000053c:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+20000540:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000544:	000000ff 	strdeq	r0, [r0], -pc	; <UNPREDICTABLE>
+20000548:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000054c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000550:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000554:	00ffffff 	ldrshteq	pc, [pc], #255	; <UNPREDICTABLE>
+20000558:	ffff0000 			; <UNDEFINED> instruction: 0xffff0000
+2000055c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000560:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000564:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000568:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000056c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000570:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000574:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000578:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000057c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000580:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000584:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000588:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000058c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000590:	00ffffff 	ldrshteq	pc, [pc], #255	; <UNPREDICTABLE>
+20000594:	ffff0000 			; <UNDEFINED> instruction: 0xffff0000
+20000598:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000059c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200005a0:	0000ffff 	strdeq	pc, [r0], -pc	; <UNPREDICTABLE>
+	...
+200005ac:	ffff0000 			; <UNDEFINED> instruction: 0xffff0000
+200005b0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+	...
+200005bc:	ffffff00 			; <UNDEFINED> instruction: 0xffffff00
+200005c0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200005c4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200005c8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200005cc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200005d0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200005d4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200005d8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200005dc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200005e0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200005e4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200005e8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200005ec:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200005f0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200005f4:	0000ffff 	strdeq	pc, [r0], -pc	; <UNPREDICTABLE>
+200005f8:	00000000 	andeq	r0, r0, r0
+200005fc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000600:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000604:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+	...
+20000614:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+20000618:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000061c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000620:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000624:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000628:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000062c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000630:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000634:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000638:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000063c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000640:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000644:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000648:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000064c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000650:	00ffffff 	ldrshteq	pc, [pc], #255	; <UNPREDICTABLE>
+	...
+2000065c:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+20000660:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000664:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000668:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000066c:	0000ffff 	strdeq	pc, [r0], -pc	; <UNPREDICTABLE>
+20000670:	ffffff00 			; <UNDEFINED> instruction: 0xffffff00
+20000674:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000678:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000067c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000680:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000684:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000688:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000068c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000690:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000694:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000698:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000069c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200006a0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200006a4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200006a8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200006ac:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200006b0:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+200006b4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200006b8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+	...
+200006cc:	ffff0000 			; <UNDEFINED> instruction: 0xffff0000
+200006d0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200006d4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200006d8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200006dc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200006e0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200006e4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200006e8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200006ec:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200006f0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200006f4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200006f8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200006fc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000700:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000704:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000708:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000070c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000710:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+20000714:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000718:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+	...
+20000724:	ffffff00 			; <UNDEFINED> instruction: 0xffffff00
+20000728:	00ffffff 	ldrshteq	pc, [pc], #255	; <UNPREDICTABLE>
+2000072c:	00000000 	andeq	r0, r0, r0
+20000730:	ffffff00 			; <UNDEFINED> instruction: 0xffffff00
+20000734:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+20000738:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000073c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000740:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000744:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000748:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000074c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000750:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000754:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000758:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000075c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000760:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000764:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000768:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000076c:	000000ff 	strdeq	r0, [r0], -pc	; <UNPREDICTABLE>
+20000770:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000774:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000778:	000000ff 	strdeq	r0, [r0], -pc	; <UNPREDICTABLE>
+2000077c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000780:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000784:	000000ff 	strdeq	r0, [r0], -pc	; <UNPREDICTABLE>
+20000788:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000078c:	0000ffff 	strdeq	pc, [r0], -pc	; <UNPREDICTABLE>
+20000790:	00000000 	andeq	r0, r0, r0
+20000794:	00ffffff 	ldrshteq	pc, [pc], #255	; <UNPREDICTABLE>
+20000798:	ffff0000 			; <UNDEFINED> instruction: 0xffff0000
+2000079c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200007a0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200007a4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200007a8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200007ac:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200007b0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200007b4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200007b8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200007bc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200007c0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200007c4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200007c8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200007cc:	000000ff 	strdeq	r0, [r0], -pc	; <UNPREDICTABLE>
+200007d0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200007d4:	0000ffff 	strdeq	pc, [r0], -pc	; <UNPREDICTABLE>
+200007d8:	ffffff00 			; <UNDEFINED> instruction: 0xffffff00
+200007dc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200007e0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200007e4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200007e8:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+200007ec:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200007f0:	000000ff 	strdeq	r0, [r0], -pc	; <UNPREDICTABLE>
+200007f4:	00ffffff 	ldrshteq	pc, [pc], #255	; <UNPREDICTABLE>
+200007f8:	ffff0000 			; <UNDEFINED> instruction: 0xffff0000
+200007fc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000800:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000804:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000808:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000080c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000810:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000814:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000818:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000081c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000820:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000824:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000828:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000082c:	000000ff 	strdeq	r0, [r0], -pc	; <UNPREDICTABLE>
+20000830:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000834:	0000ffff 	strdeq	pc, [r0], -pc	; <UNPREDICTABLE>
+20000838:	ffffff00 			; <UNDEFINED> instruction: 0xffffff00
+2000083c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000840:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000844:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000848:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+2000084c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000850:	000000ff 	strdeq	r0, [r0], -pc	; <UNPREDICTABLE>
+20000854:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+20000858:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000085c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000860:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000864:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000868:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000086c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000870:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000874:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000878:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000087c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000880:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000884:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000888:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000088c:	000000ff 	strdeq	r0, [r0], -pc	; <UNPREDICTABLE>
+20000890:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+20000894:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000898:	000000ff 	strdeq	r0, [r0], -pc	; <UNPREDICTABLE>
+2000089c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200008a0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200008a4:	000000ff 	strdeq	r0, [r0], -pc	; <UNPREDICTABLE>
+200008a8:	00ffffff 	ldrshteq	pc, [pc], #255	; <UNPREDICTABLE>
+200008ac:	00000000 	andeq	r0, r0, r0
+200008b0:	ffffff00 			; <UNDEFINED> instruction: 0xffffff00
+200008b4:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+200008b8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200008bc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200008c0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200008c4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200008c8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200008cc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200008d0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200008d4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200008d8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200008dc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200008e0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200008e4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200008e8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200008ec:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+	...
+20000904:	ffffff00 			; <UNDEFINED> instruction: 0xffffff00
+20000908:	00ffffff 	ldrshteq	pc, [pc], #255	; <UNPREDICTABLE>
+2000090c:	00000000 	andeq	r0, r0, r0
+20000910:	ffffff00 			; <UNDEFINED> instruction: 0xffffff00
+20000914:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+20000918:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000091c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000920:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000924:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000928:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000092c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000930:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000934:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000938:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000093c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000940:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000944:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000948:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000094c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+	...
+20000974:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+20000978:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000097c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000980:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000984:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000988:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000098c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000990:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000994:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000998:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+2000099c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200009a0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200009a4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200009a8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200009ac:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200009b0:	00ffffff 	ldrshteq	pc, [pc], #255	; <UNPREDICTABLE>
+	...
+200009d8:	ffff0000 			; <UNDEFINED> instruction: 0xffff0000
+200009dc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200009e0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200009e4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200009e8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200009ec:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200009f0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200009f4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200009f8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+200009fc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000a00:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000a04:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000a08:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000a0c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000a10:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+20000a14:	0000ffff 	strdeq	pc, [r0], -pc	; <UNPREDICTABLE>
+	...
+20000a34:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000a38:	0000ffff 	strdeq	pc, [r0], -pc	; <UNPREDICTABLE>
+20000a3c:	ffffff00 			; <UNDEFINED> instruction: 0xffffff00
+20000a40:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000a44:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000a48:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000a4c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000a50:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000a54:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000a58:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000a5c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000a60:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000a64:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000a68:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000a6c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000a70:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+20000a74:	0000ffff 	strdeq	pc, [r0], -pc	; <UNPREDICTABLE>
+	...
+20000a84:	ffffff00 			; <UNDEFINED> instruction: 0xffffff00
+	...
+20000a90:	ffffff00 			; <UNDEFINED> instruction: 0xffffff00
+20000a94:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000a98:	0000ffff 	strdeq	pc, [r0], -pc	; <UNPREDICTABLE>
+20000a9c:	ffffff00 			; <UNDEFINED> instruction: 0xffffff00
+20000aa0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000aa4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000aa8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000aac:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000ab0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000ab4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000ab8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000abc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000ac0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000ac4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000ac8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000acc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000ad0:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+20000ad4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000ad8:	000000ff 	strdeq	r0, [r0], -pc	; <UNPREDICTABLE>
+20000adc:	00000000 	andeq	r0, r0, r0
+20000ae0:	ffff0000 			; <UNDEFINED> instruction: 0xffff0000
+20000ae4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000ae8:	00ffffff 	ldrshteq	pc, [pc], #255	; <UNPREDICTABLE>
+20000aec:	ffff0000 			; <UNDEFINED> instruction: 0xffff0000
+20000af0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000af4:	00ffffff 	ldrshteq	pc, [pc], #255	; <UNPREDICTABLE>
+20000af8:	ffff0000 			; <UNDEFINED> instruction: 0xffff0000
+20000afc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b00:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b04:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b08:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b0c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b10:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b14:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b18:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b1c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b20:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b24:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b28:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b2c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b30:	00ffffff 	ldrshteq	pc, [pc], #255	; <UNPREDICTABLE>
+20000b34:	ffff0000 			; <UNDEFINED> instruction: 0xffff0000
+20000b38:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b3c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b40:	0000ffff 	strdeq	pc, [r0], -pc	; <UNPREDICTABLE>
+20000b44:	ffffff00 			; <UNDEFINED> instruction: 0xffffff00
+20000b48:	00ffffff 	ldrshteq	pc, [pc], #255	; <UNPREDICTABLE>
+20000b4c:	ffff0000 			; <UNDEFINED> instruction: 0xffff0000
+20000b50:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b54:	ff000000 			; <UNDEFINED> instruction: 0xff000000
+20000b58:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b5c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b60:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b64:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b68:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b6c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b70:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b74:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b78:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b7c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b80:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b84:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b88:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b8c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b90:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000b94:	0000ffff 	strdeq	pc, [r0], -pc	; <UNPREDICTABLE>
+	...
+20000ba4:	ffffff00 			; <UNDEFINED> instruction: 0xffffff00
+20000ba8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000bac:	0000ffff 	strdeq	pc, [r0], -pc	; <UNPREDICTABLE>
+20000bb0:	00000000 	andeq	r0, r0, r0
+20000bb4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000bb8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000bbc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000bc0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000bc4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000bc8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000bcc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000bd0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000bd4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000bd8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000bdc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000be0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000be4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000be8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000bec:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000bf0:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000bf4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000bf8:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000bfc:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c00:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c04:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c08:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c0c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c10:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c14:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c18:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c1c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c20:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c24:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c28:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c2c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c30:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c34:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c38:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c3c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c40:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c44:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c48:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c4c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c50:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c54:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c58:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c5c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c60:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c64:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c68:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c6c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c70:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c74:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c78:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c7c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c80:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c84:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c88:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c8c:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c90:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c94:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+20000c98:	00000000 	andeq	r0, r0, r0
+
+Disassembly of section .debug_info:
+
+00000000 <.debug_info>:
+   0:	00000177 	andeq	r0, r0, r7, ror r1
+   4:	00000004 	andeq	r0, r0, r4
+   8:	01040000 	mrseq	r0, (UNDEF: 4)
+   c:	00000000 	andeq	r0, r0, r0
+  10:	00009d0c 	andeq	r9, r0, ip, lsl #26
+  14:	0000fb00 	andeq	pc, r0, r0, lsl #22
+	...
+  24:	0c100200 	lfmeq	f0, 4, [r0], {-0}
+  28:	640e0202 	strvs	r0, [lr], #-514	; 0xfffffdfe
+  2c:	03000000 	movweq	r0, #0
+  30:	000000ee 	andeq	r0, r0, lr, ror #1
+  34:	69120302 	ldmdbvs	r2, {r1, r8, r9}
+  38:	00000000 	andeq	r0, r0, r0
+  3c:	0000f403 	andeq	pc, r0, r3, lsl #8
+  40:	12040200 	andne	r0, r4, #0, 4
+  44:	00000069 	andeq	r0, r0, r9, rrx
+  48:	01610304 	cmneq	r1, r4, lsl #6
+  4c:	05020000 	streq	r0, [r2, #-0]
+  50:	00006912 	andeq	r6, r0, r2, lsl r9
+  54:	40030800 	andmi	r0, r3, r0, lsl #16
+  58:	02000001 	andeq	r0, r0, #1
+  5c:	00701206 	rsbseq	r1, r0, r6, lsl #4
+  60:	000c0000 	andeq	r0, ip, r0
+  64:	00002504 	andeq	r2, r0, r4, lsl #10
+  68:	07040500 	streq	r0, [r4, -r0, lsl #10]
+  6c:	0000007c 	andeq	r0, r0, ip, ror r0
+  70:	00008106 	andeq	r8, r0, r6, lsl #2
+  74:	00008100 	andeq	r8, r0, r0, lsl #2
+  78:	00690700 	rsbeq	r0, r9, r0, lsl #14
+  7c:	0c000000 	stceq	0, cr0, [r0], {-0}
+  80:	08010500 	stmdaeq	r1, {r8, sl}
+  84:	00000122 	andeq	r0, r0, r2, lsr #2
+  88:	00013508 	andeq	r3, r1, r8, lsl #10
+  8c:	03070200 	movweq	r0, #29184	; 0x7200
+  90:	00000064 	andeq	r0, r0, r4, rrx
+  94:	008c0305 	addeq	r0, ip, r5, lsl #6
+  98:	30092000 	andcc	r2, r9, r0
+  9c:	01000001 	tsteq	r0, r1
+  a0:	00280632 	eoreq	r0, r8, r2, lsr r6
+  a4:	00642000 	rsbeq	r2, r4, r0
+  a8:	9c010000 	stcls	0, cr0, [r1], {-0}
+  ac:	000000df 	ldrdeq	r0, [r0], -pc	; <UNPREDICTABLE>
+  b0:	00002e0a 	andeq	r2, r0, sl, lsl #28
+  b4:	00004e20 	andeq	r4, r0, r0, lsr #28
+  b8:	00790b00 	rsbseq	r0, r9, r0, lsl #22
+  bc:	df0a3901 	svcle	0x000a3901
+  c0:	02000000 	andeq	r0, r0, #0
+  c4:	340a7491 	strcc	r7, [sl], #-1169	; 0xfffffb6f
+  c8:	3a200000 	bcc	8000d0 <startup-0x1f7fff30>
+  cc:	0b000000 	bleq	d4 <startup-0x1fffff2c>
+  d0:	3b010078 	blcc	402b8 <startup-0x1ffbfd48>
+  d4:	0000df0b 	andeq	sp, r0, fp, lsl #30
+  d8:	70910200 	addsvc	r0, r1, r0, lsl #4
+  dc:	0c000000 	stceq	0, cr0, [r0], {-0}
+  e0:	6e690504 	cdpvs	5, 6, cr0, cr9, cr4, {0}
+  e4:	d90d0074 	stmdble	sp, {r2, r4, r5, r6}
+  e8:	01000000 	mrseq	r0, (UNDEF: 0)
+  ec:	00220628 	eoreq	r0, r2, r8, lsr #12
+  f0:	00062000 	andeq	r2, r6, r0
+  f4:	9c010000 	stcls	0, cr0, [r1], {-0}
+  f8:	00000115 	andeq	r0, r0, r5, lsl r1
+  fc:	0100780e 	tsteq	r0, lr, lsl #16
+ 100:	00df2128 	sbcseq	r2, pc, r8, lsr #2
+ 104:	50010000 	andpl	r0, r1, r0
+ 108:	0100790e 	tsteq	r0, lr, lsl #18
+ 10c:	00df2828 	sbcseq	r2, pc, r8, lsr #16
+ 110:	51010000 	mrspl	r0, (UNDEF: 1)
+ 114:	00c60d00 	sbceq	r0, r6, r0, lsl #26
+ 118:	21010000 	mrscs	r0, (UNDEF: 1)
+ 11c:	00001c06 	andeq	r1, r0, r6, lsl #24
+ 120:	00000620 	andeq	r0, r0, r0, lsr #12
+ 124:	449c0100 	ldrmi	r0, [ip], #256	; 0x100
+ 128:	0e000001 	cdpeq	0, 0, cr0, cr0, cr1, {0}
+ 12c:	21010078 	tstcs	r1, r8, ror r0
+ 130:	0000df1f 	andeq	sp, r0, pc, lsl pc
+ 134:	0e500100 	rdfeqs	f0, f0, f0
+ 138:	21010079 	tstcs	r1, r9, ror r0
+ 13c:	0000df26 	andeq	sp, r0, r6, lsr #30
+ 140:	00510100 	subseq	r0, r1, r0, lsl #2
+ 144:	00014b0f 	andeq	r4, r1, pc, lsl #22
+ 148:	061a0100 	ldreq	r0, [sl], -r0, lsl #2
+ 14c:	20000016 	andcs	r0, r0, r6, lsl r0
+ 150:	00000006 	andeq	r0, r0, r6
+ 154:	890f9c01 	stmdbhi	pc, {r0, sl, fp, ip, pc}	; <UNPREDICTABLE>
+ 158:	01000000 	mrseq	r0, (UNDEF: 0)
+ 15c:	00100613 	andseq	r0, r0, r3, lsl r6
+ 160:	00062000 	andeq	r2, r6, r0
+ 164:	9c010000 	stcls	0, cr0, [r1], {-0}
+ 168:	00011a0f 	andeq	r1, r1, pc, lsl #20
+ 16c:	06060100 	streq	r0, [r6], -r0, lsl #2
+ 170:	20000000 	andcs	r0, r0, r0
+ 174:	0000000c 	andeq	r0, r0, ip
+ 178:	Address 0x00000178 is out of bounds.
+
+
+Disassembly of section .debug_abbrev:
+
+00000000 <.debug_abbrev>:
+   0:	25011101 	strcs	r1, [r1, #-257]	; 0xfffffeff
+   4:	030b130e 	movweq	r1, #45838	; 0xb30e
+   8:	550e1b0e 	strpl	r1, [lr, #-2830]	; 0xfffff4f2
+   c:	10011117 	andne	r1, r1, r7, lsl r1
+  10:	02000017 	andeq	r0, r0, #23
+  14:	050b0113 	streq	r0, [fp, #-275]	; 0xfffffeed
+  18:	0b3b0b3a 	bleq	ec2d08 <startup-0x1f13d2f8>
+  1c:	13010b39 	movwne	r0, #6969	; 0x1b39
+  20:	0d030000 	stceq	0, cr0, [r3, #-0]
+  24:	3a0e0300 	bcc	380c2c <startup-0x1fc7f3d4>
+  28:	390b3b0b 	stmdbcc	fp, {r0, r1, r3, r8, r9, fp, ip, sp}
+  2c:	3813490b 	ldmdacc	r3, {r0, r1, r3, r8, fp, lr}
+  30:	0400000b 	streq	r0, [r0], #-11
+  34:	13490026 	movtne	r0, #36902	; 0x9026
+  38:	24050000 	strcs	r0, [r5], #-0
+  3c:	3e0b0b00 	vmlacc.f64	d0, d11, d0
+  40:	000e030b 	andeq	r0, lr, fp, lsl #6
+  44:	01010600 	tsteq	r1, r0, lsl #12
+  48:	13011349 	movwne	r1, #4937	; 0x1349
+  4c:	21070000 	mrscs	r0, (UNDEF: 7)
+  50:	2f134900 	svccs	0x00134900
+  54:	08000005 	stmdaeq	r0, {r0, r2}
+  58:	0e030034 	mcreq	0, 0, r0, cr3, cr4, {1}
+  5c:	0b3b0b3a 	bleq	ec2d4c <startup-0x1f13d2b4>
+  60:	13490b39 	movtne	r0, #39737	; 0x9b39
+  64:	00001802 	andeq	r1, r0, r2, lsl #16
+  68:	3f012e09 	svccc	0x00012e09
+  6c:	3a0e0319 	bcc	380cd8 <startup-0x1fc7f328>
+  70:	390b3b0b 	stmdbcc	fp, {r0, r1, r3, r8, r9, fp, ip, sp}
+  74:	1119270b 	tstne	r9, fp, lsl #14
+  78:	40061201 	andmi	r1, r6, r1, lsl #4
+  7c:	19429618 	stmdbne	r2, {r3, r4, r9, sl, ip, pc}^
+  80:	00001301 	andeq	r1, r0, r1, lsl #6
+  84:	11010b0a 	tstne	r1, sl, lsl #22
+  88:	00061201 	andeq	r1, r6, r1, lsl #4
+  8c:	00340b00 	eorseq	r0, r4, r0, lsl #22
+  90:	0b3a0803 	bleq	e820a4 <startup-0x1f17df5c>
+  94:	0b390b3b 	bleq	e42d88 <startup-0x1f1bd278>
+  98:	18021349 	stmdane	r2, {r0, r3, r6, r8, r9, ip}
+  9c:	240c0000 	strcs	r0, [ip], #-0
+  a0:	3e0b0b00 	vmlacc.f64	d0, d11, d0
+  a4:	0008030b 	andeq	r0, r8, fp, lsl #6
+  a8:	012e0d00 			; <UNDEFINED> instruction: 0x012e0d00
+  ac:	0e03193f 			; <UNDEFINED> instruction: 0x0e03193f
+  b0:	0b3b0b3a 	bleq	ec2da0 <startup-0x1f13d260>
+  b4:	19270b39 	stmdbne	r7!, {r0, r3, r4, r5, r8, r9, fp}
+  b8:	06120111 			; <UNDEFINED> instruction: 0x06120111
+  bc:	42971840 	addsmi	r1, r7, #64, 16	; 0x400000
+  c0:	00130119 	andseq	r0, r3, r9, lsl r1
+  c4:	00050e00 	andeq	r0, r5, r0, lsl #28
+  c8:	0b3a0803 	bleq	e820dc <startup-0x1f17df24>
+  cc:	0b390b3b 	bleq	e42dc0 <startup-0x1f1bd240>
+  d0:	18021349 	stmdane	r2, {r0, r3, r6, r8, r9, ip}
+  d4:	2e0f0000 	cdpcs	0, 0, cr0, cr15, cr0, {0}
+  d8:	03193f00 	tsteq	r9, #0, 30
+  dc:	3b0b3a0e 	blcc	2ce91c <startup-0x1fd316e4>
+  e0:	270b390b 	strcs	r3, [fp, -fp, lsl #18]
+  e4:	12011119 	andne	r1, r1, #1073741830	; 0x40000006
+  e8:	97184006 	ldrls	r4, [r8, -r6]
+  ec:	00001942 	andeq	r1, r0, r2, asr #18
+	...
+
+Disassembly of section .debug_aranges:
+
+00000000 <.debug_aranges>:
+   0:	00000024 	andeq	r0, r0, r4, lsr #32
+   4:	00000002 	andeq	r0, r0, r2
+   8:	00040000 	andeq	r0, r4, r0
+   c:	00000000 	andeq	r0, r0, r0
+  10:	20000010 	andcs	r0, r0, r0, lsl r0
+  14:	0000007c 	andeq	r0, r0, ip, ror r0
+  18:	20000000 	andcs	r0, r0, r0
+  1c:	0000000c 	andeq	r0, r0, ip
+	...
+
+Disassembly of section .debug_ranges:
+
+00000000 <.debug_ranges>:
+   0:	20000010 	andcs	r0, r0, r0, lsl r0
+   4:	2000008c 	andcs	r0, r0, ip, lsl #1
+   8:	20000000 	andcs	r0, r0, r0
+   c:	2000000c 	andcs	r0, r0, ip
+	...
+
+Disassembly of section .debug_line:
+
+00000000 <.debug_line>:
+   0:	000000f5 	strdeq	r0, [r0], -r5
+   4:	004a0003 	subeq	r0, sl, r3
+   8:	01020000 	mrseq	r0, (UNDEF: 2)
+   c:	000d0efb 	strdeq	r0, [sp], -fp
+  10:	01010101 	tsteq	r1, r1, lsl #2
+  14:	01000000 	mrseq	r0, (UNDEF: 0)
+  18:	44010000 	strmi	r0, [r1], #-0
+  1c:	6f6d2f3a 	svcvs	0x006d2f3a
+  20:	796d2f70 	stmdbvc	sp!, {r4, r5, r6, r8, r9, sl, fp, sp}^
+  24:	6b726f57 	blvs	1c9bd88 <startup-0x1e364278>
+  28:	63617073 	cmnvs	r1, #115	; 0x73
+  2c:	302e3265 	eorcc	r3, lr, r5, ror #4
+  30:	6b654c2f 	blvs	19530f4 <startup-0x1e6acf0c>
+  34:	6e6f6974 			; <UNDEFINED> instruction: 0x6e6f6974
+  38:	73000038 	movwvc	r0, #56	; 0x38
+  3c:	74726174 	ldrbtvc	r6, [r2], #-372	; 0xfffffe8c
+  40:	632e7075 			; <UNDEFINED> instruction: 0x632e7075
+  44:	00000100 	andeq	r0, r0, r0, lsl #2
+  48:	67616d69 	strbvs	r6, [r1, -r9, ror #26]!
+  4c:	00682e65 	rsbeq	r2, r8, r5, ror #28
+  50:	00000001 	andeq	r0, r0, r1
+  54:	05000105 	streq	r0, [r0, #-261]	; 0xfffffefb
+  58:	00000002 	andeq	r0, r0, r2
+  5c:	21131820 	tstcs	r3, r0, lsr #16
+  60:	02212f21 	eoreq	r2, r1, #33, 30	; 0x84
+  64:	01010003 	tsteq	r1, r3
+  68:	05000105 	streq	r0, [r0, #-261]	; 0xfffffefb
+  6c:	00001002 	andeq	r1, r0, r2
+  70:	01130320 	tsteq	r3, r0, lsr #6
+  74:	13210205 			; <UNDEFINED> instruction: 0x13210205
+  78:	24210105 	strtcs	r0, [r1], #-261	; 0xfffffefb
+  7c:	13210205 			; <UNDEFINED> instruction: 0x13210205
+  80:	24210105 	strtcs	r0, [r1], #-261	; 0xfffffefb
+  84:	13210205 			; <UNDEFINED> instruction: 0x13210205
+  88:	24210105 	strtcs	r0, [r1], #-261	; 0xfffffefb
+  8c:	13210205 			; <UNDEFINED> instruction: 0x13210205
+  90:	27210105 	strcs	r0, [r1, -r5, lsl #2]!
+  94:	05420a05 	strbeq	r0, [r2, #-2565]	; 0xfffff5fb
+  98:	0b052e02 	bleq	14b8a8 <startup-0x1feb4758>
+  9c:	2e030522 	cfsh32cs	mvfx0, mvfx3, #18
+  a0:	05222c05 	streq	r2, [r2, #-3077]!	; 0xfffff3fb
+  a4:	33052020 	movwcc	r2, #20512	; 0x5020
+  a8:	2e38052e 	cdpcs	5, 3, cr0, cr8, cr14, {1}
+  ac:	053c1c05 	ldreq	r1, [ip, #-3077]!	; 0xfffff3fb
+  b0:	43053c06 	movwmi	r3, #23558	; 0x5c06
+  b4:	01040200 	mrseq	r0, R12_usr
+  b8:	0029052e 	eoreq	r0, r9, lr, lsr #10
+  bc:	64020402 	strvs	r0, [r2], #-1026	; 0xfffffbfe
+  c0:	02002005 	andeq	r2, r0, #5
+  c4:	053c0104 	ldreq	r0, [ip, #-260]!	; 0xfffffefc
+  c8:	04020014 	streq	r0, [r2], #-20	; 0xffffffec
+  cc:	03052001 	movweq	r2, #20481	; 0x5001
+  d0:	01040200 	mrseq	r0, R12_usr
+  d4:	00290520 	eoreq	r0, r9, r0, lsr #10
+  d8:	2c020402 	cfstrscs	mvf0, [r2], {2}
+  dc:	02001f05 	andeq	r1, r0, #5, 30
+  e0:	053c0104 	ldreq	r0, [ip, #-260]!	; 0xfffffefc
+  e4:	04020013 	streq	r0, [r2], #-19	; 0xffffffed
+  e8:	02052001 	andeq	r2, r5, #1
+  ec:	01040200 	mrseq	r0, R12_usr
+  f0:	35010520 	strcc	r0, [r1, #-1312]	; 0xfffffae0
+  f4:	01000802 	tsteq	r0, r2, lsl #16
+  f8:	Address 0x000000f8 is out of bounds.
+
+
+Disassembly of section .debug_str:
+
+00000000 <.debug_str>:
+   0:	20554e47 	subscs	r4, r5, r7, asr #28
+   4:	20393943 	eorscs	r3, r9, r3, asr #18
+   8:	2e322e39 	mrccs	14, 1, r2, cr2, cr9, {1}
+   c:	30322031 	eorscc	r2, r2, r1, lsr r0
+  10:	30313931 	eorscc	r3, r1, r1, lsr r9
+  14:	28203532 	stmdacs	r0!, {r1, r4, r5, r8, sl, ip, sp}
+  18:	656c6572 	strbvs	r6, [ip, #-1394]!	; 0xfffffa8e
+  1c:	29657361 	stmdbcs	r5!, {r0, r5, r6, r8, r9, ip, sp, lr}^
+  20:	52415b20 	subpl	r5, r1, #32, 22	; 0x8000
+  24:	72612f4d 	rsbvc	r2, r1, #308	; 0x134
+  28:	2d392d6d 	ldccs	13, cr2, [r9, #-436]!	; 0xfffffe4c
+  2c:	6e617262 	cdpvs	2, 6, cr7, cr1, cr2, {3}
+  30:	72206863 	eorvc	r6, r0, #6488064	; 0x630000
+  34:	73697665 	cmnvc	r9, #105906176	; 0x6500000
+  38:	206e6f69 	rsbcs	r6, lr, r9, ror #30
+  3c:	35373732 	ldrcc	r3, [r7, #-1842]!	; 0xfffff8ce
+  40:	205d3939 	subscs	r3, sp, r9, lsr r9
+  44:	68746d2d 	ldmdavs	r4!, {r0, r2, r3, r5, r8, sl, fp, sp, lr}^
+  48:	20626d75 	rsbcs	r6, r2, r5, ror sp
+  4c:	6c666d2d 	stclvs	13, cr6, [r6], #-180	; 0xffffff4c
+  50:	2d74616f 	ldfcse	f6, [r4, #-444]!	; 0xfffffe44
+  54:	3d696261 	sfmcc	f6, 2, [r9, #-388]!	; 0xfffffe7c
+  58:	74666f73 	strbtvc	r6, [r6], #-3955	; 0xfffff08d
+  5c:	616d2d20 	cmnvs	sp, r0, lsr #26
+  60:	3d686372 	stclcc	3, cr6, [r8, #-456]!	; 0xfffffe38
+  64:	766d7261 	strbtvc	r7, [sp], -r1, ror #4
+  68:	206d2d36 	rsbcs	r2, sp, r6, lsr sp
+  6c:	2d20672d 	stccs	7, cr6, [r0, #-180]!	; 0xffffff4c
+  70:	2d20304f 	stccs	0, cr3, [r0, #-316]!	; 0xfffffec4
+  74:	3d647473 	cfstrdcc	mvd7, [r4, #-460]!	; 0xfffffe34
+  78:	00393963 	eorseq	r3, r9, r3, ror #18
+  7c:	69736e75 	ldmdbvs	r3!, {r0, r2, r4, r5, r6, r9, sl, fp, sp, lr}^
+  80:	64656e67 	strbtvs	r6, [r5], #-3687	; 0xfffff199
+  84:	746e6920 	strbtvc	r6, [lr], #-2336	; 0xfffff6e0
+  88:	61726700 	cmnvs	r2, r0, lsl #14
+  8c:	63696870 	cmnvs	r9, #112, 16	; 0x700000
+  90:	6e695f73 	mcrvs	15, 3, r5, cr9, cr3, {3}
+  94:	61697469 	cmnvs	r9, r9, ror #8
+  98:	657a696c 	ldrbvs	r6, [sl, #-2412]!	; 0xfffff694
+  9c:	2f3a4400 	svccs	0x003a4400
+  a0:	2f706f6d 	svccs	0x00706f6d
+  a4:	6f57796d 	svcvs	0x0057796d
+  a8:	70736b72 	rsbsvc	r6, r3, r2, ror fp
+  ac:	32656361 	rsbcc	r6, r5, #-2080374783	; 0x84000001
+  b0:	4c2f302e 	stcmi	0, cr3, [pc], #-184	; 0 <startup-0x20000000>
+  b4:	69746b65 	ldmdbvs	r4!, {r0, r2, r5, r6, r8, r9, fp, sp, lr}^
+  b8:	2f386e6f 	svccs	0x00386e6f
+  bc:	72617473 	rsbvc	r7, r1, #1929379840	; 0x73000000
+  c0:	2e707574 	mrccs	5, 3, r7, cr0, cr4, {3}
+  c4:	72670063 	rsbvc	r0, r7, #99	; 0x63
+  c8:	69687061 	stmdbvs	r8!, {r0, r5, r6, ip, sp, lr}^
+  cc:	705f7363 	subsvc	r7, pc, r3, ror #6
+  d0:	6c657869 	stclvs	8, cr7, [r5], #-420	; 0xfffffe5c
+  d4:	7465735f 	strbtvc	r7, [r5], #-863	; 0xfffffca1
+  d8:	61726700 	cmnvs	r2, r0, lsl #14
+  dc:	63696870 	cmnvs	r9, #112, 16	; 0x700000
+  e0:	69705f73 	ldmdbvs	r0!, {r0, r1, r4, r5, r6, r8, r9, sl, fp, ip, lr}^
+  e4:	5f6c6578 	svcpl	0x006c6578
+  e8:	61656c63 	cmnvs	r5, r3, ror #24
+  ec:	69770072 	ldmdbvs	r7!, {r1, r4, r5, r6}^
+  f0:	00687464 	rsbeq	r7, r8, r4, ror #8
+  f4:	67696568 	strbvs	r6, [r9, -r8, ror #10]!
+  f8:	44007468 	strmi	r7, [r0], #-1128	; 0xfffffb98
+  fc:	6f6d5c3a 	svcvs	0x006d5c3a
+ 100:	796d5c70 	stmdbvc	sp!, {r4, r5, r6, sl, fp, ip, lr}^
+ 104:	6b726f57 	blvs	1c9be68 <startup-0x1e364198>
+ 108:	63617073 	cmnvs	r1, #115	; 0x73
+ 10c:	302e3265 	eorcc	r3, lr, r5, ror #4
+ 110:	6b654c5c 	blvs	1953288 <startup-0x1e6acd78>
+ 114:	6e6f6974 			; <UNDEFINED> instruction: 0x6e6f6974
+ 118:	74730038 	ldrbtvc	r0, [r3], #-56	; 0xffffffc8
+ 11c:	75747261 	ldrbvc	r7, [r4, #-609]!	; 0xfffffd9f
+ 120:	6e750070 	mrcvs	0, 3, r0, cr5, cr0, {3}
+ 124:	6e676973 			; <UNDEFINED> instruction: 0x6e676973
+ 128:	63206465 			; <UNDEFINED> instruction: 0x63206465
+ 12c:	00726168 	rsbseq	r6, r2, r8, ror #2
+ 130:	6e69616d 	powvsez	f6, f1, #5.0
+ 134:	6d696700 	stclvs	7, cr6, [r9, #-0]
+ 138:	6d695f70 	stclvs	15, cr5, [r9, #-448]!	; 0xfffffe40
+ 13c:	00656761 	rsbeq	r6, r5, r1, ror #14
+ 140:	65786970 	ldrbvs	r6, [r8, #-2416]!	; 0xfffff690
+ 144:	61645f6c 	cmnvs	r4, ip, ror #30
+ 148:	67006174 	smlsdxvs	r0, r4, r1, r6
+ 14c:	68706172 	ldmdavs	r0!, {r1, r4, r5, r6, r8, sp, lr}^
+ 150:	5f736369 	svcpl	0x00736369
+ 154:	61656c63 	cmnvs	r5, r3, ror #24
+ 158:	63735f72 	cmnvs	r3, #456	; 0x1c8
+ 15c:	6e656572 	mcrvs	5, 3, r6, cr5, cr2, {3}
+ 160:	74796200 	ldrbtvc	r6, [r9], #-512	; 0xfffffe00
+ 164:	705f7365 	subsvc	r7, pc, r5, ror #6
+ 168:	705f7265 	subsvc	r7, pc, r5, ror #4
+ 16c:	6c657869 	stclvs	8, cr7, [r5], #-420	; 0xfffffe5c
+	...
+
+Disassembly of section .comment:
+
+00000000 <.comment>:
+   0:	3a434347 	bcc	10d0d24 <startup-0x1ef2f2dc>
+   4:	4e472820 	cdpmi	8, 4, cr2, cr7, cr0, {1}
+   8:	6f542055 	svcvs	0x00542055
+   c:	20736c6f 	rsbscs	r6, r3, pc, ror #24
+  10:	20726f66 	rsbscs	r6, r2, r6, ror #30
+  14:	206d7241 	rsbcs	r7, sp, r1, asr #4
+  18:	65626d45 	strbvs	r6, [r2, #-3397]!	; 0xfffff2bb
+  1c:	64656464 	strbtvs	r6, [r5], #-1124	; 0xfffffb9c
+  20:	6f725020 	svcvs	0x00725020
+  24:	73736563 	cmnvc	r3, #415236096	; 0x18c00000
+  28:	2073726f 	rsbscs	r7, r3, pc, ror #4
+  2c:	30322d39 	eorscc	r2, r2, r9, lsr sp
+  30:	712d3931 			; <UNDEFINED> instruction: 0x712d3931
+  34:	616d2d34 	cmnvs	sp, r4, lsr sp
+  38:	29726f6a 	ldmdbcs	r2!, {r1, r3, r5, r6, r8, r9, sl, fp, sp, lr}^
+  3c:	322e3920 	eorcc	r3, lr, #32, 18	; 0x80000
+  40:	3220312e 	eorcc	r3, r0, #-2147483637	; 0x8000000b
+  44:	31393130 	teqcc	r9, r0, lsr r1
+  48:	20353230 	eorscs	r3, r5, r0, lsr r2
+  4c:	6c657228 	sfmvs	f7, 2, [r5], #-160	; 0xffffff60
+  50:	65736165 	ldrbvs	r6, [r3, #-357]!	; 0xfffffe9b
+  54:	415b2029 	cmpmi	fp, r9, lsr #32
+  58:	612f4d52 			; <UNDEFINED> instruction: 0x612f4d52
+  5c:	392d6d72 	pushcc	{r1, r4, r5, r6, r8, sl, fp, sp, lr}
+  60:	6172622d 	cmnvs	r2, sp, lsr #4
+  64:	2068636e 	rsbcs	r6, r8, lr, ror #6
+  68:	69766572 	ldmdbvs	r6!, {r1, r4, r5, r6, r8, sl, sp, lr}^
+  6c:	6e6f6973 			; <UNDEFINED> instruction: 0x6e6f6973
+  70:	37373220 	ldrcc	r3, [r7, -r0, lsr #4]!
+  74:	5d393935 			; <UNDEFINED> instruction: 0x5d393935
+	...
+
+Disassembly of section .ARM.attributes:
+
+00000000 <.ARM.attributes>:
+   0:	00002a41 	andeq	r2, r0, r1, asr #20
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	00000020 	andeq	r0, r0, r0, lsr #32
+  10:	4d2d3605 	stcmi	6, cr3, [sp, #-20]!	; 0xffffffec
+  14:	070b0600 	streq	r0, [fp, -r0, lsl #12]
+  18:	1201094d 	andne	r0, r1, #1261568	; 0x134000
+  1c:	15011404 	strne	r1, [r1, #-1028]	; 0xfffffbfc
+  20:	18031701 	stmdane	r3, {r0, r8, r9, sl, ip}
+  24:	1a011901 	bne	46430 <startup-0x1ffb9bd0>
+  28:	Address 0x00000028 is out of bounds.
+
+
+Disassembly of section .debug_frame:
+
+00000000 <.debug_frame>:
+   0:	0000000c 	andeq	r0, r0, ip
+   4:	ffffffff 			; <UNDEFINED> instruction: 0xffffffff
+   8:	7c020001 	stcvc	0, cr0, [r2], {1}
+   c:	000d0c0e 	andeq	r0, sp, lr, lsl #24
+  10:	0000000c 	andeq	r0, r0, ip
+  14:	00000000 	andeq	r0, r0, r0
+  18:	20000000 	andcs	r0, r0, r0
+  1c:	0000000c 	andeq	r0, r0, ip
+  20:	0000000c 	andeq	r0, r0, ip
+  24:	00000000 	andeq	r0, r0, r0
+  28:	20000010 	andcs	r0, r0, r0, lsl r0
+  2c:	00000006 	andeq	r0, r0, r6
+  30:	0000000c 	andeq	r0, r0, ip
+  34:	00000000 	andeq	r0, r0, r0
+  38:	20000016 	andcs	r0, r0, r6, lsl r0
+  3c:	00000006 	andeq	r0, r0, r6
+  40:	0000000c 	andeq	r0, r0, ip
+  44:	00000000 	andeq	r0, r0, r0
+  48:	2000001c 	andcs	r0, r0, ip, lsl r0
+  4c:	00000006 	andeq	r0, r0, r6
+  50:	0000000c 	andeq	r0, r0, ip
+  54:	00000000 	andeq	r0, r0, r0
+  58:	20000022 	andcs	r0, r0, r2, lsr #32
+  5c:	00000006 	andeq	r0, r0, r6
+  60:	0000001c 	andeq	r0, r0, ip, lsl r0
+  64:	00000000 	andeq	r0, r0, r0
+  68:	20000028 	andcs	r0, r0, r8, lsr #32
+  6c:	00000064 	andeq	r0, r0, r4, rrx
+  70:	87080e41 	strhi	r0, [r8, -r1, asr #28]
+  74:	41018e02 	tstmi	r1, r2, lsl #28
+  78:	0d41100e 	stcleq	0, cr1, [r1, #-56]	; 0xffffffc8
+  7c:	00000007 	andeq	r0, r0, r7

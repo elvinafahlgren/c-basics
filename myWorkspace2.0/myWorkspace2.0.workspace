@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="myWorkspace2.0" Database="" Version="10000">
   <Project Name="lek5" Path="lek5/lek5.project" Active="No"/>
-  <Project Name="HelloWorld" Path="HelloWorld/HelloWorld.project" Active="Yes"/>
+  <Project Name="HelloWorld" Path="HelloWorld/HelloWorld.project" Active="No"/>
   <Project Name="PrintIntegerArray" Path="PrintIntegerArray/PrintIntegerArray.project" Active="No"/>
   <Project Name="VadArX" Path="VadArX/VadArX.project" Active="No"/>
   <Project Name="VariousTextString" Path="VariousTextString/VariousTextString.project" Active="No"/>
+  <Project Name="Rita-ut-bild" Path="Lektion8/Lektion8.project" Active="No"/>
+  <Project Name="lektion10" Path="lektion10/lektion10.project" Active="Yes"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Environment/>
@@ -21,6 +23,8 @@
       <Project Name="PrintIntegerArray" ConfigName="Debug"/>
       <Project Name="VadArX" ConfigName="Debug"/>
       <Project Name="VariousTextString" ConfigName="Debug"/>
+      <Project Name="Rita-ut-bild" ConfigName="Debug"/>
+      <Project Name="lektion10" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Environment/>
@@ -37,6 +41,8 @@
       <Project Name="PrintIntegerArray" ConfigName="Release"/>
       <Project Name="VadArX" ConfigName="Release"/>
       <Project Name="VariousTextString" ConfigName="Release"/>
+      <Project Name="Rita-ut-bild" ConfigName="Release"/>
+      <Project Name="lektion10" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>

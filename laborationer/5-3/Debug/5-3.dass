@@ -5,42 +5,22 @@ Debug/5-3.elf:     file format elf32-littlearm
 Disassembly of section .text:
 
 20000000 <startup>:
- *
- */
-__attribute__((naked)) __attribute__((section (".start_section")) )
-void startup ( void )
-{
-__asm__ volatile(" LDR R0,=0x2001C000\n");		/* set stack */
 20000000:	4802      	ldr	r0, [pc, #8]	; (2000000c <startup+0xc>)
-__asm__ volatile(" MOV SP,R0\n");
 20000002:	4685      	mov	sp, r0
-__asm__ volatile(" BL main\n");					/* call main */
 20000004:	f000 f87b 	bl	200000fe <main>
-__asm__ volatile(".L1: B .L1\n");				/* never return */
 20000008:	e7fe      	b.n	20000008 <startup+0x8>
-}
 2000000a:	46c0      	nop			; (mov r8, r8)
 2000000c:	2001c000 	andcs	ip, r1, r0
 
 20000010 <init_app>:
-#define SIMULATOR 
-#define GPIO_MODER ((volatile unsigned int *) 0x40021000)
-#define Bargraph ((volatile unsigned char *) 0x40021014)
-
-void init_app(void)
-{
 20000010:	b580      	push	{r7, lr}
 20000012:	af00      	add	r7, sp, #0
-    * ( (unsigned long *) 0x40021000) = 0x00005555;  // GPIO_MODER initieras
 20000014:	4b04      	ldr	r3, [pc, #16]	; (20000028 <init_app+0x18>)
 20000016:	4a05      	ldr	r2, [pc, #20]	; (2000002c <init_app+0x1c>)
 20000018:	601a      	str	r2, [r3, #0]
-    * ( (unsigned char *) 0x40021014) = 0x0;
 2000001a:	4b05      	ldr	r3, [pc, #20]	; (20000030 <init_app+0x20>)
 2000001c:	2200      	movs	r2, #0
 2000001e:	701a      	strb	r2, [r3, #0]
-
-}
 20000020:	46c0      	nop			; (mov r8, r8)
 20000022:	46bd      	mov	sp, r7
 20000024:	bd80      	pop	{r7, pc}
@@ -50,31 +30,20 @@ void init_app(void)
 20000030:	40021014 	andmi	r1, r2, r4, lsl r0
 
 20000034 <delay_250ns>:
-
-
-void delay_250ns( void )
-{
 20000034:	b580      	push	{r7, lr}
 20000036:	af00      	add	r7, sp, #0
-    /* SystemCoreClock = 168000000 */
-    *STK_CTRL = 0;
 20000038:	4b0c      	ldr	r3, [pc, #48]	; (2000006c <delay_250ns+0x38>)
 2000003a:	2200      	movs	r2, #0
 2000003c:	601a      	str	r2, [r3, #0]
-    *STK_LOAD = ( (168/4) -1 );
 2000003e:	4b0c      	ldr	r3, [pc, #48]	; (20000070 <delay_250ns+0x3c>)
 20000040:	2229      	movs	r2, #41	; 0x29
 20000042:	601a      	str	r2, [r3, #0]
-    *STK_VAL = 0;
 20000044:	4b0b      	ldr	r3, [pc, #44]	; (20000074 <delay_250ns+0x40>)
 20000046:	2200      	movs	r2, #0
 20000048:	601a      	str	r2, [r3, #0]
-    *STK_CTRL = 5;  //sätter enable och clksource
 2000004a:	4b08      	ldr	r3, [pc, #32]	; (2000006c <delay_250ns+0x38>)
 2000004c:	2205      	movs	r2, #5
 2000004e:	601a      	str	r2, [r3, #0]
-    // börjar räkna
-    while( (*STK_CTRL & 0x10000 )== 0 );    //vänta till countflag=1
 20000050:	46c0      	nop			; (mov r8, r8)
 20000052:	4b06      	ldr	r3, [pc, #24]	; (2000006c <delay_250ns+0x38>)
 20000054:	681a      	ldr	r2, [r3, #0]
@@ -82,11 +51,9 @@ void delay_250ns( void )
 20000058:	025b      	lsls	r3, r3, #9
 2000005a:	4013      	ands	r3, r2
 2000005c:	d0f9      	beq.n	20000052 <delay_250ns+0x1e>
-    *STK_CTRL = 0;
 2000005e:	4b03      	ldr	r3, [pc, #12]	; (2000006c <delay_250ns+0x38>)
 20000060:	2200      	movs	r2, #0
 20000062:	601a      	str	r2, [r3, #0]
-}
 20000064:	46c0      	nop			; (mov r8, r8)
 20000066:	46bd      	mov	sp, r7
 20000068:	bd80      	pop	{r7, pc}
@@ -96,15 +63,10 @@ void delay_250ns( void )
 20000074:	e000e018 	and	lr, r0, r8, lsl r0
 
 20000078 <delay_micro>:
-
-void delay_micro(unsigned int us)
-{
 20000078:	b580      	push	{r7, lr}
 2000007a:	b082      	sub	sp, #8
 2000007c:	af00      	add	r7, sp, #0
 2000007e:	6078      	str	r0, [r7, #4]
-#ifdef SIMULATOR
-    us = us / 1000;
 20000080:	687b      	ldr	r3, [r7, #4]
 20000082:	22fa      	movs	r2, #250	; 0xfa
 20000084:	0091      	lsls	r1, r2, #2
@@ -112,32 +74,20 @@ void delay_micro(unsigned int us)
 20000088:	f000 f850 	bl	2000012c <__udivsi3>
 2000008c:	0003      	movs	r3, r0
 2000008e:	607b      	str	r3, [r7, #4]
-    us++;
 20000090:	687b      	ldr	r3, [r7, #4]
 20000092:	3301      	adds	r3, #1
 20000094:	607b      	str	r3, [r7, #4]
-#endif
-    while( us > 0 )
 20000096:	e00a      	b.n	200000ae <delay_micro+0x36>
-    {
-        delay_250ns();
 20000098:	f7ff ffcc 	bl	20000034 <delay_250ns>
-        delay_250ns();
 2000009c:	f7ff ffca 	bl	20000034 <delay_250ns>
-        delay_250ns();
 200000a0:	f7ff ffc8 	bl	20000034 <delay_250ns>
-        delay_250ns();
 200000a4:	f7ff ffc6 	bl	20000034 <delay_250ns>
-        us--;
 200000a8:	687b      	ldr	r3, [r7, #4]
 200000aa:	3b01      	subs	r3, #1
 200000ac:	607b      	str	r3, [r7, #4]
-    while( us > 0 )
 200000ae:	687b      	ldr	r3, [r7, #4]
 200000b0:	2b00      	cmp	r3, #0
 200000b2:	d1f1      	bne.n	20000098 <delay_micro+0x20>
-    }
-}
 200000b4:	46c0      	nop			; (mov r8, r8)
 200000b6:	46c0      	nop			; (mov r8, r8)
 200000b8:	46bd      	mov	sp, r7
@@ -145,15 +95,10 @@ void delay_micro(unsigned int us)
 200000bc:	bd80      	pop	{r7, pc}
 
 200000be <delay_milli>:
-
-void delay_milli(unsigned int ms)
-{
 200000be:	b580      	push	{r7, lr}
 200000c0:	b082      	sub	sp, #8
 200000c2:	af00      	add	r7, sp, #0
 200000c4:	6078      	str	r0, [r7, #4]
-#ifdef  SIMULATOR
-    ms = ms / 1000;
 200000c6:	687b      	ldr	r3, [r7, #4]
 200000c8:	22fa      	movs	r2, #250	; 0xfa
 200000ca:	0091      	lsls	r1, r2, #2
@@ -161,29 +106,20 @@ void delay_milli(unsigned int ms)
 200000ce:	f000 f82d 	bl	2000012c <__udivsi3>
 200000d2:	0003      	movs	r3, r0
 200000d4:	607b      	str	r3, [r7, #4]
-    ms++;
 200000d6:	687b      	ldr	r3, [r7, #4]
 200000d8:	3301      	adds	r3, #1
 200000da:	607b      	str	r3, [r7, #4]
-#endif
-    while(ms > 0)
 200000dc:	e007      	b.n	200000ee <delay_milli+0x30>
-    {
-        delay_micro(1000);
 200000de:	23fa      	movs	r3, #250	; 0xfa
 200000e0:	009b      	lsls	r3, r3, #2
 200000e2:	0018      	movs	r0, r3
 200000e4:	f7ff ffc8 	bl	20000078 <delay_micro>
-        ms--;
 200000e8:	687b      	ldr	r3, [r7, #4]
 200000ea:	3b01      	subs	r3, #1
 200000ec:	607b      	str	r3, [r7, #4]
-    while(ms > 0)
 200000ee:	687b      	ldr	r3, [r7, #4]
 200000f0:	2b00      	cmp	r3, #0
 200000f2:	d1f4      	bne.n	200000de <delay_milli+0x20>
-    }
-}
 200000f4:	46c0      	nop			; (mov r8, r8)
 200000f6:	46c0      	nop			; (mov r8, r8)
 200000f8:	46bd      	mov	sp, r7
@@ -191,34 +127,23 @@ void delay_milli(unsigned int ms)
 200000fc:	bd80      	pop	{r7, pc}
 
 200000fe <main>:
-
-void main(void)
-{
 200000fe:	b580      	push	{r7, lr}
 20000100:	af00      	add	r7, sp, #0
-    init_app();
 20000102:	f7ff ff85 	bl	20000010 <init_app>
-    while(1)
-    {
-        *Bargraph = 0;
 20000106:	4b08      	ldr	r3, [pc, #32]	; (20000128 <main+0x2a>)
 20000108:	2200      	movs	r2, #0
 2000010a:	701a      	strb	r2, [r3, #0]
-        delay_milli(500);
 2000010c:	23fa      	movs	r3, #250	; 0xfa
 2000010e:	005b      	lsls	r3, r3, #1
 20000110:	0018      	movs	r0, r3
 20000112:	f7ff ffd4 	bl	200000be <delay_milli>
-        *Bargraph = 0xFF;
 20000116:	4b04      	ldr	r3, [pc, #16]	; (20000128 <main+0x2a>)
 20000118:	22ff      	movs	r2, #255	; 0xff
 2000011a:	701a      	strb	r2, [r3, #0]
-        delay_milli(500);
 2000011c:	23fa      	movs	r3, #250	; 0xfa
 2000011e:	005b      	lsls	r3, r3, #1
 20000120:	0018      	movs	r0, r3
 20000122:	f7ff ffcc 	bl	200000be <delay_milli>
-        *Bargraph = 0;
 20000126:	e7ee      	b.n	20000106 <main+0x8>
 20000128:	40021014 	andmi	r1, r2, r4, lsl r0
 
@@ -415,7 +340,7 @@ Disassembly of section .debug_info:
   b0:	06060100 	streq	r0, [r6], -r0, lsl #2
   b4:	20000000 	andcs	r0, r0, r0
   b8:	0000000c 	andeq	r0, r0, ip
-  bc:	Address 0x00000000000000bc is out of bounds.
+  bc:	Address 0x000000bc is out of bounds.
 
 
 Disassembly of section .debug_abbrev:
@@ -552,7 +477,7 @@ Disassembly of section .debug_line:
  118:	0013052f 	andseq	r0, r3, pc, lsr #10
  11c:	55010402 	strpl	r0, [r1, #-1026]	; 0xfffffbfe
  120:	01000302 	tsteq	r0, r2, lsl #6
- 124:	Address 0x0000000000000124 is out of bounds.
+ 124:	Address 0x00000124 is out of bounds.
 
 
 Disassembly of section .debug_str:

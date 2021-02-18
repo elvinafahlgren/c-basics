@@ -18,7 +18,7 @@ __asm__ volatile(".L1: B .L1\n");				/* never return */
 #define GPIO_IDR_HIGH ((volatile unsigned char *) 0x40020C11)
 #define GPIO_MODER ((volatile unsigned long *) 0x40020C00)
 #define GPIO_OTYPER ((volatile unsigned short *) 0x40020C04)
-#define GPIO_PUPDR ((volatile unsigned long *)0x40020C0C
+#define GPIO_PUPDR ((volatile unsigned long *)0x40020C0C)
 
 
 void app_init(void){

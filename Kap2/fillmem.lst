@@ -1,0 +1,62 @@
+
+fillmem.elf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+20000000 <start>:
+@
+@ fillmem.asm
+@
+start:
+	@ ladda parametrarana
+	LDR	R0,mptr		@ adress
+20000000:	4806      	ldr	r0, [pc, #24]	; (2000001c <mptr>)
+	MOV	R1,#32		@ size
+20000002:	2120      	movs	r1, #32
+	MOV	R2,#0xAA	@ fill
+20000004:	22aa      	movs	r2, #170	; 0xaa
+	BL	fillmem
+20000006:	f000 f801 	bl	2000000c <fillmem>
+	B	start
+2000000a:	e7f9      	b.n	20000000 <start>
+
+2000000c <fillmem>:
+fillmem:
+@ void fillmem( char *start, unsigned int size, char fill )
+@ {
+.L1:
+@ while ( size ) 
+	CMP	R1,#0
+2000000c:	2900      	cmp	r1, #0
+	BEQ	.L2
+2000000e:	d003      	beq.n	20000018 <fillmem+0xc>
+@  	{
+@	*start++ = fill;
+	STRB	R2,[R0]
+20000010:	7002      	strb	r2, [r0, #0]
+	ADD	R0,R0,#1
+20000012:	3001      	adds	r0, #1
+@ 	size--;
+	SUB	R1,R1,#1
+20000014:	3901      	subs	r1, #1
+	B	.L1
+20000016:	e7f9      	b.n	2000000c <fillmem>
+@  	}
+@ }
+.L2:
+	BX	LR
+20000018:	4770      	bx	lr
+2000001a:	46c0      	nop			; (mov r8, r8)
+
+2000001c <mptr>:
+2000001c:	20008000 	.word	0x20008000
+
+20000020 <__bss_end__>:
+	...
+
+20001000 <heap_low>:
+	...
+
+20001800 <heap_top>:
+	...
