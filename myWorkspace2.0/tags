@@ -1,2 +1,1 @@
-startup	D:\mop\myWorkspace2.0\lektion10\startup.c	/^void startup ( void )$/;"	function	line:6	signature:( void )	returns:void 
-main	D:\mop\myWorkspace2.0\lektion10\startup.c	/^void main(void)$/;"	function	line:14	signature:(void)	returns:void 
+main	D:\mop\myWorkspace2.0\VariousTextString\main.c	/^int main(void)$/;"	function	line:3	signature:(void)	returns:int 

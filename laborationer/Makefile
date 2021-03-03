@@ -1,8 +1,8 @@
 .PHONY: clean All
 
 All:
-	@echo "----------Building project:[ mop4-1 - Debug ]----------"
-	@cd "mop4-1" && "$(MAKE)" -f  "mop4-1.mk" && "$(MAKE)" -f  "mop4-1.mk" PostBuild
+	@echo "----------Building project:[ libMD407 - Debug ]----------"
+	@cd "libMD407" && "$(MAKE)" -f  "libMD407.mk" && "$(MAKE)" -f  "libMD407.mk" PostBuild
 clean:
-	@echo "----------Cleaning project:[ mop4-1 - Debug ]----------"
-	@cd "mop4-1" && "$(MAKE)" -f  "mop4-1.mk" clean
+	@echo "----------Cleaning project:[ libMD407 - Debug ]----------"
+	@cd "libMD407" && "$(MAKE)" -f  "libMD407.mk" clean

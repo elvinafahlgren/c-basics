@@ -17,9 +17,32 @@
   </VirtualDirectory>
   <VirtualDirectory Name="lab4">
     <Project Name="getsetpsr" Path="getsetpsr/getsetpsr.project" Active="No"/>
-    <Project Name="mop4-1" Path="mop4-1/mop4-1.project" Active="Yes"/>
+    <Project Name="mop4-1" Path="mop4-1/mop4-1.project" Active="No"/>
+    <Project Name="6-4" Path="6-4/6-4.project" Active="No"/>
+    <Project Name="6-5" Path="6-5/6-5.project" Active="Yes"/>
+    <Project Name="mop4-2" Path="mop4-2/mop4-2.project" Active="No"/>
+    <Project Name="mop4-3" Path="mop4-3/mop4-3.project" Active="No"/>
+    <Project Name="mop4-3" Path="mop4-3/mop4-3.project" Active="No"/>
+    <Project Name="mop4-4" Path="mop4-4/mop4-4.project" Active="No"/>
   </VirtualDirectory>
-  <VirtualDirectory Name="lab"/>
+  <VirtualDirectory Name="Lektioner">
+    <Project Name="Lektion12" Path="Lektion12/Lektion12.project" Active="No"/>
+    <Project Name="laborationer" Path="laborationer/laborationer.project" Active="No"/>
+    <Project Name="Lektion13" Path="Lektion13/Lektion13.project" Active="No"/>
+    <Project Name="Lektion13-2" Path="Lektion13-2/Lektion13-2.project" Active="No"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="Kapitel7-Seriekommunikation">
+    <Project Name="7-1" Path="7-1/7-1.project" Active="No"/>
+    <Project Name="7-2" Path="7-2/7-2.project" Active="No"/>
+    <Project Name="7-1-olivia" Path="7-1-olivia/7-1-olivia.project" Active="No"/>
+    <Project Name="laborationer" Path="laborationer/laborationer.project" Active="No"/>
+    <Project Name="7-3" Path="7-3/7-3.project" Active="No"/>
+    <Project Name="7-4" Path="7-4/7-4.project" Active="No"/>
+    <Project Name="7-5" Path="7-5/7-5.project" Active="No"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="lab5">
+    <Project Name="libMD407" Path="libMD407/libMD407.project" Active="No"/>
+  </VirtualDirectory>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Environment/>
@@ -34,8 +57,26 @@
       <Project Name="5-15" ConfigName="Debug"/>
       <Project Name="5-15" ConfigName="Debug"/>
       <Project Name="mop3-5" ConfigName="Debug"/>
-      <Project Name="getsetpsr" ConfigName="Debug"/>
+      <Project Name="6-1" ConfigName="Debug"/>
       <Project Name="mop4-1" ConfigName="Debug"/>
+      <Project Name="6-4" ConfigName="Debug"/>
+      <Project Name="6-5" ConfigName="Debug"/>
+      <Project Name="mop4-2" ConfigName="Debug"/>
+      <Project Name="mop4-3" ConfigName="Debug"/>
+      <Project Name="mop4-3" ConfigName="Debug"/>
+      <Project Name="mop4-4" ConfigName="Debug"/>
+      <Project Name="Lektion12" ConfigName="Debug"/>
+      <Project Name="7-1" ConfigName="Debug"/>
+      <Project Name="7-2" ConfigName="Debug"/>
+      <Project Name="7-2-olivia" ConfigName="Debug"/>
+      <Project Name="Lektion13-1" ConfigName="Debug"/>
+      <Project Name="Lektion13-1" ConfigName="Debug"/>
+      <Project Name="Lektion13-2" ConfigName="Debug"/>
+      <Project Name="7-3" ConfigName="Debug"/>
+      <Project Name="7-3" ConfigName="Debug"/>
+      <Project Name="7-4" ConfigName="Debug"/>
+      <Project Name="7-5" ConfigName="Debug"/>
+      <Project Name="libMD407" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Environment/>
@@ -50,8 +91,26 @@
       <Project Name="5-15" ConfigName="Release"/>
       <Project Name="5-15" ConfigName="Release"/>
       <Project Name="mop3-5" ConfigName="Release"/>
-      <Project Name="getsetpsr" ConfigName="Release"/>
+      <Project Name="6-1" ConfigName="Release"/>
       <Project Name="mop4-1" ConfigName="Release"/>
+      <Project Name="6-4" ConfigName="Release"/>
+      <Project Name="6-5" ConfigName="Release"/>
+      <Project Name="mop4-2" ConfigName="Release"/>
+      <Project Name="mop4-3" ConfigName="Release"/>
+      <Project Name="mop4-3" ConfigName="Release"/>
+      <Project Name="mop4-4" ConfigName="Release"/>
+      <Project Name="Lektion12" ConfigName="Release"/>
+      <Project Name="7-1" ConfigName="Release"/>
+      <Project Name="7-2" ConfigName="Release"/>
+      <Project Name="7-2-olivia" ConfigName="Release"/>
+      <Project Name="Lektion13-1" ConfigName="Release"/>
+      <Project Name="Lektion13-1" ConfigName="Release"/>
+      <Project Name="Lektion13-2" ConfigName="Release"/>
+      <Project Name="7-3" ConfigName="Release"/>
+      <Project Name="7-3" ConfigName="Release"/>
+      <Project Name="7-4" ConfigName="Release"/>
+      <Project Name="7-5" ConfigName="Release"/>
+      <Project Name="libMD407" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>

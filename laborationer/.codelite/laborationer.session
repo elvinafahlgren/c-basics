@@ -1,55 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Session Name="/home/elvina/Dokument/MOP/laborationer/laborationer.workspace">
-  <int Value="3" Name="m_selectedTab"/>
-  <wxString Value="/home/elvina/Dokument/MOP/laborationer/laborationer.workspace" Name="m_workspaceName"/>
+<Session Name="D:\mop\laborationer\laborationer.workspace">
+  <int Value="6" Name="m_selectedTab"/>
+  <wxString Value="D:\mop\laborationer\laborationer.workspace" Name="m_workspaceName"/>
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
-      <wxString Value="/home/elvina/Dokument/MOP/laborationer/laborationer/keypad.c" Name="FileName"/>
-      <int Value="73" Name="FirstVisibleLine"/>
-      <int Value="6" Name="CurrentLine"/>
-      <wxArrayString Name="Bookmarks"/>
-      <IntVector Name="CollapsedFolds"/>
-    </TabInfo>
-    <TabInfo>
-      <wxString Value="/home/elvina/Dokument/MOP/laborationer/5-3/delay.c" Name="FileName"/>
+      <wxString Value="D:\mop\laborationer\libMD407\libMD407.h" Name="FileName"/>
       <int Value="0" Name="FirstVisibleLine"/>
-      <int Value="16" Name="CurrentLine"/>
+      <int Value="21" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
-      <wxString Value="/home/elvina/Dokument/MOP/laborationer/mop3-5/startup.c" Name="FileName"/>
-      <int Value="12" Name="FirstVisibleLine"/>
-      <int Value="28" Name="CurrentLine"/>
+      <wxString Value="D:\mop\laborationer\libMD407\general.c" Name="FileName"/>
+      <int Value="30" Name="FirstVisibleLine"/>
+      <int Value="25" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
-      <wxString Value="/home/elvina/Dokument/MOP/laborationer/mop4-1/systick_irq.c" Name="FileName"/>
-      <int Value="3" Name="FirstVisibleLine"/>
-      <int Value="8" Name="CurrentLine"/>
+      <wxString Value="D:\mop\laborationer\libMD407\usart_driver.c" Name="FileName"/>
+      <int Value="39" Name="FirstVisibleLine"/>
+      <int Value="14" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="D:\mop\laborationer\libMD407\keypad_driver.c" Name="FileName"/>
+      <int Value="27" Name="FirstVisibleLine"/>
+      <int Value="49" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds">
+        <IntVectorItem Value="54"/>
+        <IntVectorItem Value="64"/>
+        <IntVectorItem Value="78"/>
+      </IntVector>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="D:\mop\laborationer\libMD407\asciidisplay_driver.c" Name="FileName"/>
+      <int Value="83" Name="FirstVisibleLine"/>
+      <int Value="224" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds">
+        <IntVectorItem Value="52"/>
+        <IntVectorItem Value="60"/>
+        <IntVectorItem Value="68"/>
+        <IntVectorItem Value="76"/>
+        <IntVectorItem Value="87"/>
+        <IntVectorItem Value="98"/>
+        <IntVectorItem Value="109"/>
+        <IntVectorItem Value="116"/>
+        <IntVectorItem Value="123"/>
+        <IntVectorItem Value="135"/>
+        <IntVectorItem Value="141"/>
+        <IntVectorItem Value="151"/>
+        <IntVectorItem Value="159"/>
+        <IntVectorItem Value="166"/>
+        <IntVectorItem Value="174"/>
+        <IntVectorItem Value="183"/>
+        <IntVectorItem Value="213"/>
+      </IntVector>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="D:\mop\laborationer\asciidisplay\asciidisp.c" Name="FileName"/>
+      <int Value="191" Name="FirstVisibleLine"/>
+      <int Value="213" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="D:\mop\laborationer\7-1\usart_polling.c" Name="FileName"/>
+      <int Value="2" Name="FirstVisibleLine"/>
+      <int Value="20" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
   </TabInfoArray>
   <SerializedObject Name="m_breakpoints">
-    <long Value="1" Name="Count"/>
-    <SerializedObject Name="Breakpoint0">
-      <wxString Value="/home/elvina/Dokument/MOP/laborationer/6-1/startup.c" Name="file"/>
-      <int Value="27" Name="lineno"/>
-      <wxString Value="" Name="function_name"/>
-      <wxString Value="" Name="memory_address"/>
-      <int Value="1" Name="bp_type"/>
-      <int Value="0" Name="watchpoint_type"/>
-      <wxString Value="" Name="watchpt_data"/>
-      <CData Name="commandlist"/>
-      <bool Value="0" Name="regex"/>
-      <bool Value="0" Name="is_temp"/>
-      <bool Value="1" Name="is_enabled"/>
-      <long Value="0" Name="ignore_number"/>
-      <wxString Value="" Name="conditions"/>
-      <int Value="0" Name="origin"/>
-    </SerializedObject>
+    <long Value="0" Name="Count"/>
   </SerializedObject>
   <wxString Value="*.c;*.cpp;*.cxx;*.cc;*.h;*.hpp;*.inc;*.mm;*.m;*.xrc;*.plist;*.txt" Name="m_findInFilesMask"/>
 </Session>
