@@ -4,8 +4,17 @@
  * includes: _crt_init, _crt_deinit, _sbrk for malloc-support.
  * template functions for stdio:
  */
+ /*
+#define _REENT_SMALL
+#define __SINGLE_THREAD
+
+#include <sys/reent.h> 
+ */
+
 #include "libMD407.h"
 extern DEV_DRIVER_DESC StdIn,StdOut,StdErr,KeyPad,AsciiDisplay;
+
+
 PDEV_DRIVER_DESC device_table[MAX_FILENO+1] =
 {
 	&StdIn,
@@ -21,7 +30,21 @@ extern char __heap_top; 	/* Defined by the linker */
 extern char __bss_start__; 	/* Defined by the linker */
 extern char __bss_end__; 	/* Defined by the linker */
 
-char * _sbrk(int incr) { ... }
+char * _sbrk(int incr) {
+    char *prev_heap_end;
+    if (heap_end == 0) {
+        heap_end = &__heap_low;
+    }
+    prev_heap_end = heap_end;
+    
+    if(heap_end + incr > &__heap_top) {
+        /* Kollision mellan heap och stack...*/
+        errno = ENOMEM;
+        return (char *)-1;
+    }
+    heap_end += incr;
+    return (char *) prev_heap_end;
+}
 
 void _crt_init() {
 	char *s;
@@ -72,5 +95,18 @@ int _isatty(int file) {
 	}
 }
 
-int _write(int file, char *ptr, int len) { ... }
-int _read(int file, char *ptr, int len) { ... } 
+int _write(int file, char *ptr, int len) {
+    PDEV_DRIVER_DESC drvr;
+    drvr = device_table[file];
+    if(drvr == 0)
+        return 0;
+    return drvr->write(ptr,len);
+}
+
+int _read(int file, char *ptr, int len) {
+    PDEV_DRIVER_DESC drvr;
+    drvr = device_table[file];
+    if(drvr == 0)
+        return 0;
+    return drvr->read(ptr,len);
+} 

@@ -19,7 +19,7 @@
     <Project Name="getsetpsr" Path="getsetpsr/getsetpsr.project" Active="No"/>
     <Project Name="mop4-1" Path="mop4-1/mop4-1.project" Active="No"/>
     <Project Name="6-4" Path="6-4/6-4.project" Active="No"/>
-    <Project Name="6-5" Path="6-5/6-5.project" Active="Yes"/>
+    <Project Name="6-5" Path="6-5/6-5.project" Active="No"/>
     <Project Name="mop4-2" Path="mop4-2/mop4-2.project" Active="No"/>
     <Project Name="mop4-3" Path="mop4-3/mop4-3.project" Active="No"/>
     <Project Name="mop4-3" Path="mop4-3/mop4-3.project" Active="No"/>
@@ -30,6 +30,8 @@
     <Project Name="laborationer" Path="laborationer/laborationer.project" Active="No"/>
     <Project Name="Lektion13" Path="Lektion13/Lektion13.project" Active="No"/>
     <Project Name="Lektion13-2" Path="Lektion13-2/Lektion13-2.project" Active="No"/>
+    <Project Name="Lektion14" Path="Lektion14/Lektion14.project" Active="No"/>
+    <Project Name="libmd407io" Path="libmd407io/libmd407io.project" Active="No"/>
   </VirtualDirectory>
   <VirtualDirectory Name="Kapitel7-Seriekommunikation">
     <Project Name="7-1" Path="7-1/7-1.project" Active="No"/>
@@ -42,6 +44,7 @@
   </VirtualDirectory>
   <VirtualDirectory Name="lab5">
     <Project Name="libMD407" Path="libMD407/libMD407.project" Active="No"/>
+    <Project Name="testlib" Path="testlib/testlib.project" Active="Yes"/>
   </VirtualDirectory>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
@@ -77,6 +80,9 @@
       <Project Name="7-4" ConfigName="Debug"/>
       <Project Name="7-5" ConfigName="Debug"/>
       <Project Name="libMD407" ConfigName="Debug"/>
+      <Project Name="Lektion14" ConfigName="Debug"/>
+      <Project Name="libmd407io" ConfigName="Debug"/>
+      <Project Name="testlib" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Environment/>
@@ -111,6 +117,9 @@
       <Project Name="7-4" ConfigName="Release"/>
       <Project Name="7-5" ConfigName="Release"/>
       <Project Name="libMD407" ConfigName="Release"/>
+      <Project Name="Lektion14" ConfigName="Release"/>
+      <Project Name="libmd407io" ConfigName="Release"/>
+      <Project Name="testlib" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>

@@ -52,6 +52,8 @@ static int keypad_init( int initval ){
 
 static void keypad_deinit( int deinitval){ }
 
+/* Funktioner till keypad_read */
+
 void ActivateRow(unsigned int row){
     switch (row) {
         case 1: * GPIO_ODR_HIGH = 0x10; break;
@@ -80,7 +82,7 @@ unsigned char keyb(void){
     unsigned char key[] = {1,2,3,0xA,4,5,6,0xB,7,8,9,0xC,0xE,0,0xF,0xD};
     unsigned int row, col;
     for (int row = 1; row <= 4; row++){
-        ActivateRow(row);clTabCtrl
+        ActivateRow(row);
         col = ReadColumn();
         if  (col != 0 ){
             ActivateRow(0);

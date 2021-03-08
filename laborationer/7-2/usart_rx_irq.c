@@ -53,7 +53,7 @@ char _tstchar ( void )
 {
 	char c = inbuf;
 	inbuf = 0;
-	return 0;
+	return c;   //HITTADE FELET returnerade c
 }
 
 // Avbrottsrutin

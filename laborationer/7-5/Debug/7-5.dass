@@ -5,56 +5,33 @@ Debug/7-5:     file format elf32-littlearm
 Disassembly of section .text:
 
 20000000 <startup>:
- *
- */
-__attribute__((naked)) __attribute__((section (".start_section")) )
-void startup ( void )
-{
-__asm__ volatile(" LDR R0,=0x2001C000\n");		/* set stack */
 20000000:	4802      	ldr	r0, [pc, #8]	; (2000000c <startup+0xc>)
-__asm__ volatile(" MOV SP,R0\n");
 20000002:	4685      	mov	sp, r0
-__asm__ volatile(" BL main\n");					/* call main */
 20000004:	f000 f925 	bl	20000252 <main>
-__asm__ volatile(".L1: B .L1\n");				/* never return */
 20000008:	e7fe      	b.n	20000008 <startup+0x8>
-}
 2000000a:	46c0      	nop			; (mov r8, r8)
 2000000c:	2001c000 	andcs	ip, r1, r0
 
 20000010 <buffer_init>:
-
-/* Vi behöver två buffertar */
-static FIFO TxBuffer, RxBuffer;
-
-void buffer_init(FIFO * buffer)
-{
 20000010:	b580      	push	{r7, lr}
 20000012:	b082      	sub	sp, #8
 20000014:	af00      	add	r7, sp, #0
 20000016:	6078      	str	r0, [r7, #4]
-	buffer->count = 0;
 20000018:	687b      	ldr	r3, [r7, #4]
 2000001a:	2200      	movs	r2, #0
 2000001c:	709a      	strb	r2, [r3, #2]
-	buffer->in = 0;
 2000001e:	687b      	ldr	r3, [r7, #4]
 20000020:	2200      	movs	r2, #0
 20000022:	701a      	strb	r2, [r3, #0]
-	buffer->out = 0;
 20000024:	687b      	ldr	r3, [r7, #4]
 20000026:	2200      	movs	r2, #0
 20000028:	705a      	strb	r2, [r3, #1]
-}
 2000002a:	46c0      	nop			; (mov r8, r8)
 2000002c:	46bd      	mov	sp, r7
 2000002e:	b002      	add	sp, #8
 20000030:	bd80      	pop	{r7, pc}
 
 20000032 <buffer_put>:
-
-char buffer_put(FIFO * buffer, char c)
-{
 20000032:	b580      	push	{r7, lr}
 20000034:	b082      	sub	sp, #8
 20000036:	af00      	add	r7, sp, #0
@@ -62,16 +39,12 @@ char buffer_put(FIFO * buffer, char c)
 2000003a:	000a      	movs	r2, r1
 2000003c:	1cfb      	adds	r3, r7, #3
 2000003e:	701a      	strb	r2, [r3, #0]
-	if(buffer->count >= USARTBUFFSIZE)
 20000040:	687b      	ldr	r3, [r7, #4]
 20000042:	789b      	ldrb	r3, [r3, #2]
 20000044:	2b3f      	cmp	r3, #63	; 0x3f
 20000046:	d901      	bls.n	2000004c <buffer_put+0x1a>
-		return 0;
 20000048:	2300      	movs	r3, #0
 2000004a:	e01b      	b.n	20000084 <buffer_put+0x52>
-	else{
-		buffer->buff[buffer->in] = c;
 2000004c:	687b      	ldr	r3, [r7, #4]
 2000004e:	781b      	ldrb	r3, [r3, #0]
 20000050:	001a      	movs	r2, r3
@@ -80,57 +53,43 @@ char buffer_put(FIFO * buffer, char c)
 20000056:	1cfa      	adds	r2, r7, #3
 20000058:	7812      	ldrb	r2, [r2, #0]
 2000005a:	70da      	strb	r2, [r3, #3]
-		buffer->in++;
 2000005c:	687b      	ldr	r3, [r7, #4]
 2000005e:	781b      	ldrb	r3, [r3, #0]
 20000060:	3301      	adds	r3, #1
 20000062:	b2da      	uxtb	r2, r3
 20000064:	687b      	ldr	r3, [r7, #4]
 20000066:	701a      	strb	r2, [r3, #0]
-		buffer->count++;
 20000068:	687b      	ldr	r3, [r7, #4]
 2000006a:	789b      	ldrb	r3, [r3, #2]
 2000006c:	3301      	adds	r3, #1
 2000006e:	b2da      	uxtb	r2, r3
 20000070:	687b      	ldr	r3, [r7, #4]
 20000072:	709a      	strb	r2, [r3, #2]
-		if(buffer->in == USARTBUFFSIZE)
 20000074:	687b      	ldr	r3, [r7, #4]
 20000076:	781b      	ldrb	r3, [r3, #0]
 20000078:	2b40      	cmp	r3, #64	; 0x40
 2000007a:	d102      	bne.n	20000082 <buffer_put+0x50>
-			buffer->in = 0;
 2000007c:	687b      	ldr	r3, [r7, #4]
 2000007e:	2200      	movs	r2, #0
 20000080:	701a      	strb	r2, [r3, #0]
-		return 1;
 20000082:	2301      	movs	r3, #1
-	}
-}
 20000084:	0018      	movs	r0, r3
 20000086:	46bd      	mov	sp, r7
 20000088:	b002      	add	sp, #8
 2000008a:	bd80      	pop	{r7, pc}
 
 2000008c <buffer_get>:
-
-char buffer_get(FIFO * buffer, char * ptr)
-{
 2000008c:	b580      	push	{r7, lr}
 2000008e:	b082      	sub	sp, #8
 20000090:	af00      	add	r7, sp, #0
 20000092:	6078      	str	r0, [r7, #4]
 20000094:	6039      	str	r1, [r7, #0]
-	if(buffer->count == 0)
 20000096:	687b      	ldr	r3, [r7, #4]
 20000098:	789b      	ldrb	r3, [r3, #2]
 2000009a:	2b00      	cmp	r3, #0
 2000009c:	d101      	bne.n	200000a2 <buffer_get+0x16>
-		return 0;
 2000009e:	2300      	movs	r3, #0
 200000a0:	e01b      	b.n	200000da <buffer_get+0x4e>
-	else{
-		*ptr = buffer->buff[buffer->out];
 200000a2:	687b      	ldr	r3, [r7, #4]
 200000a4:	785b      	ldrb	r3, [r3, #1]
 200000a6:	001a      	movs	r2, r3
@@ -139,51 +98,35 @@ char buffer_get(FIFO * buffer, char * ptr)
 200000ac:	78da      	ldrb	r2, [r3, #3]
 200000ae:	683b      	ldr	r3, [r7, #0]
 200000b0:	701a      	strb	r2, [r3, #0]
-		buffer->count--;
 200000b2:	687b      	ldr	r3, [r7, #4]
 200000b4:	789b      	ldrb	r3, [r3, #2]
 200000b6:	3b01      	subs	r3, #1
 200000b8:	b2da      	uxtb	r2, r3
 200000ba:	687b      	ldr	r3, [r7, #4]
 200000bc:	709a      	strb	r2, [r3, #2]
-		buffer->out++;
 200000be:	687b      	ldr	r3, [r7, #4]
 200000c0:	785b      	ldrb	r3, [r3, #1]
 200000c2:	3301      	adds	r3, #1
 200000c4:	b2da      	uxtb	r2, r3
 200000c6:	687b      	ldr	r3, [r7, #4]
 200000c8:	705a      	strb	r2, [r3, #1]
-		if(buffer->out == USARTBUFFSIZE){
 200000ca:	687b      	ldr	r3, [r7, #4]
 200000cc:	785b      	ldrb	r3, [r3, #1]
 200000ce:	2b40      	cmp	r3, #64	; 0x40
 200000d0:	d102      	bne.n	200000d8 <buffer_get+0x4c>
-			buffer->out = 0;
 200000d2:	687b      	ldr	r3, [r7, #4]
 200000d4:	2200      	movs	r2, #0
 200000d6:	705a      	strb	r2, [r3, #1]
-		}
-		return 1;
 200000d8:	2301      	movs	r3, #1
-	}
-}
 200000da:	0018      	movs	r0, r3
 200000dc:	46bd      	mov	sp, r7
 200000de:	b002      	add	sp, #8
 200000e0:	bd80      	pop	{r7, pc}
 
 200000e2 <usart_tstchar>:
-#define USART1 ((USART*) 0x40011000)
-//char inbuf;
-//char outbuf;
-
-
-char usart_tstchar(void){
 200000e2:	b590      	push	{r4, r7, lr}
 200000e4:	b083      	sub	sp, #12
 200000e6:	af00      	add	r7, sp, #0
-	char a;
-    char c = buffer_get(&RxBuffer, &a);
 200000e8:	1dfc      	adds	r4, r7, #7
 200000ea:	1dba      	adds	r2, r7, #6
 200000ec:	4b09      	ldr	r3, [pc, #36]	; (20000114 <usart_tstchar+0x32>)
@@ -192,18 +135,14 @@ char usart_tstchar(void){
 200000f2:	f7ff ffcb 	bl	2000008c <buffer_get>
 200000f6:	0003      	movs	r3, r0
 200000f8:	7023      	strb	r3, [r4, #0]
-	if( c )
 200000fa:	1dfb      	adds	r3, r7, #7
 200000fc:	781b      	ldrb	r3, [r3, #0]
 200000fe:	2b00      	cmp	r3, #0
 20000100:	d002      	beq.n	20000108 <usart_tstchar+0x26>
-		return a;
 20000102:	1dbb      	adds	r3, r7, #6
 20000104:	781b      	ldrb	r3, [r3, #0]
 20000106:	e000      	b.n	2000010a <usart_tstchar+0x28>
-    return 0;
 20000108:	2300      	movs	r3, #0
-}
 2000010a:	0018      	movs	r0, r3
 2000010c:	46bd      	mov	sp, r7
 2000010e:	b003      	add	sp, #12
@@ -212,12 +151,9 @@ char usart_tstchar(void){
 20000114:	200002d8 	ldrdcs	r0, [r0], -r8
 
 20000118 <usart_irq_routine>:
-
-void usart_irq_routine(void){
 20000118:	b590      	push	{r4, r7, lr}
 2000011a:	b083      	sub	sp, #12
 2000011c:	af00      	add	r7, sp, #0
-    if( USART1->sr & BIT_RXNE ){
 2000011e:	4b1c      	ldr	r3, [pc, #112]	; (20000190 <usart_irq_routine+0x78>)
 20000120:	881b      	ldrh	r3, [r3, #0]
 20000122:	b29b      	uxth	r3, r3
@@ -225,21 +161,17 @@ void usart_irq_routine(void){
 20000126:	2320      	movs	r3, #32
 20000128:	4013      	ands	r3, r2
 2000012a:	d00b      	beq.n	20000144 <usart_irq_routine+0x2c>
-		char c = (char) USART1->dr;
 2000012c:	4b18      	ldr	r3, [pc, #96]	; (20000190 <usart_irq_routine+0x78>)
 2000012e:	889b      	ldrh	r3, [r3, #4]
 20000130:	b29a      	uxth	r2, r3
 20000132:	1dfb      	adds	r3, r7, #7
 20000134:	701a      	strb	r2, [r3, #0]
-		buffer_put(&RxBuffer, c);
 20000136:	1dfb      	adds	r3, r7, #7
 20000138:	781a      	ldrb	r2, [r3, #0]
 2000013a:	4b16      	ldr	r3, [pc, #88]	; (20000194 <usart_irq_routine+0x7c>)
 2000013c:	0011      	movs	r1, r2
 2000013e:	0018      	movs	r0, r3
 20000140:	f7ff ff77 	bl	20000032 <buffer_put>
-    }
-	if( (USART1->sr & BIT_TXE) !=0 ){
 20000144:	4b12      	ldr	r3, [pc, #72]	; (20000190 <usart_irq_routine+0x78>)
 20000146:	881b      	ldrh	r3, [r3, #0]
 20000148:	b29b      	uxth	r3, r3
@@ -247,8 +179,6 @@ void usart_irq_routine(void){
 2000014c:	2380      	movs	r3, #128	; 0x80
 2000014e:	4013      	ands	r3, r2
 20000150:	d01a      	beq.n	20000188 <usart_irq_routine+0x70>
-		char b;
-		char notEmpty = buffer_get(&TxBuffer, &b);
 20000152:	1dbc      	adds	r4, r7, #6
 20000154:	1d7a      	adds	r2, r7, #5
 20000156:	4b10      	ldr	r3, [pc, #64]	; (20000198 <usart_irq_routine+0x80>)
@@ -257,23 +187,16 @@ void usart_irq_routine(void){
 2000015c:	f7ff ff96 	bl	2000008c <buffer_get>
 20000160:	0003      	movs	r3, r0
 20000162:	7023      	strb	r3, [r4, #0]
-		if( notEmpty )
 20000164:	1dbb      	adds	r3, r7, #6
 20000166:	781b      	ldrb	r3, [r3, #0]
 20000168:	2b00      	cmp	r3, #0
 2000016a:	d005      	beq.n	20000178 <usart_irq_routine+0x60>
-			USART1->dr = (unsigned short) b;
 2000016c:	1d7b      	adds	r3, r7, #5
 2000016e:	781a      	ldrb	r2, [r3, #0]
 20000170:	4b07      	ldr	r3, [pc, #28]	; (20000190 <usart_irq_routine+0x78>)
 20000172:	b292      	uxth	r2, r2
 20000174:	809a      	strh	r2, [r3, #4]
-		else
-			USART1->cr1 &= ~TXEIE;	/* Deaktivera avbrott för TXE */
-	}
-}
 20000176:	e007      	b.n	20000188 <usart_irq_routine+0x70>
-			USART1->cr1 &= ~TXEIE;	/* Deaktivera avbrott för TXE */
 20000178:	4b05      	ldr	r3, [pc, #20]	; (20000190 <usart_irq_routine+0x78>)
 2000017a:	899b      	ldrh	r3, [r3, #12]
 2000017c:	b29b      	uxth	r3, r3
@@ -282,7 +205,6 @@ void usart_irq_routine(void){
 20000182:	438b      	bics	r3, r1
 20000184:	b29b      	uxth	r3, r3
 20000186:	8193      	strh	r3, [r2, #12]
-}
 20000188:	46c0      	nop			; (mov r8, r8)
 2000018a:	46bd      	mov	sp, r7
 2000018c:	b003      	add	sp, #12
@@ -292,39 +214,29 @@ void usart_irq_routine(void){
 20000198:	20000294 	mulcs	r0, r4, r2
 
 2000019c <usart_init>:
-
-char usart_init(void){
 2000019c:	b580      	push	{r7, lr}
 2000019e:	af00      	add	r7, sp, #0
-    *USART1_IRQVEC = usart_irq_routine;
 200001a0:	4b0c      	ldr	r3, [pc, #48]	; (200001d4 <usart_init+0x38>)
 200001a2:	4a0d      	ldr	r2, [pc, #52]	; (200001d8 <usart_init+0x3c>)
 200001a4:	601a      	str	r2, [r3, #0]
-    *NVIC_USART1_ISER |= NVIC_USART1_IRQ_BPOS;
 200001a6:	4b0d      	ldr	r3, [pc, #52]	; (200001dc <usart_init+0x40>)
 200001a8:	681a      	ldr	r2, [r3, #0]
 200001aa:	4b0c      	ldr	r3, [pc, #48]	; (200001dc <usart_init+0x40>)
 200001ac:	2120      	movs	r1, #32
 200001ae:	430a      	orrs	r2, r1
 200001b0:	601a      	str	r2, [r3, #0]
-    USART1->brr = 0x2D9;
 200001b2:	4b0b      	ldr	r3, [pc, #44]	; (200001e0 <usart_init+0x44>)
 200001b4:	4a0b      	ldr	r2, [pc, #44]	; (200001e4 <usart_init+0x48>)
 200001b6:	811a      	strh	r2, [r3, #8]
-    USART1->cr3 = 0;
 200001b8:	4b09      	ldr	r3, [pc, #36]	; (200001e0 <usart_init+0x44>)
 200001ba:	2200      	movs	r2, #0
 200001bc:	829a      	strh	r2, [r3, #20]
-    USART1->cr2 = 0;
 200001be:	4b08      	ldr	r3, [pc, #32]	; (200001e0 <usart_init+0x44>)
 200001c0:	2200      	movs	r2, #0
 200001c2:	821a      	strh	r2, [r3, #16]
-    USART1->cr1 = BIT_EN | BIT_RXNEIE | BIT_TE | BIT_RE;
 200001c4:	4b06      	ldr	r3, [pc, #24]	; (200001e0 <usart_init+0x44>)
 200001c6:	4a08      	ldr	r2, [pc, #32]	; (200001e8 <usart_init+0x4c>)
 200001c8:	819a      	strh	r2, [r3, #12]
-
-}
 200001ca:	46c0      	nop			; (mov r8, r8)
 200001cc:	0018      	movs	r0, r3
 200001ce:	46bd      	mov	sp, r7
@@ -338,22 +250,18 @@ char usart_init(void){
 200001e8:	0000202c 	andeq	r2, r0, ip, lsr #32
 
 200001ec <usart_outchar>:
-
-void usart_outchar( char c ){
 200001ec:	b580      	push	{r7, lr}
 200001ee:	b082      	sub	sp, #8
 200001f0:	af00      	add	r7, sp, #0
 200001f2:	0002      	movs	r2, r0
 200001f4:	1dfb      	adds	r3, r7, #7
 200001f6:	701a      	strb	r2, [r3, #0]
-	buffer_put(&TxBuffer, c);
 200001f8:	1dfb      	adds	r3, r7, #7
 200001fa:	781a      	ldrb	r2, [r3, #0]
 200001fc:	4b08      	ldr	r3, [pc, #32]	; (20000220 <usart_outchar+0x34>)
 200001fe:	0011      	movs	r1, r2
 20000200:	0018      	movs	r0, r3
 20000202:	f7ff ff16 	bl	20000032 <buffer_put>
-	USART1->cr1 |= TXEIE;       /* aktivera avbrott för TXE */
 20000206:	4b07      	ldr	r3, [pc, #28]	; (20000224 <usart_outchar+0x38>)
 20000208:	899b      	ldrh	r3, [r3, #12]
 2000020a:	b29b      	uxth	r3, r3
@@ -362,7 +270,6 @@ void usart_outchar( char c ){
 20000210:	430b      	orrs	r3, r1
 20000212:	b29b      	uxth	r3, r3
 20000214:	8193      	strh	r3, [r2, #12]
-}
 20000216:	46c0      	nop			; (mov r8, r8)
 20000218:	46bd      	mov	sp, r7
 2000021a:	b002      	add	sp, #8
@@ -372,29 +279,21 @@ void usart_outchar( char c ){
 20000224:	40011000 	andmi	r1, r1, r0
 
 20000228 <putstring>:
-
-void putstring(char *s)
-{
 20000228:	b580      	push	{r7, lr}
 2000022a:	b082      	sub	sp, #8
 2000022c:	af00      	add	r7, sp, #0
 2000022e:	6078      	str	r0, [r7, #4]
-	while(*s){
 20000230:	e006      	b.n	20000240 <putstring+0x18>
-		usart_outchar (*s++);
 20000232:	687b      	ldr	r3, [r7, #4]
 20000234:	1c5a      	adds	r2, r3, #1
 20000236:	607a      	str	r2, [r7, #4]
 20000238:	781b      	ldrb	r3, [r3, #0]
 2000023a:	0018      	movs	r0, r3
 2000023c:	f7ff ffd6 	bl	200001ec <usart_outchar>
-	while(*s){
 20000240:	687b      	ldr	r3, [r7, #4]
 20000242:	781b      	ldrb	r3, [r3, #0]
 20000244:	2b00      	cmp	r3, #0
 20000246:	d1f4      	bne.n	20000232 <putstring+0xa>
-	}
-}
 20000248:	46c0      	nop			; (mov r8, r8)
 2000024a:	46c0      	nop			; (mov r8, r8)
 2000024c:	46bd      	mov	sp, r7
@@ -402,41 +301,28 @@ void putstring(char *s)
 20000250:	bd80      	pop	{r7, pc}
 
 20000252 <main>:
-
-void main(void)
-{
 20000252:	b590      	push	{r4, r7, lr}
 20000254:	b083      	sub	sp, #12
 20000256:	af00      	add	r7, sp, #0
-    char c;
-    usart_init();
 20000258:	f7ff ffa0 	bl	2000019c <usart_init>
-	buffer_init(&TxBuffer);
 2000025c:	4b0b      	ldr	r3, [pc, #44]	; (2000028c <main+0x3a>)
 2000025e:	0018      	movs	r0, r3
 20000260:	f7ff fed6 	bl	20000010 <buffer_init>
-	buffer_init(&RxBuffer);
 20000264:	4b0a      	ldr	r3, [pc, #40]	; (20000290 <main+0x3e>)
 20000266:	0018      	movs	r0, r3
 20000268:	f7ff fed2 	bl	20000010 <buffer_init>
-	//putstring ("USART program");	/* Skriv en textsträng */
-    while (1){
-        c = usart_tstchar();
 2000026c:	1dfc      	adds	r4, r7, #7
 2000026e:	f7ff ff38 	bl	200000e2 <usart_tstchar>
 20000272:	0003      	movs	r3, r0
 20000274:	7023      	strb	r3, [r4, #0]
-        if ( c ){
 20000276:	1dfb      	adds	r3, r7, #7
 20000278:	781b      	ldrb	r3, [r3, #0]
 2000027a:	2b00      	cmp	r3, #0
 2000027c:	d0f6      	beq.n	2000026c <main+0x1a>
-            usart_outchar(c);
 2000027e:	1dfb      	adds	r3, r7, #7
 20000280:	781b      	ldrb	r3, [r3, #0]
 20000282:	0018      	movs	r0, r3
 20000284:	f7ff ffb2 	bl	200001ec <usart_outchar>
-        c = usart_tstchar();
 20000288:	e7f0      	b.n	2000026c <main+0x1a>
 2000028a:	46c0      	nop			; (mov r8, r8)
 2000028c:	20000294 	mulcs	r0, r4, r2
@@ -885,7 +771,7 @@ Disassembly of section .debug_line:
  170:	590c054d 	stmdbpl	ip, {r0, r2, r3, r6, r8, sl}
  174:	054b0d05 	strbeq	r0, [fp, #-3333]	; 0xfffff2fb
  178:	0602560b 	streq	r5, [r2], -fp, lsl #12
- 17c:	Address 0x0000017c is out of bounds.
+ 17c:	Address 0x000000000000017c is out of bounds.
 
 
 Disassembly of section .debug_str:
@@ -1052,7 +938,7 @@ Disassembly of section .ARM.attributes:
   1c:	15011404 	strne	r1, [r1, #-1028]	; 0xfffffbfc
   20:	18031701 	stmdane	r3, {r0, r8, r9, sl, ip}
   24:	1a011901 	bne	46430 <startup-0x1ffb9bd0>
-  28:	Address 0x00000028 is out of bounds.
+  28:	Address 0x0000000000000028 is out of bounds.
 
 
 Disassembly of section .debug_frame:
