@@ -1,2 +1,2 @@
-# MOP
+# C Basics
 Learning Machine-oriented programming
