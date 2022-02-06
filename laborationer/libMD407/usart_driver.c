@@ -129,19 +129,7 @@ static int usart_write(char *ptr, int len){
         _outchar(*ptr++);
     
     return len0;
-    
-/*    
-    }
-    char c = (char) usart_read(*ptr, len);
-    
-	if( c )
-    {
-        _outchar(c);
-        return 1;
-    }
-    return 0;
-*/
-		
+    	
 	
 }
 
@@ -153,11 +141,4 @@ static int usart_read(char *ptr, int len){
     
     return len0;
 
-    /*
-    
-	c = _tstchar();
-    if ( c )
-        return c;
-    return 0;
-     */
 } 

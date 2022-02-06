@@ -96,7 +96,7 @@ void main(void)
 {
     char c;
     usart_init();
-	putstring ("USART program");	/* Skric en textsträng */
+	putstring ("USART program");	/* Skriv en textsträng */
     while (1){
         c = usart_tstchar();
         if ( c ){

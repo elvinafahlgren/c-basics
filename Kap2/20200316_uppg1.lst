@@ -1,0 +1,71 @@
+
+20200316_uppg1.elf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+20000000 <j>:
+@ int k;
+k:		.SPACE	4
+		.ALIGN
+
+@ j+(2*k)-1 till R0
+		LDR	R0,=j		@ R1 = &j (adress till j)
+20000000:	00          	.byte	0x00
+20000001:	00          	.byte	0x00
+20000002:	46c0      	nop			; (mov r8, r8)
+
+20000004 <k>:
+20000004:	00000000 	.word	0x00000000
+20000008:	4808      	ldr	r0, [pc, #32]	; (2000002c <s1+0x4>)
+		LDRB	R0,[R0]		@ R1 = j (värdet)
+2000000a:	7800      	ldrb	r0, [r0, #0]
+		SXTB	R0,R0		@ teckenutvidga j
+2000000c:	b240      	sxtb	r0, r0
+		LDR	R1,=k		@ R2 = &k (adressen)
+2000000e:	4908      	ldr	r1, [pc, #32]	; (20000030 <s1+0x8>)
+		LDR	R1,[R1]		@ R2 = k (värdet)
+20000010:	6809      	ldr	r1, [r1, #0]
+		LSL	R1,R1,#1	@ R2 = 2*k
+20000012:	0049      	lsls	r1, r1, #1
+		ADD	R0,R0,R1	@ R0 = j + (2*k)
+20000014:	1840      	adds	r0, r0, r1
+		SUB	R0,R0,#1	@ R0 = j + (2*k) - 1
+20000016:	3801      	subs	r0, #1
+@ I funktionen void g(int param) görs följande funktionsanrop:
+@ my_rv = f( my_g, param );
+@ Visa hur detta då kodas i ARMv6 assemblerspråk. (2p)
+
+@ my_rv = f( my_g, param );
+		MOV	R1,R0
+20000018:	1c01      	adds	r1, r0, #0
+		MOV	R0,R4
+2000001a:	1c20      	adds	r0, r4, #0
+		BL 	f
+2000001c:	f000 f801 	bl	20000022 <f>
+		MOV	R5,R0
+20000020:	1c05      	adds	r5, r0, #0
+
+20000022 <f>:
+20000022:	0000      	.short	0x0000
+	...
+
+20000026 <c1>:
+	...
+
+20000027 <c2>:
+	...
+
+20000028 <s1>:
+20000028:	00000000 	.word	0x00000000
+2000002c:	20000000 	.word	0x20000000
+20000030:	20000004 	.word	0x20000004
+
+20000034 <__bss_end__>:
+	...
+
+20001000 <heap_low>:
+	...
+
+20001800 <heap_top>:
+	...

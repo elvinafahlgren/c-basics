@@ -5,18 +5,18 @@
 ## Debug
 ProjectName            :=mop3-5
 ConfigurationName      :=Debug
-WorkspacePath          :=/home/elvina/Dokument/MOP/laborationer
-ProjectPath            :=/home/elvina/Dokument/MOP/laborationer/mop3-5
+WorkspacePath          :=D:/mop/laborationer
+ProjectPath            :=D:/mop/laborationer/mop3-5
 IntermediateDirectory  :=$(ConfigurationName)
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
-User                   :=Elvina
-Date                   :=18/02/21
-CodeLitePath           :=/home/elvina/.codelite
-LinkerName             :=/usr/share/codelite/tools/gcc-arm/bin/arm-none-eabi-g++
-SharedObjectLinkerName :=/usr/share/codelite/tools/gcc-arm/bin/arm-none-eabi-g++ -shared -fPIC
+User                   :=elvin
+Date                   :=08/03/2021
+CodeLitePath           :=D:/Nedladdningar/CodeLite
+LinkerName             :=$(CodeLiteDir)/tools/gcc-arm/bin/arm-none-eabi-g++.exe
+SharedObjectLinkerName :=$(CodeLiteDir)/tools/gcc-arm/arm-none-eabi-g++.exe -shared -fPIC
 ObjectSuffix           :=.o
 DependSuffix           :=.o.d
 PreprocessSuffix       :=.i
@@ -34,7 +34,9 @@ ArchiveOutputSwitch    :=
 PreprocessOnlySwitch   :=-E
 ObjectsFileList        :="mop3-5.txt"
 PCHCompileFlags        :=
-MakeDirCommand         :=mkdir -p
+MakeDirCommand         :=makedir
+RcCmpOptions           := 
+RcCompilerName         :=
 LinkOptions            :=  -T$(ProjectPath)/md407-ram.x -L$(ARM_V6LIB) -L$(ARM_GCC_V6LIB) -nostartfiles
 IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch). 
 IncludePCH             := 
@@ -47,19 +49,19 @@ LibPath                := $(LibraryPathSwitch).
 ## Common variables
 ## AR, CXX, CC, AS, CXXFLAGS and CFLAGS can be overriden using an environment variables
 ##
-AR       := /usr/share/codelite/tools/gcc-arm/bin/arm-none-eabi-ar rcu
-CXX      := /usr/share/codelite/tools/gcc-arm/bin/arm-none-eabi-g++
-CC       := /usr/share/codelite/tools/gcc-arm/bin/arm-none-eabi-gcc
+AR       := $(CodeLiteDir)/tools/gcc-arm/bin/arm-none-eabi-ar.exe rcu
+CXX      := $(CodeLiteDir)/tools/gcc-arm/bin/arm-none-eabi-g++.exe
+CC       := $(CodeLiteDir)/tools/gcc-arm/bin/arm-none-eabi-gcc.exe
 CXXFLAGS :=  -g -O0 -W $(Preprocessors)
 CFLAGS   :=  -g -O0 -w -mthumb -march=armv6-m  -mfloat-abi=soft -std=c99 $(Preprocessors)
 ASFLAGS  := 
-AS       := /usr/share/codelite/tools/gcc-arm/bin/arm-none-eabi-as
+AS       := $(CodeLiteDir)/tools/gcc-arm/bin/arm-none-eabi-as.exe
 
 
 ##
 ## User defined environment variables
 ##
-CodeLiteDir:=/usr/share/codelite
+CodeLiteDir:=D:\Nedladdningar\CodeLite
 ARM_V6LIB:=$(CodeLiteDir)/tools/gcc-arm/arm-none-eabi/lib/thumb/v6-m/nofp
 ARM_GCC_V6LIB:=$(CodeLiteDir)/tools/gcc-arm/lib/gcc/arm-none-eabi/9.2.1/thumb/v6-m/nofp
 ARM_M4SFPLIB:=$(CodeLiteDir)/tools/gcc-arm/arm-none-eabi/lib/thumb/v7e-m+fp/softfp
@@ -86,16 +88,16 @@ $(OutputFile): $(IntermediateDirectory)/.d $(Objects)
 
 PostBuild:
 	@echo Executing Post Build commands ...
-	/usr/share/codelite/tools/gcc-arm/bin/arm-none-eabi-objcopy -S -O srec  Debug/mop3-5 Debug/mop3-5.s19
-	/usr/share/codelite/tools/gcc-arm/bin/arm-none-eabi-objdump -D -S Debug/mop3-5 > Debug/mop3-5.dass
+	D:\Nedladdningar\CodeLite/tools/gcc-arm/bin/arm-none-eabi-objcopy -S -O srec  Debug/mop3-5 Debug/mop3-5.s19
+	D:\Nedladdningar\CodeLite/tools/gcc-arm/bin/arm-none-eabi-objdump -D -S Debug/mop3-5 > Debug/mop3-5.dass
 	@echo Done
 
 MakeIntermediateDirs:
-	@test -d $(ConfigurationName) || $(MakeDirCommand) $(ConfigurationName)
+	@$(MakeDirCommand) "$(ConfigurationName)"
 
 
 $(IntermediateDirectory)/.d:
-	@test -d $(ConfigurationName) || $(MakeDirCommand) $(ConfigurationName)
+	@$(MakeDirCommand) "$(ConfigurationName)"
 
 PreBuild:
 
@@ -105,7 +107,7 @@ PreBuild:
 ##
 $(IntermediateDirectory)/startup.c$(ObjectSuffix): startup.c
 	@$(CC) $(CFLAGS) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/startup.c$(ObjectSuffix) -MF$(IntermediateDirectory)/startup.c$(DependSuffix) -MM startup.c
-	$(CC) $(SourceSwitch) "/home/elvina/Dokument/MOP/laborationer/mop3-5/startup.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/startup.c$(ObjectSuffix) $(IncludePath)
+	$(CC) $(SourceSwitch) "D:/mop/laborationer/mop3-5/startup.c" $(CFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/startup.c$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/startup.c$(PreprocessSuffix): startup.c
 	$(CC) $(CFLAGS) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/startup.c$(PreprocessSuffix) startup.c
 

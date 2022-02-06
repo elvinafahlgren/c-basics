@@ -1,0 +1,150 @@
+
+20200821uppg1.elf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+20000000 <result>:
+	...
+
+20000064 <presentage>:
+@ int precentage
+		.ALIGN
+presentage:	.SPACE	4
+
+
+main:		PUSH	{R4,LR}
+20000064:	00000000 	.word	0x00000000
+
+20000068 <main>:
+20000068:	b510      	push	{r4, lr}
+@ precentage = 0;
+		LDR	R3,=presentage
+2000006a:	4b16      	ldr	r3, [pc, #88]	; (200000c4 <comparePorts+0x14>)
+		MOV	R2,#0
+2000006c:	2200      	movs	r2, #0
+		STR	R2,[R3,#0]
+2000006e:	601a      	str	r2, [r3, #0]
+@ for(int i=0; i<100; i++)
+		MOV	R4,#0
+20000070:	2400      	movs	r4, #0
+		B	.L1
+20000072:	e004      	b.n	2000007e <main+0x16>
+@ saveRelation( comparePorts() ) 
+.L0:		BL	comparePorts
+20000074:	f000 f81c 	bl	200000b0 <comparePorts>
+		BL	saveRelation
+20000078:	f000 f813 	bl	200000a2 <saveRelation>
+		ADD	R4,#1		@i++
+2000007c:	3401      	adds	r4, #1
+
+.L1:		CMP	R4,#99
+2000007e:	2c63      	cmp	r4, #99	; 0x63
+		BLE	.L0
+20000080:	ddf8      	ble.n	20000074 <main+0xc>
+
+@ int i = 0;
+		MOV	R4,#0
+20000082:	2400      	movs	r4, #0
+
+ @ while( i < 100 )
+		B	.L3
+20000084:	e008      	b.n	20000098 <main+0x30>
+.L2:		
+@ 	if( result[i] )
+		LDR	R2,=result
+20000086:	4a10      	ldr	r2, [pc, #64]	; (200000c8 <comparePorts+0x18>)
+		ADD	R3,R2,R4	@ R2+R4->R3 (i=R2+R4)
+20000088:	1913      	adds	r3, r2, r4
+		LDRB	R3,[R3]		@ innehållet från result[i] placeras i R3
+2000008a:	781b      	ldrb	r3, [r3, #0]
+		CMP	R3,#0
+2000008c:	2b00      	cmp	r3, #0
+		BEQ	.L3
+2000008e:	d003      	beq.n	20000098 <main+0x30>
+@		percentage++;
+		LDR	R3,=presentage
+20000090:	4b0c      	ldr	r3, [pc, #48]	; (200000c4 <comparePorts+0x14>)
+		LDR	R2,[R3]
+20000092:	681a      	ldr	r2, [r3, #0]
+		ADD	R2,#1
+20000094:	3201      	adds	r2, #1
+		STR	R2,[R3]
+20000096:	601a      	str	r2, [r3, #0]
+		
+
+.L3:		CMP	R4,#99
+20000098:	2c63      	cmp	r4, #99	; 0x63
+		BLE	.L2
+2000009a:	ddf4      	ble.n	20000086 <main+0x1e>
+		POP	{R4,PC}
+2000009c:	bd10      	pop	{r4, pc}
+
+2000009e <items>:
+2000009e:	0000      	.short	0x0000
+	...
+
+200000a2 <saveRelation>:
+@ static int items = 0;
+items:		.WORD	0
+		
+saveRelation:
+@ result[items++] = relation; 
+		LDR	R3,=items
+200000a2:	4b0a      	ldr	r3, [pc, #40]	; (200000cc <comparePorts+0x1c>)
+		ADD	R1,R3,#1	
+200000a4:	1c59      	adds	r1, r3, #1
+		LDR	R2,=items	@ R2 håller adressen till items
+200000a6:	4a09      	ldr	r2, [pc, #36]	; (200000cc <comparePorts+0x1c>)
+		STR	R1,[R2]		@ placerar värdet i items
+200000a8:	6011      	str	r1, [r2, #0]
+		LDR	R2,=result	@ R2 håller adressen till result
+200000aa:	4a07      	ldr	r2, [pc, #28]	; (200000c8 <comparePorts+0x18>)
+		STRB	R0,[R2,R3]	@ result[items++] = relation
+200000ac:	54d0      	strb	r0, [r2, r3]
+		BX	LR
+200000ae:	4770      	bx	lr
+
+200000b0 <comparePorts>:
+
+comparePorts:
+@ 	if (*port8ptrA <= *port8ptrB){
+		LDR	R3,=0x100000
+200000b0:	4b07      	ldr	r3, [pc, #28]	; (200000d0 <comparePorts+0x20>)
+		LDRB	R2,[R3]
+200000b2:	781a      	ldrb	r2, [r3, #0]
+		LDR	R3,=0x100001
+200000b4:	4b07      	ldr	r3, [pc, #28]	; (200000d4 <comparePorts+0x24>)
+		LDRB	R3,[R1]
+200000b6:	780b      	ldrb	r3, [r1, #0]
+		CMP	R2,R3
+200000b8:	429a      	cmp	r2, r3
+		BHI	.L4
+200000ba:	d801      	bhi.n	200000c0 <comparePorts+0x10>
+@ 	return 1; 
+		MOV	R0,#3
+200000bc:	2003      	movs	r0, #3
+		B	.L5
+200000be:	e000      	b.n	200000c2 <comparePorts+0x12>
+		
+.L4:
+@ return 0; 
+		MOV	R0,#0
+200000c0:	2000      	movs	r0, #0
+@}
+.L5:		BX	LR
+200000c2:	4770      	bx	lr
+200000c4:	20000064 	.word	0x20000064
+200000c8:	20000000 	.word	0x20000000
+200000cc:	2000009e 	.word	0x2000009e
+200000d0:	00100000 	.word	0x00100000
+200000d4:	00100001 	.word	0x00100001
+
+200000d8 <__bss_end__>:
+	...
+
+20001000 <heap_low>:
+	...
+
+20001800 <heap_top>:
+	...

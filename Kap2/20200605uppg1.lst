@@ -1,0 +1,176 @@
+
+20200605uppg1.elf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+20000000 <student_year>:
+	...
+
+20000008 <student_grade>:
+		.ALIGN
+
+@void init_data(){
+init_data: 	
+	@student_year[0] = 2000; 
+		LDR	R0,=student_year
+20000008:	00000000 	.word	0x00000000
+
+2000000c <c>:
+2000000c:	00000000 	.word	0x00000000
+
+20000010 <init_data>:
+20000010:	4819      	ldr	r0, [pc, #100]	; (20000078 <main+0x18>)
+		LDR	R2,=2000
+20000012:	4a1a      	ldr	r2, [pc, #104]	; (2000007c <main+0x1c>)
+		STRH	R2,[R0]
+20000014:	8002      	strh	r2, [r0, #0]
+	@student_grade[0] = 4; 
+		LDR	R1,=student_grade
+20000016:	491a      	ldr	r1, [pc, #104]	; (20000080 <main+0x20>)
+		LDR	R2,=4
+20000018:	4a1a      	ldr	r2, [pc, #104]	; (20000084 <main+0x24>)
+		STRB	R2,[R1]
+2000001a:	700a      	strb	r2, [r1, #0]
+
+	@student_year[1] = 2000; 
+		ADD	R0,R0,#2
+2000001c:	3002      	adds	r0, #2
+		LDR	R2,=2000
+2000001e:	4a17      	ldr	r2, [pc, #92]	; (2000007c <main+0x1c>)
+		STRH	R2,[R0]
+20000020:	8002      	strh	r2, [r0, #0]
+	@student_grade[1] = 3; 
+		ADD	R1,R1,#1
+20000022:	3101      	adds	r1, #1
+		LDR	R2,=3
+20000024:	4a18      	ldr	r2, [pc, #96]	; (20000088 <main+0x28>)
+		STRB	R2,[R1]
+20000026:	700a      	strb	r2, [r1, #0]
+
+	@student_year[2] = 1998;
+		ADD	R0,R0,#2
+20000028:	3002      	adds	r0, #2
+		LDR	R2,=1998
+2000002a:	4a18      	ldr	r2, [pc, #96]	; (2000008c <main+0x2c>)
+		STRH	R2,[R0]
+2000002c:	8002      	strh	r2, [r0, #0]
+	@student_grade[2] = 5; 
+		ADD	R1,R1,#1
+2000002e:	3101      	adds	r1, #1
+		LDR	R2,=5
+20000030:	4a17      	ldr	r2, [pc, #92]	; (20000090 <main+0x30>)
+		STRB	R2,[R1]
+20000032:	700a      	strb	r2, [r1, #0]
+
+	@student_year[3] = 2002;
+		ADD	R0,R0,#2
+20000034:	3002      	adds	r0, #2
+		LDR	R2,=2002
+20000036:	4a17      	ldr	r2, [pc, #92]	; (20000094 <main+0x34>)
+		STRH	R2,[R0]
+20000038:	8002      	strh	r2, [r0, #0]
+	@student_grade[3] = 4;
+		ADD	R1,R1,#1
+2000003a:	3101      	adds	r1, #1
+		LDR	R2,=4
+2000003c:	4a11      	ldr	r2, [pc, #68]	; (20000084 <main+0x24>)
+		STRB	R2,[R1]
+2000003e:	700a      	strb	r2, [r1, #0]
+
+20000040 <sum_grade>:
+@}
+
+@ implementation of the sum_grade function
+sum_grade:
+		@year is in R0
+		PUSH	{R4,R5,LR}
+20000040:	b530      	push	{r4, r5, lr}
+		LDR	R1,=0;	@ use R1 for x
+20000042:	4915      	ldr	r1, [pc, #84]	; (20000098 <main+0x38>)
+		LDR	R2,=0;	@ use R2 for i
+20000044:	4a14      	ldr	r2, [pc, #80]	; (20000098 <main+0x38>)
+	@ use R3 for student_year access
+		LDR	R3,=student_year
+20000046:	4b0c      	ldr	r3, [pc, #48]	; (20000078 <main+0x18>)
+
+20000048 <loop>:
+	@ use r4 for student_grade access
+loop:
+		CMP	R2,#4
+20000048:	2a04      	cmp	r2, #4
+		BGE	loop_exit
+2000004a:	da07      	bge.n	2000005c <loop_exit>
+		LSL	R5,R2,#2	@ i<<1 -> R5
+2000004c:	0095      	lsls	r5, r2, #2
+		LDRH	R5,[R3,R5]	@ student_year[R5] -> R5
+2000004e:	5b5d      	ldrh	r5, [r3, r5]
+		CMP	R5,R0
+20000050:	4285      	cmp	r5, r0
+		BNE	if_exit
+20000052:	d101      	bne.n	20000058 <if_exit>
+		LDRB	R5,[R4,R2]	@ student_grade[i]
+20000054:	5ca5      	ldrb	r5, [r4, r2]
+		ADD	R1,R1,R5
+20000056:	1949      	adds	r1, r1, r5
+
+20000058 <if_exit>:
+
+if_exit:	ADD	R2,R2,#1	@ i++
+20000058:	3201      	adds	r2, #1
+		B	loop
+2000005a:	e7f5      	b.n	20000048 <loop>
+
+2000005c <loop_exit>:
+
+loop_exit:	MOV	R0,R1
+2000005c:	1c08      	adds	r0, r1, #0
+		POP 	{R3,R5,PC}
+2000005e:	bd28      	pop	{r3, r5, pc}
+
+20000060 <main>:
+
+@int main( void ) {
+main:		
+	@init_data(); 
+		BL	init_data
+20000060:	f7ff ffd6 	bl	20000010 <init_data>
+		LDR	R0,=2020	@ year = 2020
+20000064:	480d      	ldr	r0, [pc, #52]	; (2000009c <main+0x3c>)
+	@a = sum_grade(2020); 
+		BL	sum_grade
+20000066:	f7ff ffeb 	bl	20000040 <sum_grade>
+		MOV	R2,R3		@ R2 = a = sum_grade(2020)
+2000006a:	1c1a      	adds	r2, r3, #0
+		LDR	R0,=2000
+2000006c:	4803      	ldr	r0, [pc, #12]	; (2000007c <main+0x1c>)
+	@b = sum_grade(2000);
+		BL	sum_grade	@ R3 = a = sum_grade(2020)
+2000006e:	f7ff ffe7 	bl	20000040 <sum_grade>
+	@c = a+b; 
+		ADD	R0,R2,R3	@ R1 = c = a + b
+20000072:	18d0      	adds	r0, r2, r3
+		LDR	R1,=c
+20000074:	490a      	ldr	r1, [pc, #40]	; (200000a0 <main+0x40>)
+		STR	R1,[R0]
+20000076:	6001      	str	r1, [r0, #0]
+20000078:	20000000 	.word	0x20000000
+2000007c:	000007d0 	.word	0x000007d0
+20000080:	20000008 	.word	0x20000008
+20000084:	00000004 	.word	0x00000004
+20000088:	00000003 	.word	0x00000003
+2000008c:	000007ce 	.word	0x000007ce
+20000090:	00000005 	.word	0x00000005
+20000094:	000007d2 	.word	0x000007d2
+20000098:	00000000 	.word	0x00000000
+2000009c:	000007e4 	.word	0x000007e4
+200000a0:	2000000c 	.word	0x2000000c
+
+200000a4 <__bss_end__>:
+	...
+
+20001000 <heap_low>:
+	...
+
+20001800 <heap_top>:
+	...

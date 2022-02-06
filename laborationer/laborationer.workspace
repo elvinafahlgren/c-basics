@@ -30,8 +30,6 @@
     <Project Name="laborationer" Path="laborationer/laborationer.project" Active="No"/>
     <Project Name="Lektion13" Path="Lektion13/Lektion13.project" Active="No"/>
     <Project Name="Lektion13-2" Path="Lektion13-2/Lektion13-2.project" Active="No"/>
-    <Project Name="Lektion14" Path="Lektion14/Lektion14.project" Active="No"/>
-    <Project Name="libmd407io" Path="libmd407io/libmd407io.project" Active="No"/>
   </VirtualDirectory>
   <VirtualDirectory Name="Kapitel7-Seriekommunikation">
     <Project Name="7-1" Path="7-1/7-1.project" Active="No"/>
@@ -44,8 +42,46 @@
   </VirtualDirectory>
   <VirtualDirectory Name="lab5">
     <Project Name="libMD407" Path="libMD407/libMD407.project" Active="No"/>
-    <Project Name="testlib" Path="testlib/testlib.project" Active="Yes"/>
+    <Project Name="testlib2" Path="testlib2/testlib2.project" Active="No"/>
+    <Project Name="maze-game" Path="maze-game/maze-game.project" Active="No"/>
   </VirtualDirectory>
+  <VirtualDirectory Name="Tenta20200821">
+    <Project Name="200821_uppg1_" Path="200821_uppg1_/200821_uppg1_.project" Active="No"/>
+    <Project Name="200605_uppg1" Path="200605_uppg1/200605_uppg1.project" Active="No"/>
+    <Project Name="200821_uppg2_keypad" Path="200821_uppg2_keypad/200821_uppg2_keypad.project" Active="No"/>
+    <Project Name="200821_uppg3_systick" Path="200821_uppg3_systick/200821_uppg3_systick.project" Active="No"/>
+    <Project Name="200821_uppg4_exti_irq" Path="200821_uppg4_exti_irq/200821_uppg4_exti_irq.project" Active="No"/>
+    <Project Name="200605_uppg2_systick_irq" Path="200605_uppg2_systick_irq/200605_uppg2_systick_irq.project" Active="No"/>
+    <Project Name="200605_uppg3_exti_irq" Path="200605_uppg3_exti_irq/200605_uppg3_exti_irq.project" Active="No"/>
+    <Project Name="200605_uppg4_struct_union" Path="200605_uppg4_struct_union/200605_uppg4_struct_union.project" Active="No"/>
+    <Project Name="200316_1_bitconverter" Path="200316_1_bitconverter/200316_1_bitconverter.project" Active="No"/>
+    <Project Name="200316_2_circularShiftRight" Path="200316_2_circularShiftRight/200316_2_circularShiftRight.project" Active="No"/>
+    <Project Name="200316_5_irq_braKommentarer" Path="200316_5_irq_braKommentarer/200316_5_irq_braKommentarer.project" Active="No"/>
+    <Project Name="1908_5_comparePost" Path="1908_5_comparePost/1908_5_comparePost.project" Active="No"/>
+    <Project Name="1908_6_encrypt" Path="1908_6_encrypt/1908_6_encrypt.project" Active="No"/>
+    <Project Name="1908_7_systick" Path="1908_7_systick/1908_7_systick.project" Active="No"/>
+    <Project Name="1906_1_exti_systick_irq" Path="1906_1_exti_systick_irq/1906_1_exti_systick_irq.project" Active="No"/>
+    <Project Name="1903_2_exti_systick_irq" Path="1903_2_exti_systick_irq/1903_2_exti_systick_irq.project" Active="No"/>
+    <Project Name="1806_1" Path="1806_1/1806_1.project" Active="No"/>
+    <Project Name="1804_2_systick" Path="1804_2_systick/1804_2_systick.project" Active="No"/>
+    <Project Name="1801_5_usart" Path="1801_5_usart/1801_5_usart.project" Active="No"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="Kapitel8">
+    <Project Name="8-7" Path="8-7/8-7.project" Active="No"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="Färdigskrivet">
+    <Project Name="Systick" Path="Systick/Systick.project" Active="No"/>
+    <Project Name="Port_D_E" Path="Port_D_E/Port_D_E.project" Active="No"/>
+    <Project Name="flipflop_irq" Path="flipflop_irq/flipflop_irq.project" Active="No"/>
+    <Project Name="keypad" Path="keypad/keypad.project" Active="No"/>
+    <Project Name="Sycktick_irq" Path="Sycktick_irq/Sycktick_irq.project" Active="No"/>
+    <Project Name="Asciidisplay" Path="Asciidisplay/Asciidisplay.project" Active="No"/>
+    <Project Name="ascii_disp" Path="ascii_disp/ascii_disp.project" Active="No"/>
+  </VirtualDirectory>
+  <Project Name="1-210315" Path="1-210315/1-210315.project" Active="Yes"/>
+  <Project Name="2-210315" Path="2-210315/2-210315.project" Active="No"/>
+  <Project Name="3-210315" Path="3-210315/3-210315.project" Active="No"/>
+  <Project Name="4-210315" Path="4-210315/4-210315.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Environment/>
@@ -80,9 +116,45 @@
       <Project Name="7-4" ConfigName="Debug"/>
       <Project Name="7-5" ConfigName="Debug"/>
       <Project Name="libMD407" ConfigName="Debug"/>
-      <Project Name="Lektion14" ConfigName="Debug"/>
-      <Project Name="libmd407io" ConfigName="Debug"/>
-      <Project Name="testlib" ConfigName="Debug"/>
+      <Project Name="testlib2" ConfigName="Debug"/>
+      <Project Name="maze-game" ConfigName="Debug"/>
+      <Project Name="200821_uppg3_" ConfigName="Debug"/>
+      <Project Name="200821_uppg2" ConfigName="Debug"/>
+      <Project Name="200821_uppg1_" ConfigName="Debug"/>
+      <Project Name="200821_uppg4" ConfigName="Debug"/>
+      <Project Name="8-7" ConfigName="Debug"/>
+      <Project Name="200605_uppg1" ConfigName="Debug"/>
+      <Project Name="200605uppg2" ConfigName="Debug"/>
+      <Project Name="200605uppg3" ConfigName="Debug"/>
+      <Project Name="200821_uppg2_keypad" ConfigName="Debug"/>
+      <Project Name="200821_uppg3_systick" ConfigName="Debug"/>
+      <Project Name="200821_uppg4_exti_irq" ConfigName="Debug"/>
+      <Project Name="200605_uppg2_systick_irq" ConfigName="Debug"/>
+      <Project Name="200605_uppg3_exti_irq" ConfigName="Debug"/>
+      <Project Name="200605_uppg4_avbrott" ConfigName="Debug"/>
+      <Project Name="200605_uppg4_struct_union" ConfigName="Debug"/>
+      <Project Name="200316_1_bitconverter" ConfigName="Debug"/>
+      <Project Name="200316_2_circularShiftRight" ConfigName="Debug"/>
+      <Project Name="200316_5_irq_braKommentarer" ConfigName="Debug"/>
+      <Project Name="1908_5_comparePost" ConfigName="Debug"/>
+      <Project Name="1908_6_encrypt" ConfigName="Debug"/>
+      <Project Name="1908_7_systick" ConfigName="Debug"/>
+      <Project Name="Systick" ConfigName="Debug"/>
+      <Project Name="Port_D_E" ConfigName="Debug"/>
+      <Project Name="flipflop_irq" ConfigName="Debug"/>
+      <Project Name="1906_1_exti_systick_irq" ConfigName="Debug"/>
+      <Project Name="keypad" ConfigName="Debug"/>
+      <Project Name="Sycktick_irq" ConfigName="Debug"/>
+      <Project Name="1903_2_exti_systick_irq" ConfigName="Debug"/>
+      <Project Name="Asciidisplay" ConfigName="Debug"/>
+      <Project Name="1806_1" ConfigName="Debug"/>
+      <Project Name="1804_2_systick" ConfigName="Debug"/>
+      <Project Name="1801_5_usart" ConfigName="Debug"/>
+      <Project Name="ascii_disp" ConfigName="Debug"/>
+      <Project Name="1-210315" ConfigName="Debug"/>
+      <Project Name="2-210315" ConfigName="Debug"/>
+      <Project Name="3-210315" ConfigName="Debug"/>
+      <Project Name="4-210315" ConfigName="Debug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Environment/>
@@ -117,9 +189,45 @@
       <Project Name="7-4" ConfigName="Release"/>
       <Project Name="7-5" ConfigName="Release"/>
       <Project Name="libMD407" ConfigName="Release"/>
-      <Project Name="Lektion14" ConfigName="Release"/>
-      <Project Name="libmd407io" ConfigName="Release"/>
-      <Project Name="testlib" ConfigName="Release"/>
+      <Project Name="testlib2" ConfigName="Release"/>
+      <Project Name="maze-game" ConfigName="Release"/>
+      <Project Name="200821_uppg3_" ConfigName="Release"/>
+      <Project Name="200821_uppg2" ConfigName="Release"/>
+      <Project Name="200821_uppg1_" ConfigName="Release"/>
+      <Project Name="200821_uppg4" ConfigName="Release"/>
+      <Project Name="8-7" ConfigName="Release"/>
+      <Project Name="200605_uppg1" ConfigName="Release"/>
+      <Project Name="200605uppg2" ConfigName="Release"/>
+      <Project Name="200605uppg3" ConfigName="Release"/>
+      <Project Name="200821_uppg2_keypad" ConfigName="Release"/>
+      <Project Name="200821_uppg3_systick" ConfigName="Release"/>
+      <Project Name="200821_uppg4_exti_irq" ConfigName="Release"/>
+      <Project Name="200605_uppg2_systick_irq" ConfigName="Release"/>
+      <Project Name="200605_uppg3_exti_irq" ConfigName="Release"/>
+      <Project Name="200605_uppg4_avbrott" ConfigName="Release"/>
+      <Project Name="200605_uppg4_struct_union" ConfigName="Release"/>
+      <Project Name="200316_1_bitconverter" ConfigName="Release"/>
+      <Project Name="200316_2_circularShiftRight" ConfigName="Release"/>
+      <Project Name="200316_5_irq_braKommentarer" ConfigName="Release"/>
+      <Project Name="1908_5_comparePost" ConfigName="Release"/>
+      <Project Name="1908_6_encrypt" ConfigName="Release"/>
+      <Project Name="1908_7_systick" ConfigName="Release"/>
+      <Project Name="Systick" ConfigName="Release"/>
+      <Project Name="Port_D_E" ConfigName="Release"/>
+      <Project Name="flipflop_irq" ConfigName="Release"/>
+      <Project Name="1906_1_exti_systick_irq" ConfigName="Release"/>
+      <Project Name="keypad" ConfigName="Release"/>
+      <Project Name="Sycktick_irq" ConfigName="Release"/>
+      <Project Name="1903_2_exti_systick_irq" ConfigName="Release"/>
+      <Project Name="Asciidisplay" ConfigName="Release"/>
+      <Project Name="1806_1" ConfigName="Release"/>
+      <Project Name="1804_2_systick" ConfigName="Release"/>
+      <Project Name="1801_5_usart" ConfigName="Release"/>
+      <Project Name="ascii_disp" ConfigName="Release"/>
+      <Project Name="1-210315" ConfigName="Release"/>
+      <Project Name="2-210315" ConfigName="Release"/>
+      <Project Name="3-210315" ConfigName="Release"/>
+      <Project Name="4-210315" ConfigName="Release"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>

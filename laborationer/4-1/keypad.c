@@ -67,7 +67,7 @@ unsigned char keyb(void){
     unsigned char key[] = {1,2,3,0xA,4,5,6,0xB,7,8,9,0xC,0xE,0,0xF,0xD};
     unsigned int row, col;
     for (int row = 1; row <= 4; row++){
-        ActivateRow(row);clTabCtrl
+        ActivateRow(row);
         col = ReadColumn();
         if  (col != 0 ){
             ActivateRow(0);

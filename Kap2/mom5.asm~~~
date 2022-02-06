@@ -9,8 +9,8 @@ start:
 @ adressen till port E:s in-dataregisster till R6
 	LDR	R6,=0x40021010
 main:
-	LDRSB	R0,[R6]		@ l√§s PE0-E7
-	LDRSB	R1,[R6,#1]	@ l√§s PE8-E15
+	LDRSB	R0,[R6]		@ l‰s PE0-E7
+	LDRSB	R1,[R6,#1]	@ l‰s PE8-E15
 	ADD	R0,R0,R1
 	SXTB	R0,R0
 	STRH	R0,[R5]

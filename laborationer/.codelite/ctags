@@ -1,9 +1,26 @@
-
-
-
-
-
-
-
-
-
+std	C:\Users\elvin\AppData\Roaming\codelite\tmp\codelite_templates.hpp	/^namespace std { template<typename _Tp> class shared_ptr {$/;"	namespace	line:1
+shared_ptr	C:\Users\elvin\AppData\Roaming\codelite\tmp\codelite_templates.hpp	/^namespace std { template<typename _Tp> class shared_ptr { $/;"	class	line:1	namespace:std
+operator ->	C:\Users\elvin\AppData\Roaming\codelite\tmp\codelite_templates.hpp	/^    _Tp* operator->();$/;"	prototype	line:2	class:std::shared_ptr	access:private	signature:()	returns:_Tp 
+reset	C:\Users\elvin\AppData\Roaming\codelite\tmp\codelite_templates.hpp	/^    void reset( Y* ptr );$/;"	prototype	line:3	class:std::shared_ptr	access:private	signature:( Y* ptr )	returns:void 
+reset	C:\Users\elvin\AppData\Roaming\codelite\tmp\codelite_templates.hpp	/^    void reset( Y* ptr, Deleter d );$/;"	prototype	line:4	class:std::shared_ptr	access:private	signature:( Y* ptr, Deleter d )	returns:void 
+reset	C:\Users\elvin\AppData\Roaming\codelite\tmp\codelite_templates.hpp	/^    void reset( Y* ptr, Deleter d, Alloc alloc );$/;"	prototype	line:5	class:std::shared_ptr	access:private	signature:( Y* ptr, Deleter d, Alloc alloc )	returns:void 
+get	C:\Users\elvin\AppData\Roaming\codelite\tmp\codelite_templates.hpp	/^    _T* get() const;$/;"	prototype	line:6	class:std::shared_ptr	access:private	signature:() const	returns:_T 
+name	D:\mop\laborationer\libMD407\libMD407.h	/^	char name[16];$/;"	member	line:12	struct:__anon1	access:public
+init	D:\mop\laborationer\libMD407\libMD407.h	/^	int (*init) (int);$/;"	member	line:13	struct:__anon1	access:public
+deinit	D:\mop\laborationer\libMD407\libMD407.h	/^	void (*deinit) (int);$/;"	member	line:14	struct:__anon1	access:public
+fstat	D:\mop\laborationer\libMD407\libMD407.h	/^	int (*fstat)(struct stat *st);$/;"	member	line:15	struct:__anon1	access:public
+isatty	D:\mop\laborationer\libMD407\libMD407.h	/^	int (*isatty)(void);$/;"	member	line:16	struct:__anon1	access:public
+open	D:\mop\laborationer\libMD407\libMD407.h	/^	int (*open)(const char name,int flags,int mode);$/;"	member	line:17	struct:__anon1	access:public
+close	D:\mop\laborationer\libMD407\libMD407.h	/^	int (*close)(void);$/;"	member	line:18	struct:__anon1	access:public
+lseek	D:\mop\laborationer\libMD407\libMD407.h	/^	int (*lseek)(int ptr, int dir);$/;"	member	line:19	struct:__anon1	access:public
+write	D:\mop\laborationer\libMD407\libMD407.h	/^	int (*write)(char *ptr, int len);$/;"	member	line:20	struct:__anon1	access:public
+read	D:\mop\laborationer\libMD407\libMD407.h	/^	int (*read)(char *ptr, int len);$/;"	member	line:21	struct:__anon1	access:public
+DEV_DRIVER_DESC	D:\mop\laborationer\libMD407\libMD407.h	/^typedef struct { 	char name[16]; 	int (*init) (int); 	void (*deinit) (int); 	int (*fstat)(struct stat *st); 	int (*isatty)(void); 	int (*open)(const char name,int flags,int mode); 	int (*close)(void); 	int (*lseek)(int ptr, int dir); 	int (*write)(char *ptr, int len); 	int (*read)(char *ptr, int len); } DEV_DRIVER_DESC, *PDEV_DRIVER_DESC; $/;"	typedef	line:22	typeref:struct:__anon1
+PDEV_DRIVER_DESC	D:\mop\laborationer\libMD407\libMD407.h	/^} DEV_DRIVER_DESC, *PDEV_DRIVER_DESC; $/;"	typedef	line:22	typeref:struct:__anon1
+STDIN	D:\mop\laborationer\libMD407\libMD407.h	/^enum {STDIN=0,STDOUT,STDERR,KEYPAD,ASCIIDISPLAY};$/;"	enumerator	line:25	enum:__anon2
+STDOUT	D:\mop\laborationer\libMD407\libMD407.h	/^enum {STDIN=0,STDOUT,STDERR,KEYPAD,ASCIIDISPLAY};$/;"	enumerator	line:25	enum:__anon2
+STDERR	D:\mop\laborationer\libMD407\libMD407.h	/^enum {STDIN=0,STDOUT,STDERR,KEYPAD,ASCIIDISPLAY};$/;"	enumerator	line:25	enum:__anon2
+KEYPAD	D:\mop\laborationer\libMD407\libMD407.h	/^enum {STDIN=0,STDOUT,STDERR,KEYPAD,ASCIIDISPLAY};$/;"	enumerator	line:25	enum:__anon2
+ASCIIDISPLAY	D:\mop\laborationer\libMD407\libMD407.h	/^enum {STDIN=0,STDOUT,STDERR,KEYPAD,ASCIIDISPLAY};$/;"	enumerator	line:25	enum:__anon2
+MAX_FILENO	D:\mop\laborationer\libMD407\libMD407.h	/^#define MAX_FILENO ASCIIDISPLAY$/;"	macro	line:26
+_isatty	D:\mop\laborationer\libMD407\libMD407.h	/^int _isatty(int file); /;"	prototype	line:28	signature:(int file)	returns:int 

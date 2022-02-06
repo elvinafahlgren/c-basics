@@ -134,7 +134,7 @@ monitor restart</PostConnectCommands>
     </Configuration>
   </Settings>
   <VirtualDirectory Name="src">
-    <File Name="startup.c"/>
+    <File Name="flipflip_irq_ack.c"/>
   </VirtualDirectory>
   <VirtualDirectory Name="resources">
     <File Name="md407-ram.x"/>

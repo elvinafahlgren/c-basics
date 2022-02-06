@@ -28,8 +28,6 @@
   <VirtualDirectory Name="include">
     <File Name="libMD407.h"/>
   </VirtualDirectory>
-  <Dependencies Name="Debug"/>
-  <Dependencies Name="Release"/>
   <Settings Type="Static Library">
     <GlobalSettings>
       <Compiler Options="" C_Options="" Assembler="">
@@ -127,4 +125,6 @@ $(CodeLiteDir)/tools/gcc-arm/arm-none-eabi/include/libmd407.h</Command>
       </Completion>
     </Configuration>
   </Settings>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
 </CodeLite_Project>
